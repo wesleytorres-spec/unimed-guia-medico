@@ -6,172 +6,266 @@
 <title>Guia Médico – Unimed Sorocaba</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
-    --u-dark:    #1B6B5A;
-    --u-green:   #00A859;
-    --u-teal:    #4DBFA0;
-    --u-light:   #E6F4EE;
-    --u-chip:    #9DD4BB;
-    --u-text:    #1A2E25;
-    --u-muted:   #6B7C74;
-    --u-border:  #DCE8E3;
-    --u-bg:      #F2F6F4;
+    --u-dark:   #1B6B5A;
+    --u-green:  #00A859;
+    --u-teal:   #4DBFA0;
+    --u-light:  #E6F4EE;
+    --u-chip:   #9DD4BB;
+    --u-text:   #182820;
+    --u-muted:  #5C7268;
+    --u-border: #D8EAE1;
+    --u-bg:     #F3F8F5;
+    --u-white:  #FFFFFF;
+    --radius:   10px;
+    --radius-lg:16px;
   }
 
-  * { box-sizing: border-box; }
+  *, *::before, *::after { box-sizing: border-box; }
 
   body {
-    background: #e0e5e3;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    min-height: 100vh;
-    padding: 32px 16px;
-    font-family: 'Segoe UI', system-ui, sans-serif;
-  }
-
-  /* ── device shell ── */
-  .device {
-    width: 390px;
-    min-height: 844px;
+    font-family: 'DM Sans', system-ui, sans-serif;
     background: var(--u-bg);
-    border-radius: 44px;
-    border: 8px solid #1a1a1a;
-    overflow: hidden;
-    box-shadow: 0 32px 80px rgba(0,0,0,0.35), inset 0 0 0 1px #444;
-    position: relative;
-    display: flex;
-    flex-direction: column;
+    color: var(--u-text);
+    min-height: 100vh;
+    margin: 0;
   }
 
-  /* notch */
-  .notch {
-    position: absolute;
-    top: 0; left: 50%;
-    transform: translateX(-50%);
-    width: 120px; height: 28px;
-    background: #1a1a1a;
-    border-radius: 0 0 18px 18px;
-    z-index: 99;
-  }
-
-  /* status bar */
-  .status-bar {
-    height: 44px;
+  /* ── TOP NAV / HEADER COMPACTO ── */
+  .topnav {
     background: var(--u-dark);
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
-    padding: 0 24px 6px;
-    font-size: 12px;
-    font-weight: 600;
-    color: white;
-    flex-shrink: 0;
-  }
-  .status-bar .time { font-size: 13px; font-weight: 700; }
-  .status-icons { display: flex; gap: 5px; align-items: center; }
-  .status-icons i { font-size: 13px; }
-
-  /* header */
-  .app-header {
-    background: var(--u-dark);
-    padding: 10px 16px 14px;
-    flex-shrink: 0;
-  }
-  .header-row {
+    padding: 0 24px;
+    height: 46px;
     display: flex;
     align-items: center;
-    gap: 10px;
-    margin-bottom: 12px;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 1px 8px rgba(0,0,0,0.18);
   }
-  .back-btn {
-    width: 34px; height: 34px;
-    background: rgba(255,255,255,0.15);
-    border: none;
-    border-radius: 50%;
-    color: white;
-    display: flex; align-items: center; justify-content: center;
-    cursor: pointer;
-    flex-shrink: 0;
-  }
-  .back-btn:hover { background: rgba(255,255,255,0.25); }
-  .header-title {
-    font-size: 17px;
-    font-weight: 600;
-    color: white;
-    letter-spacing: 0.2px;
-  }
-
-  .search-box {
-    position: relative;
-  }
-  .search-box input {
-    width: 100%;
-    background: rgba(255,255,255,0.18);
-    border: 1.5px solid rgba(255,255,255,0.3);
-    border-radius: 12px;
-    padding: 10px 40px 10px 14px;
-    color: white;
-    font-size: 14px;
-    outline: none;
-    transition: border-color .2s;
-  }
-  .search-box input::placeholder { color: rgba(255,255,255,0.6); }
-  .search-box input:focus { border-color: rgba(255,255,255,0.6); }
-  .search-box .si {
-    position: absolute;
-    right: 13px; top: 50%;
-    transform: translateY(-50%);
-    color: rgba(255,255,255,0.7);
-    font-size: 16px;
-    pointer-events: none;
-  }
-
-  /* tabs */
-  .app-tabs {
+  .topnav-brand {
     display: flex;
-    background: var(--u-dark);
-    border-bottom: 1px solid rgba(255,255,255,0.12);
-    flex-shrink: 0;
-  }
-  .app-tab {
-    flex: 1;
-    text-align: center;
-    padding: 10px 0 8px;
+    align-items: center;
+    gap: 8px;
+    color: white;
     font-size: 13px;
     font-weight: 500;
-    color: rgba(255,255,255,0.55);
+    text-decoration: none;
+    opacity: 0.85;
+  }
+  .topnav-brand .brand-icon {
+    width: 22px; height: 22px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 5px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px;
+  }
+  .topnav-links {
+    display: flex;
+    gap: 2px;
+  }
+  .topnav-links a {
+    color: rgba(255,255,255,0.65);
+    font-size: 12px;
+    font-weight: 500;
+    padding: 4px 10px;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: all .18s;
+  }
+  .topnav-links a:hover,
+  .topnav-links a.active {
+    background: rgba(255,255,255,0.15);
+    color: white;
+  }
+  .topnav-user {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    color: rgba(255,255,255,0.8);
+    font-size: 12px;
+    font-weight: 500;
+  }
+  .user-avatar {
+    width: 26px; height: 26px;
+    background: var(--u-teal);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px;
+    font-weight: 600;
+    color: white;
+  }
+
+  /* ── HERO STRIP COMPACTO ── */
+  .hero-strip {
+    background: var(--u-dark);
+    padding: 10px 0 12px;
+    color: white;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  .hero-strip h1 {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 0;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
+  .hero-strip h1 i { font-size: 14px; opacity: 0.8; }
+  .hero-strip p { display: none; }
+  .hero-strip .breadcrumb {
+    background: none;
+    padding: 0;
+    margin-bottom: 4px;
+    font-size: 11px;
+    opacity: 0.55;
+  }
+  .hero-strip .breadcrumb-item + .breadcrumb-item::before {
+    color: rgba(255,255,255,0.4);
+  }
+  .hero-strip .breadcrumb-item a { color: rgba(255,255,255,0.75); text-decoration: none; }
+  .hero-strip .breadcrumb-item.active { color: white; }
+
+  /* ── SEARCH CARD ── */
+  .search-card {
+    background: var(--u-white);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--u-border);
+    box-shadow: 0 2px 16px rgba(0,80,40,0.08);
+    padding: 20px;
+    margin-top: 0;
+    position: relative;
+    z-index: 10;
+  }
+
+  /* tab nav */
+  .search-tabs {
+    display: flex;
+    gap: 0;
+    border-bottom: 2px solid var(--u-border);
+    margin-bottom: 20px;
+  }
+  .s-tab {
+    padding: 8px 18px 10px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--u-muted);
     cursor: pointer;
     border-bottom: 2.5px solid transparent;
-    transition: color .2s;
+    margin-bottom: -2px;
+    transition: all .18s;
+    display: flex; align-items: center; gap: 6px;
+    white-space: nowrap;
   }
-  .app-tab.active {
-    color: #fff;
-    border-bottom-color: #7FECB8;
+  .s-tab.active {
+    color: var(--u-green);
+    border-bottom-color: var(--u-green);
   }
+  .s-tab:hover:not(.active) { color: var(--u-dark); }
 
-  /* scrollable body */
-  .app-body {
-    flex: 1;
-    overflow-y: auto;
-    overflow-x: hidden;
-    scrollbar-width: thin;
-    scrollbar-color: var(--u-chip) transparent;
+  /* search row */
+  .search-row {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
   }
+  .search-main {
+    flex: 1;
+    min-width: 200px;
+    position: relative;
+  }
+  .search-main input {
+    width: 100%;
+    border: 1.5px solid var(--u-border);
+    border-radius: var(--radius);
+    padding: 11px 42px 11px 16px;
+    font-size: 14px;
+    font-family: inherit;
+    color: var(--u-text);
+    outline: none;
+    transition: border-color .2s, box-shadow .2s;
+  }
+  .search-main input:focus {
+    border-color: var(--u-green);
+    box-shadow: 0 0 0 3px rgba(0,168,89,0.1);
+  }
+  .search-main input::placeholder { color: #adc8bc; }
+  .search-main .si {
+    position: absolute; right: 13px; top: 50%;
+    transform: translateY(-50%);
+    color: var(--u-chip);
+    font-size: 17px;
+    pointer-events: none;
+  }
+  .sel-wrap {
+    position: relative;
+    min-width: 160px;
+  }
+  .sel-wrap select {
+    width: 100%;
+    border: 1.5px solid var(--u-border);
+    border-radius: var(--radius);
+    padding: 11px 36px 11px 14px;
+    font-size: 14px;
+    font-family: inherit;
+    color: var(--u-text);
+    background: white;
+    appearance: none;
+    outline: none;
+    cursor: pointer;
+    transition: border-color .2s;
+  }
+  .sel-wrap select:focus { border-color: var(--u-green); }
+  .sel-wrap::after {
+    content: "\F282";
+    font-family: "bootstrap-icons";
+    position: absolute; right: 12px; top: 50%;
+    transform: translateY(-50%);
+    color: var(--u-muted);
+    font-size: 14px;
+    pointer-events: none;
+  }
+  .btn-pesq {
+    background: var(--u-green);
+    color: white;
+    border: none;
+    border-radius: var(--radius);
+    padding: 11px 24px;
+    font-size: 14px;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    white-space: nowrap;
+    display: flex; align-items: center; gap: 7px;
+    transition: background .18s, transform .1s;
+  }
+  .btn-pesq:hover { background: var(--u-dark); }
+  .btn-pesq:active { transform: scale(.97); }
 
   /* filter chips */
-  .chips-row {
+  .filter-row {
     display: flex;
     gap: 8px;
-    padding: 12px 14px 4px;
-    overflow-x: auto;
-    scrollbar-width: none;
-    flex-shrink: 0;
+    flex-wrap: wrap;
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px solid var(--u-border);
+    align-items: center;
   }
-  .chips-row::-webkit-scrollbar { display: none; }
+  .filter-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--u-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.7px;
+    white-space: nowrap;
+    margin-right: 2px;
+  }
   .chip {
-    display: flex; align-items: center; gap: 5px;
+    display: inline-flex; align-items: center; gap: 5px;
     background: var(--u-light);
     color: #0F6E56;
     border: 1.5px solid var(--u-chip);
@@ -179,604 +273,791 @@
     padding: 5px 13px;
     font-size: 12px;
     font-weight: 600;
-    white-space: nowrap;
     cursor: pointer;
     user-select: none;
-    transition: all .18s;
+    transition: all .15s;
+    white-space: nowrap;
   }
+  .chip i { font-size: 12px; }
   .chip.active, .chip:hover {
     background: var(--u-green);
     color: white;
     border-color: var(--u-green);
   }
-  .chip i { font-size: 12px; }
-
-  /* section label */
-  .sec-label {
+  .chip-count {
+    background: rgba(0,168,89,0.15);
+    color: var(--u-green);
+    border-radius: 10px;
+    padding: 1px 7px;
     font-size: 11px;
     font-weight: 700;
-    color: var(--u-muted);
-    text-transform: uppercase;
-    letter-spacing: 0.9px;
-    padding: 10px 16px 6px;
   }
+  .chip.active .chip-count { background: rgba(255,255,255,0.25); color: white; }
+  .ms-auto-chip { margin-left: auto; }
 
-  /* result count */
-  .result-count {
-    font-size: 12px;
-    color: var(--u-muted);
-    padding: 0 16px 8px;
-  }
-  .result-count strong { color: var(--u-green); }
-
-  /* cards */
-  .result-card {
-    background: #fff;
-    margin: 0 12px 10px;
-    border-radius: 14px;
-    border: 1px solid var(--u-border);
-    padding: 13px 14px;
-    cursor: pointer;
+  /* ── RESULTS AREA ── */
+  .results-header {
     display: flex;
-    gap: 12px;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 24px 0 16px;
+  }
+  .results-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--u-text);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .results-title .count-badge {
+    background: var(--u-light);
+    color: var(--u-green);
+    border: 1px solid var(--u-chip);
+    border-radius: 20px;
+    padding: 2px 10px;
+    font-size: 12px;
+    font-weight: 700;
+  }
+  .sort-sel {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 13px;
+    color: var(--u-muted);
+  }
+  .sort-sel select {
+    border: 1.5px solid var(--u-border);
+    border-radius: 7px;
+    padding: 5px 28px 5px 10px;
+    font-size: 13px;
+    font-family: inherit;
+    color: var(--u-text);
+    background: white;
+    appearance: none;
+    outline: none;
+    cursor: pointer;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%235C7268' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+  }
+
+  /* view toggle */
+  .view-toggle {
+    display: flex;
+    border: 1.5px solid var(--u-border);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .vt-btn {
+    padding: 6px 10px;
+    background: white;
+    border: none;
+    cursor: pointer;
+    color: var(--u-muted);
+    font-size: 15px;
+    transition: all .15s;
+  }
+  .vt-btn.active { background: var(--u-light); color: var(--u-green); }
+  .vt-btn:first-child { border-right: 1.5px solid var(--u-border); }
+
+  /* ── CARDS GRID ── */
+  #resultGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 14px;
+  }
+  #resultGrid.list-view {
+    grid-template-columns: 1fr;
+  }
+
+  .med-card {
+    background: var(--u-white);
+    border: 1px solid var(--u-border);
+    border-radius: var(--radius-lg);
+    padding: 18px;
+    cursor: pointer;
+    transition: box-shadow .2s, transform .15s, border-color .2s;
+    display: flex;
+    gap: 14px;
     align-items: flex-start;
-    transition: box-shadow .18s, transform .18s;
+    position: relative;
+    overflow: hidden;
   }
-  .result-card:hover {
-    box-shadow: 0 4px 18px rgba(0,168,89,0.13);
-    transform: translateY(-1px);
+  .med-card::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+    background: transparent;
+    transition: background .2s;
   }
-  .avatar {
-    width: 46px; height: 46px;
+  .med-card:hover {
+    box-shadow: 0 6px 24px rgba(0,100,60,0.12);
+    transform: translateY(-2px);
+    border-color: var(--u-chip);
+  }
+  .med-card:hover::before { background: var(--u-green); }
+
+  .med-avatar {
+    width: 52px; height: 52px;
     border-radius: 50%;
     background: var(--u-light);
     border: 2px solid var(--u-chip);
     display: flex; align-items: center; justify-content: center;
     font-weight: 700;
-    font-size: 14px;
+    font-size: 16px;
     color: var(--u-dark);
     flex-shrink: 0;
   }
-  .card-body-info { flex: 1; min-width: 0; }
-  .card-name {
-    font-size: 14px;
-    font-weight: 700;
+  .med-info { flex: 1; min-width: 0; }
+  .med-name {
+    font-size: 15px;
+    font-weight: 600;
     color: var(--u-text);
-    margin-bottom: 1px;
+    margin-bottom: 2px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
   }
-  .card-esp {
-    font-size: 12px;
+  .med-esp {
+    font-size: 13px;
     color: var(--u-green);
     font-weight: 600;
-    margin-bottom: 6px;
+    margin-bottom: 8px;
   }
-  .card-meta {
+  .med-meta {
     display: flex;
     flex-wrap: wrap;
-    gap: 8px;
+    gap: 10px;
   }
-  .meta-item {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    font-size: 11px;
+  .med-meta-item {
+    display: flex; align-items: center; gap: 4px;
+    font-size: 12px;
     color: var(--u-muted);
   }
-  .meta-item i { font-size: 11px; }
-  .card-badge { flex-shrink: 0; align-self: flex-start; margin-top: 2px; }
+  .med-meta-item i { font-size: 12px; }
+  .med-badges {
+    display: flex;
+    gap: 5px;
+    margin-top: 10px;
+    flex-wrap: wrap;
+  }
   .badge-aps {
     background: #E6F4EE; color: #0F6E56;
     border: 1px solid var(--u-chip);
     border-radius: 5px;
-    padding: 2px 8px;
-    font-size: 10px;
+    padding: 2px 9px;
+    font-size: 11px;
     font-weight: 700;
+    display: inline-flex; align-items: center; gap: 3px;
   }
   .badge-urg {
     background: #FEF3E2; color: #92400E;
     border: 1px solid #F9C86D;
     border-radius: 5px;
-    padding: 2px 8px;
-    font-size: 10px;
+    padding: 2px 9px;
+    font-size: 11px;
     font-weight: 700;
+    display: inline-flex; align-items: center; gap: 3px;
+  }
+  .badge-tel {
+    background: #EEF2FF; color: #3730A3;
+    border: 1px solid #C7D2FE;
+    border-radius: 5px;
+    padding: 2px 9px;
+    font-size: 11px;
+    font-weight: 700;
+    display: inline-flex; align-items: center; gap: 3px;
+  }
+  .med-side {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+  .btn-agend {
+    background: var(--u-green);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 7px 14px;
+    font-size: 12px;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background .15s;
+    display: flex; align-items: center; gap: 5px;
+  }
+  .btn-agend:hover { background: var(--u-dark); }
+  .btn-fav {
+    background: none;
+    border: 1.5px solid var(--u-border);
+    border-radius: 8px;
+    width: 32px; height: 32px;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    color: var(--u-muted);
+    font-size: 15px;
+    transition: all .15s;
+  }
+  .btn-fav:hover, .btn-fav.active {
+    border-color: #F87171;
+    color: #EF4444;
+    background: #FEF2F2;
   }
 
-  /* empty */
+  /* LIST VIEW */
+  #resultGrid.list-view .med-card {
+    flex-direction: row;
+    align-items: center;
+  }
+  #resultGrid.list-view .med-badges { margin-top: 6px; }
+  #resultGrid.list-view .med-side { flex-direction: row; align-items: center; }
+
+  /* ── EMPTY STATE ── */
   .empty-state {
     display: none;
     flex-direction: column;
     align-items: center;
-    padding: 40px 24px;
+    padding: 60px 24px;
     text-align: center;
   }
-  .empty-state i { font-size: 40px; color: var(--u-chip); margin-bottom: 12px; }
-  .empty-state p { font-size: 13px; color: var(--u-muted); }
-
-  .list-footer {
-    text-align: center;
-    padding: 8px 0 24px;
-    font-size: 11px;
-    color: var(--u-border);
-  }
-
-  /* ── DETALHADA tab ── */
-  .form-section {
-    padding: 14px 14px 0;
-    display: none;
-  }
-  .form-section.active { display: block; }
-  .form-label-u {
-    font-size: 11px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.8px;
-    color: var(--u-muted);
-    margin-bottom: 5px;
-  }
-  .form-control-u {
-    width: 100%;
-    border: 1.5px solid var(--u-border);
-    border-radius: 10px;
-    padding: 10px 12px;
-    font-size: 13px;
-    color: var(--u-text);
-    outline: none;
-    background: #fff;
-    transition: border-color .2s;
-    margin-bottom: 12px;
-    appearance: none;
-  }
-  .form-control-u:focus { border-color: var(--u-green); }
-  .checkgroup { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
-  .check-chip {
-    display: flex; align-items: center; gap: 5px;
+  .empty-state .empty-icon {
+    width: 64px; height: 64px;
     background: var(--u-light);
-    color: #0F6E56;
-    border: 1.5px solid var(--u-chip);
-    border-radius: 20px;
-    padding: 6px 13px;
-    font-size: 12px;
-    font-weight: 600;
-    cursor: pointer;
-    user-select: none;
-    transition: all .18s;
-  }
-  .check-chip input { display: none; }
-  .check-chip.checked {
-    background: var(--u-green);
-    color: white;
-    border-color: var(--u-green);
-  }
-  .btn-search-u {
-    width: 100%;
-    background: var(--u-green);
-    color: white;
-    border: none;
-    border-radius: 12px;
-    padding: 13px;
-    font-size: 14px;
-    font-weight: 700;
-    cursor: pointer;
-    margin-bottom: 10px;
-    transition: background .18s;
-    display: flex; align-items: center; justify-content: center; gap: 8px;
-  }
-  .btn-search-u:hover { background: var(--u-dark); }
-  .btn-clear-u {
-    width: 100%;
-    background: transparent;
-    color: var(--u-muted);
-    border: 1.5px solid var(--u-border);
-    border-radius: 12px;
-    padding: 11px;
-    font-size: 13px;
-    font-weight: 600;
-    cursor: pointer;
-    margin-bottom: 14px;
-    transition: all .18s;
-    display: flex; align-items: center; justify-content: center; gap: 7px;
-  }
-  .btn-clear-u:hover { border-color: var(--u-chip); color: var(--u-dark); }
-
-  /* ── BOTTOM SHEET MODAL ── */
-  .modal-overlay {
-    display: none;
-    position: absolute;
-    inset: 0;
-    background: rgba(0,0,0,0.45);
-    z-index: 50;
-    align-items: flex-end;
-  }
-  .modal-overlay.open { display: flex; }
-  .bottom-sheet {
-    background: #fff;
-    border-radius: 20px 20px 0 0;
-    padding: 0 16px 24px;
-    width: 100%;
-    animation: slideUp .25s ease;
-  }
-  @keyframes slideUp {
-    from { transform: translateY(40px); opacity: 0; }
-    to   { transform: translateY(0);    opacity: 1; }
-  }
-  .sheet-handle {
-    width: 40px; height: 4px;
-    background: var(--u-border);
-    border-radius: 2px;
-    margin: 12px auto 14px;
-  }
-  .sheet-title {
-    font-size: 15px;
-    font-weight: 700;
-    color: var(--u-text);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 28px;
+    color: var(--u-chip);
     margin-bottom: 16px;
   }
-  .sheet-close { background: none; border: none; color: var(--u-muted); cursor: pointer; font-size: 20px; }
-  .sheet-group-title {
+  .empty-state h5 { font-size: 16px; font-weight: 600; color: var(--u-text); margin-bottom: 6px; }
+  .empty-state p { font-size: 14px; color: var(--u-muted); }
+
+  /* ── DETALHADA FORM ── */
+  #formDetalhada { display: none; }
+  .form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 14px;
+    margin-bottom: 16px;
+  }
+  .form-group-u label {
+    display: block;
     font-size: 11px;
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.8px;
+    letter-spacing: 0.7px;
     color: var(--u-muted);
-    margin-bottom: 8px;
+    margin-bottom: 6px;
   }
-  .sheet-chips { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 16px; }
-  .sch {
+  .form-group-u input,
+  .form-group-u select {
+    width: 100%;
+    border: 1.5px solid var(--u-border);
+    border-radius: var(--radius);
+    padding: 10px 14px;
+    font-size: 14px;
+    font-family: inherit;
+    color: var(--u-text);
+    background: white;
+    outline: none;
+    transition: border-color .2s;
+    appearance: none;
+  }
+  .form-group-u input:focus,
+  .form-group-u select:focus { border-color: var(--u-green); }
+  .checkbox-grid {
+    display: flex; flex-wrap: wrap; gap: 8px;
+    margin-bottom: 16px;
+  }
+  .cchip {
+    display: inline-flex; align-items: center; gap: 6px;
     background: var(--u-light);
     color: #0F6E56;
     border: 1.5px solid var(--u-chip);
     border-radius: 20px;
-    padding: 5px 13px;
-    font-size: 12px;
+    padding: 6px 14px;
+    font-size: 13px;
     font-weight: 600;
     cursor: pointer;
     user-select: none;
-    transition: all .18s;
+    transition: all .15s;
   }
-  .sch.sel { background: var(--u-green); color: white; border-color: var(--u-green); }
-  .apply-btn {
-    width: 100%;
+  .cchip.on { background: var(--u-green); color: white; border-color: var(--u-green); }
+  .form-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+  .btn-buscar {
     background: var(--u-green);
     color: white;
     border: none;
-    border-radius: 12px;
-    padding: 13px;
+    border-radius: var(--radius);
+    padding: 11px 28px;
     font-size: 14px;
-    font-weight: 700;
+    font-weight: 600;
+    font-family: inherit;
     cursor: pointer;
-    margin-top: 4px;
+    display: flex; align-items: center; gap: 7px;
     transition: background .18s;
   }
-  .apply-btn:hover { background: var(--u-dark); }
-
-  /* ── nav bar ── */
-  .app-nav {
-    background: #fff;
-    border-top: 1px solid var(--u-border);
-    display: flex;
-    flex-shrink: 0;
-  }
-  .nav-item {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 8px 0 10px;
-    font-size: 10px;
-    font-weight: 600;
+  .btn-buscar:hover { background: var(--u-dark); }
+  .btn-limpar {
+    background: white;
     color: var(--u-muted);
+    border: 1.5px solid var(--u-border);
+    border-radius: var(--radius);
+    padding: 11px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    font-family: inherit;
     cursor: pointer;
-    gap: 3px;
-    transition: color .18s;
+    display: flex; align-items: center; gap: 7px;
+    transition: all .18s;
   }
-  .nav-item i { font-size: 20px; }
-  .nav-item.active { color: var(--u-green); }
+  .btn-limpar:hover { border-color: var(--u-chip); color: var(--u-dark); }
+
+  /* ── ALTERAÇÕES BANNER ── */
+  .alert-rede {
+    background: #FFFBEB;
+    border: 1px solid #FCD34D;
+    border-radius: var(--radius);
+    padding: 10px 16px;
+    font-size: 13px;
+    color: #92400E;
+    display: flex; align-items: center; gap: 8px;
+    margin-bottom: 16px;
+  }
+
+  /* ── PAGINATION ── */
+  .pagination-wrap {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    margin-top: 28px;
+    padding-bottom: 32px;
+  }
+  .pg-btn {
+    width: 36px; height: 36px;
+    display: flex; align-items: center; justify-content: center;
+    border: 1.5px solid var(--u-border);
+    border-radius: 8px;
+    background: white;
+    color: var(--u-muted);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all .15s;
+  }
+  .pg-btn:hover { border-color: var(--u-chip); color: var(--u-green); }
+  .pg-btn.active { background: var(--u-green); border-color: var(--u-green); color: white; }
+
+  /* ── FOOTER ── */
+  .site-footer {
+    background: var(--u-dark);
+    color: rgba(255,255,255,0.6);
+    padding: 20px 0;
+    font-size: 12px;
+    text-align: center;
+    margin-top: auto;
+  }
+  .site-footer a { color: rgba(255,255,255,0.8); text-decoration: none; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    .topnav-links { display: none; }
+    .topnav-user span { display: none; }
+    .hero-strip { padding: 24px 0 28px; }
+    .search-card { border-radius: 12px; padding: 16px; margin-top: -12px; }
+    .search-row { flex-direction: column; }
+    .sel-wrap { min-width: 100%; }
+    .btn-pesq { width: 100%; justify-content: center; }
+    .results-header { flex-direction: column; align-items: flex-start; gap: 8px; }
+    #resultGrid { grid-template-columns: 1fr; }
+    .med-side { display: none; }
+    .med-card { padding: 14px; }
+    .med-badges { margin-top: 8px; }
+  }
+
+  @media (min-width: 1200px) {
+    #resultGrid { grid-template-columns: repeat(3, 1fr); }
+  }
+
+  /* ── ANIMATIONS ── */
+  .med-card { animation: fadeUp .25s ease both; }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .med-card:nth-child(1)  { animation-delay: .04s; }
+  .med-card:nth-child(2)  { animation-delay: .08s; }
+  .med-card:nth-child(3)  { animation-delay: .12s; }
+  .med-card:nth-child(4)  { animation-delay: .16s; }
+  .med-card:nth-child(5)  { animation-delay: .20s; }
+  .med-card:nth-child(6)  { animation-delay: .24s; }
 </style>
 </head>
 <body>
 
-<div class="device">
-  <div class="notch"></div>
-
-  <!-- status bar -->
-  <div class="status-bar">
-    <span class="time">17:58</span>
-    <div class="status-icons">
-      <i class="bi bi-reception-4"></i>
-      <i class="bi bi-wifi"></i>
-      <i class="bi bi-battery-half"></i>
-    </div>
+<!-- TOP NAV -->
+<nav class="topnav">
+  <a href="#" class="topnav-brand">
+    <div class="brand-icon"><i class="bi bi-heart-pulse-fill text-white"></i></div>
+    Unimed Sorocaba
+  </a>
+  <div class="topnav-links d-none d-md-flex">
+    <a href="#">Início</a>
+    <a href="#" class="active">Guia Médico</a>
+    <a href="#">Autorizações</a>
+    <a href="#">Cartão Virtual</a>
+    <a href="#">Serviços</a>
   </div>
-
-  <!-- header -->
-  <div class="app-header">
-    <div class="header-row">
-      <button class="back-btn"><i class="bi bi-chevron-left"></i></button>
-      <span class="header-title">Guia Médico</span>
-    </div>
-    <div class="search-box">
-      <input type="text" id="searchInput" placeholder="Médico, especialidade, clínica..." oninput="filterCards()">
-      <i class="bi bi-search si"></i>
-    </div>
+  <div class="topnav-user">
+    <div class="user-avatar">WA</div>
+    <span>Wesley Torres</span>
   </div>
+</nav>
 
-  <!-- tabs -->
-  <div class="app-tabs">
-    <div class="app-tab active" onclick="switchTab('rapida', this)">Busca Rápida</div>
-    <div class="app-tab" onclick="switchTab('detalhada', this)">Busca Detalhada</div>
+<!-- HERO -->
+<div class="hero-strip">
+  <div class="container">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#">Início</a></li>
+        <li class="breadcrumb-item active">Guia Médico</li>
+      </ol>
+    </nav>
+    <h1><i class="bi bi-person-badge me-2"></i>Guia Médico</h1>
+    <p>Encontre médicos, especialidades e clínicas credenciadas na sua região</p>
   </div>
+</div>
 
-  <!-- body -->
-  <div class="app-body" id="appBody">
+<!-- MAIN CONTENT -->
+<div class="container py-4">
+
+  <!-- SEARCH CARD -->
+  <div class="search-card">
+
+    <!-- tabs -->
+    <div class="search-tabs">
+      <div class="s-tab active" onclick="switchTab('rapida', this)" id="tabRapidaBtn">
+        <i class="bi bi-lightning-fill"></i> Busca Rápida
+      </div>
+      <div class="s-tab" onclick="switchTab('detalhada', this)" id="tabDetalhadaBtn">
+        <i class="bi bi-sliders2"></i> Busca Detalhada
+      </div>
+    </div>
 
     <!-- BUSCA RÁPIDA -->
-    <div id="tabRapida">
-      <div class="chips-row" id="chipsRow">
-        <div class="chip active" onclick="setFilter('todos',this)"><i class="bi bi-grid-fill"></i> Todos</div>
-        <div class="chip" onclick="setFilter('urg',this)"><i class="bi bi-heart-pulse-fill"></i> Urgência</div>
-        <div class="chip" onclick="setFilter('aps',this)"><i class="bi bi-house-heart-fill"></i> APS</div>
-        <div class="chip" onclick="openModal()"><i class="bi bi-sliders2"></i> Filtros</div>
+    <div id="formRapida">
+      <div class="search-row">
+        <div class="search-main">
+          <input type="text" id="searchInput" placeholder="Médico, especialidade, clínica, endereço, cidade..." oninput="filterCards()">
+          <i class="bi bi-search si"></i>
+        </div>
+        <button class="btn-pesq" onclick="filterCards()">
+          <i class="bi bi-search"></i> Pesquisar
+        </button>
       </div>
 
-      <div class="sec-label">Resultados próximos a você</div>
-      <div class="result-count" id="resultCount"><strong>5</strong> médicos encontrados</div>
-
-      <div id="cardList">
-
-        <div class="result-card" data-name="ana paula ferreira" data-esp="clínica médica" data-tipo="aps">
-          <div class="avatar">AP</div>
-          <div class="card-body-info">
-            <div class="card-name">Dra. Ana Paula Ferreira</div>
-            <div class="card-esp">Clínica Médica</div>
-            <div class="card-meta">
-              <span class="meta-item"><i class="bi bi-geo-alt-fill"></i> Sorocaba Centro</span>
-              <span class="meta-item"><i class="bi bi-clock-fill"></i> Seg–Sex 8h–18h</span>
-            </div>
-          </div>
-          <div class="card-badge"><span class="badge-aps">APS</span></div>
+      <div class="filter-row">
+        <span class="filter-label">Filtros:</span>
+        <div class="chip active" onclick="setFilter('todos', this)">
+          <i class="bi bi-grid-fill"></i> Todos <span class="chip-count">6</span>
         </div>
-
-        <div class="result-card" data-name="carlos henrique lima" data-esp="cardiologia" data-tipo="urg">
-          <div class="avatar">CH</div>
-          <div class="card-body-info">
-            <div class="card-name">Dr. Carlos Henrique Lima</div>
-            <div class="card-esp">Cardiologia</div>
-            <div class="card-meta">
-              <span class="meta-item"><i class="bi bi-geo-alt-fill"></i> Votorantim</span>
-              <span class="meta-item"><i class="bi bi-clock-fill"></i> Seg–Qui 7h–19h</span>
-            </div>
-          </div>
-          <div class="card-badge"><span class="badge-urg">Urgência</span></div>
+        <div class="chip" onclick="setFilter('urg', this)">
+          <i class="bi bi-heart-pulse-fill"></i> Urgência e Emergência <span class="chip-count">2</span>
         </div>
-
-        <div class="result-card" data-name="mariana costa ribeiro" data-esp="pediatria" data-tipo="">
-          <div class="avatar">MC</div>
-          <div class="card-body-info">
-            <div class="card-name">Dra. Mariana Costa Ribeiro</div>
-            <div class="card-esp">Pediatria</div>
-            <div class="card-meta">
-              <span class="meta-item"><i class="bi bi-geo-alt-fill"></i> Sorocaba Norte</span>
-              <span class="meta-item"><i class="bi bi-clock-fill"></i> Ter–Sáb 8h–17h</span>
-            </div>
-          </div>
-          <div class="card-badge"></div>
+        <div class="chip" onclick="setFilter('aps', this)">
+          <i class="bi bi-house-heart-fill"></i> APS <span class="chip-count">2</span>
         </div>
-
-        <div class="result-card" data-name="roberto fonseca" data-esp="ortopedia e traumatologia" data-tipo="urg">
-          <div class="avatar">RF</div>
-          <div class="card-body-info">
-            <div class="card-name">Dr. Roberto Fonseca</div>
-            <div class="card-esp">Ortopedia e Traumatologia</div>
-            <div class="card-meta">
-              <span class="meta-item"><i class="bi bi-geo-alt-fill"></i> Itu</span>
-              <span class="meta-item"><i class="bi bi-clock-fill"></i> Seg–Sex 9h–18h</span>
-            </div>
-          </div>
-          <div class="card-badge"><span class="badge-urg">Urgência</span></div>
+        <div class="chip" onclick="setFilter('tel', this)">
+          <i class="bi bi-camera-video-fill"></i> Teleconsulta <span class="chip-count">3</span>
         </div>
-
-        <div class="result-card" data-name="fernanda melo" data-esp="ginecologia e obstetrícia" data-tipo="aps">
-          <div class="avatar">FM</div>
-          <div class="card-body-info">
-            <div class="card-name">Dra. Fernanda Melo</div>
-            <div class="card-esp">Ginecologia e Obstetrícia</div>
-            <div class="card-meta">
-              <span class="meta-item"><i class="bi bi-geo-alt-fill"></i> Sorocaba Sul</span>
-              <span class="meta-item"><i class="bi bi-clock-fill"></i> Seg–Qui 8h–16h</span>
-            </div>
-          </div>
-          <div class="card-badge"><span class="badge-aps">APS</span></div>
-        </div>
-
-        <div class="result-card" data-name="thiago nascimento" data-esp="neurologia" data-tipo="">
-          <div class="avatar">TN</div>
-          <div class="card-body-info">
-            <div class="card-name">Dr. Thiago Nascimento</div>
-            <div class="card-esp">Neurologia</div>
-            <div class="card-meta">
-              <span class="meta-item"><i class="bi bi-geo-alt-fill"></i> Sorocaba Leste</span>
-              <span class="meta-item"><i class="bi bi-clock-fill"></i> Qua–Sex 10h–17h</span>
-            </div>
-          </div>
-          <div class="card-badge"></div>
-        </div>
-
-      </div><!-- /cardList -->
-
-      <div class="empty-state" id="emptyState">
-        <i class="bi bi-search"></i>
-        <p>Nenhum médico encontrado<br>para o filtro selecionado.</p>
+        <a href="#" class="ms-auto-chip" style="font-size:12px; color:var(--u-green); font-weight:600; text-decoration:none; display:flex; align-items:center; gap:4px;">
+          <i class="bi bi-exclamation-circle"></i> Alterações na Rede Credenciada
+        </a>
       </div>
-
-      <div class="list-footer">— Fim dos resultados —</div>
-    </div><!-- /tabRapida -->
+    </div>
 
     <!-- BUSCA DETALHADA -->
-    <div id="tabDetalhada" style="display:none;">
-      <div class="form-section active">
-
-        <div class="form-label-u">Nome ou Especialidade</div>
-        <input type="text" class="form-control-u" placeholder="Ex: Cardiologia, Dr. Silva...">
-
-        <div class="form-label-u">Região / Cidade</div>
-        <select class="form-control-u">
-          <option value="">Selecione a cidade</option>
-          <option>Sorocaba</option>
-          <option>Votorantim</option>
-          <option>Itu</option>
-          <option>Mairinque</option>
-          <option>São Roque</option>
-        </select>
-
-        <div class="form-label-u">Tipo de Atendimento</div>
-        <div class="checkgroup">
-          <label class="check-chip" onclick="toggleCheck(this)">
-            <input type="checkbox"> <i class="bi bi-building"></i> Presencial
-          </label>
-          <label class="check-chip" onclick="toggleCheck(this)">
-            <input type="checkbox"> <i class="bi bi-camera-video"></i> Teleconsulta
-          </label>
+    <div id="formDetalhada">
+      <div class="form-grid">
+        <div class="form-group-u">
+          <label>Nome / Especialidade</label>
+          <input type="text" placeholder="Ex: Cardiologia, Dr. Silva...">
         </div>
-
-        <div class="form-label-u">Filtro Especial</div>
-        <div class="checkgroup">
-          <label class="check-chip" onclick="toggleCheck(this)">
-            <input type="checkbox"> <i class="bi bi-heart-pulse"></i> Urgência
-          </label>
-          <label class="check-chip" onclick="toggleCheck(this)">
-            <input type="checkbox"> <i class="bi bi-house-heart"></i> APS
-          </label>
-          <label class="check-chip" onclick="toggleCheck(this)">
-            <input type="checkbox"> <i class="bi bi-star"></i> Fácil
-          </label>
+        <div class="form-group-u">
+          <label>Cidade</label>
+          <select>
+            <option value="">Selecione...</option>
+            <option>Sorocaba</option>
+            <option>Votorantim</option>
+            <option>Itu</option>
+            <option>Mairinque</option>
+          </select>
         </div>
+        <div class="form-group-u">
+          <label>Bairro / Região</label>
+          <input type="text" placeholder="Ex: Centro, Norte...">
+        </div>
+        <div class="form-group-u">
+          <label>Disponibilidade</label>
+          <select>
+            <option value="">Qualquer horário</option>
+            <option>Manhã (6h – 12h)</option>
+            <option>Tarde (12h – 18h)</option>
+            <option>Noite (18h – 22h)</option>
+          </select>
+        </div>
+      </div>
+      <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.7px; color:var(--u-muted); margin-bottom:8px;">Tipo de atendimento</div>
+      <div class="checkbox-grid">
+        <div class="cchip" onclick="this.classList.toggle('on')"><i class="bi bi-building"></i> Presencial</div>
+        <div class="cchip" onclick="this.classList.toggle('on')"><i class="bi bi-camera-video"></i> Teleconsulta</div>
+        <div class="cchip" onclick="this.classList.toggle('on')"><i class="bi bi-heart-pulse"></i> Urgência</div>
+        <div class="cchip" onclick="this.classList.toggle('on')"><i class="bi bi-house-heart"></i> APS</div>
+        <div class="cchip" onclick="this.classList.toggle('on')"><i class="bi bi-star"></i> Fácil</div>
+      </div>
+      <div class="form-actions">
+        <button class="btn-buscar"><i class="bi bi-search"></i> Pesquisar</button>
+        <button class="btn-limpar"><i class="bi bi-arrow-counterclockwise"></i> Limpar Filtros</button>
+      </div>
+      <p style="font-size:12px; color:var(--u-muted); margin-top:14px; margin-bottom:0;">
+        Se você é cliente, <a href="#" style="color:var(--u-green); font-weight:600;">clique aqui</a> e faça seu login para ver resultados personalizados.
+      </p>
+    </div>
 
-        <div class="form-label-u">Disponibilidade</div>
-        <select class="form-control-u">
-          <option value="">Qualquer horário</option>
-          <option>Manhã (6h – 12h)</option>
-          <option>Tarde (12h – 18h)</option>
-          <option>Noite (18h – 22h)</option>
+  </div>
+  <!-- /search-card -->
+
+  <!-- RESULTS HEADER -->
+  <div class="results-header" id="resultsArea">
+    <div class="results-title">
+      Resultados
+      <span class="count-badge" id="countBadge">6 médicos</span>
+    </div>
+    <div class="d-flex align-items-center gap-3">
+      <div class="sort-sel">
+        <i class="bi bi-sort-down text-muted"></i>
+        <select>
+          <option>Mais próximos</option>
+          <option>Ordem A–Z</option>
+          <option>Especialidade</option>
         </select>
-
-        <button class="btn-search-u"><i class="bi bi-search"></i> Pesquisar</button>
-        <button class="btn-clear-u"><i class="bi bi-arrow-counterclockwise"></i> Limpar Filtros</button>
-
-        <p style="font-size:11px; color: var(--u-muted); text-align:center; margin-bottom:20px;">
-          Se você é cliente, <a href="#" style="color:var(--u-green); font-weight:600;">faça seu login</a> para ver resultados personalizados.
-        </p>
       </div>
-    </div><!-- /tabDetalhada -->
-
-  </div><!-- /app-body -->
-
-  <!-- bottom sheet -->
-  <div class="modal-overlay" id="filterModal" onclick="closeBg(event)">
-    <div class="bottom-sheet">
-      <div class="sheet-handle"></div>
-      <div class="sheet-title">
-        Filtros
-        <button class="sheet-close" onclick="closeModal()"><i class="bi bi-x-lg"></i></button>
+      <div class="view-toggle">
+        <button class="vt-btn active" id="gridBtn" onclick="setView('grid')"><i class="bi bi-grid-3x3-gap"></i></button>
+        <button class="vt-btn" id="listBtn" onclick="setView('list')"><i class="bi bi-list-ul"></i></button>
       </div>
-
-      <div class="sheet-group-title">Especialidade</div>
-      <div class="sheet-chips">
-        <div class="sch" onclick="this.classList.toggle('sel')">Clínica Médica</div>
-        <div class="sch" onclick="this.classList.toggle('sel')">Cardiologia</div>
-        <div class="sch" onclick="this.classList.toggle('sel')">Pediatria</div>
-        <div class="sch" onclick="this.classList.toggle('sel')">Ortopedia</div>
-        <div class="sch" onclick="this.classList.toggle('sel')">Ginecologia</div>
-        <div class="sch" onclick="this.classList.toggle('sel')">Neurologia</div>
-        <div class="sch" onclick="this.classList.toggle('sel')">Dermatologia</div>
-        <div class="sch" onclick="this.classList.toggle('sel')">Endocrinologia</div>
-      </div>
-
-      <div class="sheet-group-title">Região</div>
-      <div class="sheet-chips">
-        <div class="sch" onclick="this.classList.toggle('sel')">Sorocaba</div>
-        <div class="sch" onclick="this.classList.toggle('sel')">Votorantim</div>
-        <div class="sch" onclick="this.classList.toggle('sel')">Itu</div>
-        <div class="sch" onclick="this.classList.toggle('sel')">Mairinque</div>
-        <div class="sch" onclick="this.classList.toggle('sel')">São Roque</div>
-      </div>
-
-      <div class="sheet-group-title">Tipo de Atendimento</div>
-      <div class="sheet-chips">
-        <div class="sch" onclick="this.classList.toggle('sel')">Presencial</div>
-        <div class="sch" onclick="this.classList.toggle('sel')">Teleconsulta</div>
-      </div>
-
-      <button class="apply-btn" onclick="closeModal()"><i class="bi bi-check2-circle"></i> Aplicar Filtros</button>
     </div>
   </div>
 
-  <!-- nav bar -->
-  <div class="app-nav">
-    <div class="nav-item" onclick="navGo(this)"><i class="bi bi-phone"></i>Início</div>
-    <div class="nav-item" onclick="navGo(this)"><i class="bi bi-clipboard2-pulse"></i>Saúde</div>
-    <div class="nav-item active" onclick="navGo(this)"><i class="bi bi-person-badge"></i>Guia</div>
-    <div class="nav-item" onclick="navGo(this)"><i class="bi bi-eye"></i>Acesso</div>
-    <div class="nav-item" onclick="navGo(this)"><i class="bi bi-list-ul"></i>Serviços</div>
+  <!-- CARDS GRID -->
+  <div id="resultGrid">
+
+    <div class="med-card" data-name="ana paula ferreira" data-esp="clínica médica" data-tipo="aps" data-cidade="sorocaba">
+      <div class="med-avatar">AP</div>
+      <div class="med-info">
+        <div class="med-name">Dra. Ana Paula Ferreira</div>
+        <div class="med-esp">Clínica Médica</div>
+        <div class="med-meta">
+          <span class="med-meta-item"><i class="bi bi-geo-alt-fill"></i> Sorocaba Centro</span>
+          <span class="med-meta-item"><i class="bi bi-clock-fill"></i> Seg–Sex 8h–18h</span>
+          <span class="med-meta-item"><i class="bi bi-telephone-fill"></i> (15) 3213-0000</span>
+        </div>
+        <div class="med-badges">
+          <span class="badge-aps"><i class="bi bi-house-heart-fill"></i> APS</span>
+          <span class="badge-tel"><i class="bi bi-camera-video-fill"></i> Teleconsulta</span>
+        </div>
+      </div>
+      <div class="med-side">
+        <button class="btn-agend"><i class="bi bi-calendar-plus"></i> Agendar</button>
+        <button class="btn-fav" onclick="toggleFav(this)"><i class="bi bi-heart"></i></button>
+      </div>
+    </div>
+
+    <div class="med-card" data-name="carlos henrique lima" data-esp="cardiologia" data-tipo="urg" data-cidade="votorantim">
+      <div class="med-avatar">CH</div>
+      <div class="med-info">
+        <div class="med-name">Dr. Carlos Henrique Lima</div>
+        <div class="med-esp">Cardiologia</div>
+        <div class="med-meta">
+          <span class="med-meta-item"><i class="bi bi-geo-alt-fill"></i> Votorantim</span>
+          <span class="med-meta-item"><i class="bi bi-clock-fill"></i> Seg–Qui 7h–19h</span>
+          <span class="med-meta-item"><i class="bi bi-telephone-fill"></i> (15) 3222-1000</span>
+        </div>
+        <div class="med-badges">
+          <span class="badge-urg"><i class="bi bi-heart-pulse-fill"></i> Urgência</span>
+        </div>
+      </div>
+      <div class="med-side">
+        <button class="btn-agend"><i class="bi bi-calendar-plus"></i> Agendar</button>
+        <button class="btn-fav" onclick="toggleFav(this)"><i class="bi bi-heart"></i></button>
+      </div>
+    </div>
+
+    <div class="med-card" data-name="mariana costa ribeiro" data-esp="pediatria" data-tipo="tel" data-cidade="sorocaba">
+      <div class="med-avatar">MC</div>
+      <div class="med-info">
+        <div class="med-name">Dra. Mariana Costa Ribeiro</div>
+        <div class="med-esp">Pediatria</div>
+        <div class="med-meta">
+          <span class="med-meta-item"><i class="bi bi-geo-alt-fill"></i> Sorocaba Norte</span>
+          <span class="med-meta-item"><i class="bi bi-clock-fill"></i> Ter–Sáb 8h–17h</span>
+          <span class="med-meta-item"><i class="bi bi-telephone-fill"></i> (15) 3280-5500</span>
+        </div>
+        <div class="med-badges">
+          <span class="badge-tel"><i class="bi bi-camera-video-fill"></i> Teleconsulta</span>
+        </div>
+      </div>
+      <div class="med-side">
+        <button class="btn-agend"><i class="bi bi-calendar-plus"></i> Agendar</button>
+        <button class="btn-fav" onclick="toggleFav(this)"><i class="bi bi-heart"></i></button>
+      </div>
+    </div>
+
+    <div class="med-card" data-name="roberto fonseca" data-esp="ortopedia e traumatologia" data-tipo="urg" data-cidade="itu">
+      <div class="med-avatar">RF</div>
+      <div class="med-info">
+        <div class="med-name">Dr. Roberto Fonseca</div>
+        <div class="med-esp">Ortopedia e Traumatologia</div>
+        <div class="med-meta">
+          <span class="med-meta-item"><i class="bi bi-geo-alt-fill"></i> Itu</span>
+          <span class="med-meta-item"><i class="bi bi-clock-fill"></i> Seg–Sex 9h–18h</span>
+          <span class="med-meta-item"><i class="bi bi-telephone-fill"></i> (11) 4023-8800</span>
+        </div>
+        <div class="med-badges">
+          <span class="badge-urg"><i class="bi bi-heart-pulse-fill"></i> Urgência</span>
+          <span class="badge-tel"><i class="bi bi-camera-video-fill"></i> Teleconsulta</span>
+        </div>
+      </div>
+      <div class="med-side">
+        <button class="btn-agend"><i class="bi bi-calendar-plus"></i> Agendar</button>
+        <button class="btn-fav" onclick="toggleFav(this)"><i class="bi bi-heart"></i></button>
+      </div>
+    </div>
+
+    <div class="med-card" data-name="fernanda melo" data-esp="ginecologia e obstetrícia" data-tipo="aps" data-cidade="sorocaba">
+      <div class="med-avatar">FM</div>
+      <div class="med-info">
+        <div class="med-name">Dra. Fernanda Melo</div>
+        <div class="med-esp">Ginecologia e Obstetrícia</div>
+        <div class="med-meta">
+          <span class="med-meta-item"><i class="bi bi-geo-alt-fill"></i> Sorocaba Sul</span>
+          <span class="med-meta-item"><i class="bi bi-clock-fill"></i> Seg–Qui 8h–16h</span>
+          <span class="med-meta-item"><i class="bi bi-telephone-fill"></i> (15) 3233-7700</span>
+        </div>
+        <div class="med-badges">
+          <span class="badge-aps"><i class="bi bi-house-heart-fill"></i> APS</span>
+        </div>
+      </div>
+      <div class="med-side">
+        <button class="btn-agend"><i class="bi bi-calendar-plus"></i> Agendar</button>
+        <button class="btn-fav" onclick="toggleFav(this)"><i class="bi bi-heart"></i></button>
+      </div>
+    </div>
+
+    <div class="med-card" data-name="thiago nascimento" data-esp="neurologia" data-tipo="tel" data-cidade="sorocaba">
+      <div class="med-avatar">TN</div>
+      <div class="med-info">
+        <div class="med-name">Dr. Thiago Nascimento</div>
+        <div class="med-esp">Neurologia</div>
+        <div class="med-meta">
+          <span class="med-meta-item"><i class="bi bi-geo-alt-fill"></i> Sorocaba Leste</span>
+          <span class="med-meta-item"><i class="bi bi-clock-fill"></i> Qua–Sex 10h–17h</span>
+          <span class="med-meta-item"><i class="bi bi-telephone-fill"></i> (15) 3270-4400</span>
+        </div>
+        <div class="med-badges">
+          <span class="badge-tel"><i class="bi bi-camera-video-fill"></i> Teleconsulta</span>
+        </div>
+      </div>
+      <div class="med-side">
+        <button class="btn-agend"><i class="bi bi-calendar-plus"></i> Agendar</button>
+        <button class="btn-fav" onclick="toggleFav(this)"><i class="bi bi-heart"></i></button>
+      </div>
+    </div>
+
+  </div>
+  <!-- /resultGrid -->
+
+  <!-- EMPTY STATE -->
+  <div class="empty-state" id="emptyState">
+    <div class="empty-icon"><i class="bi bi-search"></i></div>
+    <h5>Nenhum resultado encontrado</h5>
+    <p>Tente outros termos ou remova algum filtro aplicado.</p>
   </div>
 
-</div><!-- /device -->
+  <!-- PAGINATION -->
+  <div class="pagination-wrap" id="paginacao">
+    <button class="pg-btn"><i class="bi bi-chevron-left"></i></button>
+    <button class="pg-btn active">1</button>
+    <button class="pg-btn">2</button>
+    <button class="pg-btn">3</button>
+    <button class="pg-btn"><i class="bi bi-chevron-right"></i></button>
+  </div>
+
+</div>
+<!-- /container -->
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="container">
+    © 2026 Unimed Sorocaba · Guia Médico ·
+    <a href="#">Política de Privacidade</a> ·
+    <a href="#">Fale Conosco</a>
+  </div>
+</footer>
 
 <script>
   let activeFilter = 'todos';
 
   function switchTab(tab, el) {
-    document.querySelectorAll('.app-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.s-tab').forEach(t => t.classList.remove('active'));
     el.classList.add('active');
-    document.getElementById('tabRapida').style.display     = tab === 'rapida'    ? 'block' : 'none';
-    document.getElementById('tabDetalhada').style.display  = tab === 'detalhada' ? 'block' : 'none';
+    document.getElementById('formRapida').style.display    = tab === 'rapida'    ? 'block' : 'none';
+    document.getElementById('formDetalhada').style.display = tab === 'detalhada' ? 'block' : 'none';
+    document.getElementById('resultsArea').style.display   = tab === 'rapida'    ? 'flex'  : 'none';
+    document.getElementById('resultGrid').style.display    = tab === 'rapida'    ? 'grid'  : 'none';
+    document.getElementById('emptyState').style.display    = 'none';
+    document.getElementById('paginacao').style.display     = tab === 'rapida'    ? 'flex'  : 'none';
   }
 
   function setFilter(type, el) {
-    if (type === 'filtros') { openModal(); return; }
     activeFilter = type;
     document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
     el.classList.add('active');
-    applyFilters();
+    filterCards();
   }
 
-  function filterCards() { applyFilters(); }
-
-  function applyFilters() {
-    const q = document.getElementById('searchInput').value.toLowerCase().trim();
-    const cards = document.querySelectorAll('#cardList .result-card');
-    let visible = 0;
+  function filterCards() {
+    const q       = document.getElementById('searchInput').value.toLowerCase().trim();
+    const cards   = document.querySelectorAll('#resultGrid .med-card');
+    let visible   = 0;
 
     cards.forEach(c => {
-      const nameMatch = c.dataset.name.includes(q) || c.dataset.esp.includes(q) || q === '';
-      const typeMatch = activeFilter === 'todos' ||
-                        (activeFilter === 'urg' && c.dataset.tipo === 'urg') ||
-                        (activeFilter === 'aps' && c.dataset.tipo === 'aps');
-      const show = nameMatch && typeMatch;
+      const nameOk   = !q || c.dataset.name.includes(q) || c.dataset.esp.includes(q);
+      const tipoOk   = activeFilter === 'todos' || c.dataset.tipo === activeFilter;
+      const show     = nameOk && tipoOk;
       c.style.display = show ? 'flex' : 'none';
       if (show) visible++;
     });
 
-    document.getElementById('resultCount').innerHTML = `<strong>${visible}</strong> médico${visible !== 1 ? 's' : ''} encontrado${visible !== 1 ? 's' : ''}`;
+    document.getElementById('countBadge').textContent = `${visible} médico${visible !== 1 ? 's' : ''}`;
     document.getElementById('emptyState').style.display = visible === 0 ? 'flex' : 'none';
+    document.getElementById('paginacao').style.display  = visible === 0 ? 'none' : 'flex';
   }
 
-  function toggleCheck(el) {
-    setTimeout(() => el.classList.toggle('checked', el.querySelector('input').checked), 0);
+  function setView(v) {
+    const grid = document.getElementById('resultGrid');
+    document.getElementById('gridBtn').classList.toggle('active', v === 'grid');
+    document.getElementById('listBtn').classList.toggle('active', v === 'list');
+    grid.classList.toggle('list-view', v === 'list');
   }
 
-  function openModal()  { document.getElementById('filterModal').classList.add('open'); }
-  function closeModal() { document.getElementById('filterModal').classList.remove('open'); }
-  function closeBg(e)   { if (e.target === document.getElementById('filterModal')) closeModal(); }
-
-  function navGo(el) {
-    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-    el.classList.add('active');
+  function toggleFav(btn) {
+    btn.classList.toggle('active');
+    const icon = btn.querySelector('i');
+    icon.className = btn.classList.contains('active') ? 'bi bi-heart-fill' : 'bi bi-heart';
   }
 </script>
 
