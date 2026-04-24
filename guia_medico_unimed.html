@@ -6,1061 +6,474 @@
 <title>Guia Médico – Unimed Sorocaba</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --u-dark:   #1B6B5A;
-    --u-green:  #00A859;
-    --u-teal:   #4DBFA0;
-    --u-light:  #E6F4EE;
-    --u-chip:   #9DD4BB;
-    --u-text:   #182820;
-    --u-muted:  #5C7268;
-    --u-border: #D8EAE1;
-    --u-bg:     #F3F8F5;
-    --u-white:  #FFFFFF;
-    --radius:   10px;
-    --radius-lg:16px;
-  }
+:root {
+  --u-dark:   #1B6B5A;
+  --u-green:  #00A859;
+  --u-teal:   #4DBFA0;
+  --u-light:  #E6F4EE;
+  --u-chip:   #9DD4BB;
+  --u-text:   #182820;
+  --u-muted:  #5C7268;
+  --u-border: #D8EAE1;
+  --u-bg:     #F3F8F5;
+  --u-white:  #FFFFFF;
+  --r: 10px; --rl: 14px;
+}
+*,*::before,*::after{box-sizing:border-box;}
+body{font-family:'DM Sans',system-ui,sans-serif;background:var(--u-bg);color:var(--u-text);min-height:100vh;margin:0;}
 
-  *, *::before, *::after { box-sizing: border-box; }
+/* TOPNAV */
+.topnav{background:var(--u-dark);height:44px;padding:0 20px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:200;box-shadow:0 1px 6px rgba(0,0,0,.2);}
+.topnav-brand{display:flex;align-items:center;gap:7px;color:rgba(255,255,255,.85);font-size:13px;font-weight:500;text-decoration:none;}
+.topnav-brand i{font-size:16px;color:white;}
+.tnav-links{display:flex;gap:2px;}
+.tnav-links a{color:rgba(255,255,255,.6);font-size:12px;font-weight:500;padding:4px 10px;border-radius:6px;text-decoration:none;transition:all .15s;}
+.tnav-links a:hover,.tnav-links a.active{background:rgba(255,255,255,.14);color:white;}
+.tnav-user{display:flex;align-items:center;gap:7px;color:rgba(255,255,255,.8);font-size:12px;font-weight:500;}
+.u-av{width:26px;height:26px;border-radius:50%;background:var(--u-teal);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:white;}
 
-  body {
-    font-family: 'DM Sans', system-ui, sans-serif;
-    background: var(--u-bg);
-    color: var(--u-text);
-    min-height: 100vh;
-    margin: 0;
-  }
+/* SUBHEADER */
+.subhdr{background:var(--u-dark);padding:6px 20px 8px;border-bottom:1px solid rgba(255,255,255,.07);}
+.bc{margin:0 0 2px;padding:0;background:none;font-size:10px;opacity:.5;}
+.bc .breadcrumb-item+.breadcrumb-item::before{color:rgba(255,255,255,.3);}
+.bc .breadcrumb-item a{color:rgba(255,255,255,.7);text-decoration:none;}
+.bc .breadcrumb-item.active{color:white;}
+.subhdr-title{font-size:13px;font-weight:600;color:white;display:flex;align-items:center;gap:7px;margin:0;}
+.subhdr-title i{opacity:.7;}
 
-  /* ── TOP NAV / HEADER COMPACTO ── */
-  .topnav {
-    background: var(--u-dark);
-    padding: 0 24px;
-    height: 46px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    box-shadow: 0 1px 8px rgba(0,0,0,0.18);
-  }
-  .topnav-brand {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    color: white;
-    font-size: 13px;
-    font-weight: 500;
-    text-decoration: none;
-    opacity: 0.85;
-  }
-  .topnav-brand .brand-icon {
-    width: 22px; height: 22px;
-    background: rgba(255,255,255,0.15);
-    border-radius: 5px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 12px;
-  }
-  .topnav-links {
-    display: flex;
-    gap: 2px;
-  }
-  .topnav-links a {
-    color: rgba(255,255,255,0.65);
-    font-size: 12px;
-    font-weight: 500;
-    padding: 4px 10px;
-    border-radius: 6px;
-    text-decoration: none;
-    transition: all .18s;
-  }
-  .topnav-links a:hover,
-  .topnav-links a.active {
-    background: rgba(255,255,255,0.15);
-    color: white;
-  }
-  .topnav-user {
-    display: flex;
-    align-items: center;
-    gap: 7px;
-    color: rgba(255,255,255,0.8);
-    font-size: 12px;
-    font-weight: 500;
-  }
-  .user-avatar {
-    width: 26px; height: 26px;
-    background: var(--u-teal);
-    border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 11px;
-    font-weight: 600;
-    color: white;
-  }
+/* SEARCH CARD */
+.sc{background:var(--u-white);border-radius:var(--rl);border:1px solid var(--u-border);box-shadow:0 2px 12px rgba(0,80,40,.07);padding:18px 20px 14px;}
+.s-tabs{display:flex;border-bottom:2px solid var(--u-border);margin-bottom:16px;}
+.s-tab{padding:6px 16px 8px;font-size:13px;font-weight:500;color:var(--u-muted);cursor:pointer;border-bottom:2.5px solid transparent;margin-bottom:-2px;transition:all .15s;display:flex;align-items:center;gap:6px;}
+.s-tab.active{color:var(--u-green);border-bottom-color:var(--u-green);}
+.s-tab:hover:not(.active){color:var(--u-dark);}
 
-  /* ── HERO STRIP COMPACTO ── */
-  .hero-strip {
-    background: var(--u-dark);
-    padding: 10px 0 12px;
-    color: white;
-    border-bottom: 1px solid rgba(255,255,255,0.08);
-  }
-  .hero-strip h1 {
-    font-size: 14px;
-    font-weight: 600;
-    margin-bottom: 0;
-    display: flex;
-    align-items: center;
-    gap: 7px;
-  }
-  .hero-strip h1 i { font-size: 14px; opacity: 0.8; }
-  .hero-strip p { display: none; }
-  .hero-strip .breadcrumb {
-    background: none;
-    padding: 0;
-    margin-bottom: 4px;
-    font-size: 11px;
-    opacity: 0.55;
-  }
-  .hero-strip .breadcrumb-item + .breadcrumb-item::before {
-    color: rgba(255,255,255,0.4);
-  }
-  .hero-strip .breadcrumb-item a { color: rgba(255,255,255,0.75); text-decoration: none; }
-  .hero-strip .breadcrumb-item.active { color: white; }
+/* SEARCH BOX */
+.sbox{position:relative;}
+.sbox input{width:100%;border:1.5px solid var(--u-border);border-radius:var(--r);padding:11px 44px 11px 16px;font-size:14px;font-family:inherit;color:var(--u-text);outline:none;transition:border-color .2s,box-shadow .2s;}
+.sbox input:focus{border-color:var(--u-green);box-shadow:0 0 0 3px rgba(0,168,89,.1);}
+.sbox input::placeholder{color:#adc8bc;}
+.sbox .si{position:absolute;right:13px;top:50%;transform:translateY(-50%);font-size:16px;color:var(--u-chip);pointer-events:none;}
+.sbox .scl{position:absolute;right:13px;top:50%;transform:translateY(-50%);font-size:16px;color:var(--u-muted);cursor:pointer;display:none;background:none;border:none;padding:0;}
+.shint{font-size:11px;color:var(--u-muted);margin-top:6px;display:flex;align-items:center;gap:4px;}
 
-  /* ── SEARCH CARD ── */
-  .search-card {
-    background: var(--u-white);
-    border-radius: var(--radius-lg);
-    border: 1px solid var(--u-border);
-    box-shadow: 0 2px 16px rgba(0,80,40,0.08);
-    padding: 20px;
-    margin-top: 0;
-    position: relative;
-    z-index: 10;
-  }
+/* FILTROS */
+.filt-toggle{display:flex;align-items:center;gap:6px;background:none;border:none;cursor:pointer;font-size:12px;font-weight:600;color:var(--u-muted);padding:0;margin-top:12px;transition:color .15s;font-family:inherit;}
+.filt-toggle:hover{color:var(--u-green);}
+.filt-toggle .arr{font-size:11px;transition:transform .2s;}
+.filt-toggle.open .arr{transform:rotate(180deg);}
+.filt-panel{display:none;padding-top:10px;}
+.filt-panel.open{display:block;}
+.flabel{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--u-muted);margin-bottom:8px;}
+.chips{display:flex;flex-wrap:wrap;gap:7px;}
+.chip{display:inline-flex;align-items:center;gap:5px;background:var(--u-light);color:#0F6E56;border:1.5px solid var(--u-chip);border-radius:20px;padding:4px 12px;font-size:12px;font-weight:600;cursor:pointer;user-select:none;transition:all .15s;white-space:nowrap;}
+.chip i{font-size:11px;}
+.ccount{background:rgba(0,168,89,.15);color:var(--u-green);border-radius:10px;padding:0 6px;font-size:10px;font-weight:700;}
+.chip.active,.chip:hover{background:var(--u-green);color:white;border-color:var(--u-green);}
+.chip.active .ccount{background:rgba(255,255,255,.25);color:white;}
+.rede-lnk{font-size:12px;color:var(--u-green);font-weight:600;text-decoration:none;display:flex;align-items:center;gap:4px;margin-top:10px;}
+.rede-lnk:hover{text-decoration:underline;}
 
-  /* tab nav */
-  .search-tabs {
-    display: flex;
-    gap: 0;
-    border-bottom: 2px solid var(--u-border);
-    margin-bottom: 20px;
-  }
-  .s-tab {
-    padding: 8px 18px 10px;
-    font-size: 14px;
-    font-weight: 500;
-    color: var(--u-muted);
-    cursor: pointer;
-    border-bottom: 2.5px solid transparent;
-    margin-bottom: -2px;
-    transition: all .18s;
-    display: flex; align-items: center; gap: 6px;
-    white-space: nowrap;
-  }
-  .s-tab.active {
-    color: var(--u-green);
-    border-bottom-color: var(--u-green);
-  }
-  .s-tab:hover:not(.active) { color: var(--u-dark); }
+/* DETALHADA */
+#formDet{display:none;}
+.fgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px;margin-bottom:14px;}
+.fg label{display:block;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--u-muted);margin-bottom:5px;}
+.fg input,.fg select{width:100%;border:1.5px solid var(--u-border);border-radius:var(--r);padding:9px 12px;font-size:13px;font-family:inherit;color:var(--u-text);background:white;appearance:none;outline:none;transition:border-color .2s;}
+.fg input:focus,.fg select:focus{border-color:var(--u-green);}
+.dlabel{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--u-muted);margin-bottom:8px;}
+.dchips{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:14px;}
+.dchip{display:inline-flex;align-items:center;gap:5px;background:var(--u-light);color:#0F6E56;border:1.5px solid var(--u-chip);border-radius:20px;padding:5px 13px;font-size:12px;font-weight:600;cursor:pointer;user-select:none;transition:all .15s;}
+.dchip.on{background:var(--u-green);color:white;border-color:var(--u-green);}
+.dact{display:flex;gap:10px;flex-wrap:wrap;}
+.btn-buscar{background:var(--u-green);color:white;border:none;border-radius:var(--r);padding:10px 24px;font-size:13px;font-weight:600;font-family:inherit;cursor:pointer;display:flex;align-items:center;gap:6px;transition:background .15s;}
+.btn-buscar:hover{background:var(--u-dark);}
+.btn-limpar{background:white;color:var(--u-muted);border:1.5px solid var(--u-border);border-radius:var(--r);padding:10px 18px;font-size:13px;font-weight:600;font-family:inherit;cursor:pointer;display:flex;align-items:center;gap:6px;transition:all .15s;}
+.btn-limpar:hover{border-color:var(--u-chip);color:var(--u-dark);}
 
-  /* search row */
-  .search-row {
-    display: flex;
-    gap: 12px;
-    flex-wrap: wrap;
-  }
-  .search-main {
-    flex: 1;
-    min-width: 200px;
-    position: relative;
-  }
-  .search-main input {
-    width: 100%;
-    border: 1.5px solid var(--u-border);
-    border-radius: var(--radius);
-    padding: 11px 42px 11px 16px;
-    font-size: 14px;
-    font-family: inherit;
-    color: var(--u-text);
-    outline: none;
-    transition: border-color .2s, box-shadow .2s;
-  }
-  .search-main input:focus {
-    border-color: var(--u-green);
-    box-shadow: 0 0 0 3px rgba(0,168,89,0.1);
-  }
-  .search-main input::placeholder { color: #adc8bc; }
-  .search-main .si {
-    position: absolute; right: 13px; top: 50%;
-    transform: translateY(-50%);
-    color: var(--u-chip);
-    font-size: 17px;
-    pointer-events: none;
-  }
-  .sel-wrap {
-    position: relative;
-    min-width: 160px;
-  }
-  .sel-wrap select {
-    width: 100%;
-    border: 1.5px solid var(--u-border);
-    border-radius: var(--radius);
-    padding: 11px 36px 11px 14px;
-    font-size: 14px;
-    font-family: inherit;
-    color: var(--u-text);
-    background: white;
-    appearance: none;
-    outline: none;
-    cursor: pointer;
-    transition: border-color .2s;
-  }
-  .sel-wrap select:focus { border-color: var(--u-green); }
-  .sel-wrap::after {
-    content: "\F282";
-    font-family: "bootstrap-icons";
-    position: absolute; right: 12px; top: 50%;
-    transform: translateY(-50%);
-    color: var(--u-muted);
-    font-size: 14px;
-    pointer-events: none;
-  }
-  .btn-pesq {
-    background: var(--u-green);
-    color: white;
-    border: none;
-    border-radius: var(--radius);
-    padding: 11px 24px;
-    font-size: 14px;
-    font-weight: 600;
-    font-family: inherit;
-    cursor: pointer;
-    white-space: nowrap;
-    display: flex; align-items: center; gap: 7px;
-    transition: background .18s, transform .1s;
-  }
-  .btn-pesq:hover { background: var(--u-dark); }
-  .btn-pesq:active { transform: scale(.97); }
+/* EMPTY STATE */
+.empty-st{display:flex;flex-direction:column;align-items:center;padding:56px 24px;text-align:center;}
+.e-icon{width:72px;height:72px;background:var(--u-light);border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:18px;}
+.e-icon i{font-size:32px;color:var(--u-teal);}
+.empty-st h4{font-size:18px;font-weight:600;color:var(--u-dark);margin-bottom:6px;}
+.empty-st p{font-size:13px;color:var(--u-muted);max-width:340px;margin:0;}
 
-  /* filter chips */
-  .filter-row {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-    margin-top: 14px;
-    padding-top: 14px;
-    border-top: 1px solid var(--u-border);
-    align-items: center;
-  }
-  .filter-label {
-    font-size: 12px;
-    font-weight: 600;
-    color: var(--u-muted);
-    text-transform: uppercase;
-    letter-spacing: 0.7px;
-    white-space: nowrap;
-    margin-right: 2px;
-  }
-  .chip {
-    display: inline-flex; align-items: center; gap: 5px;
-    background: var(--u-light);
-    color: #0F6E56;
-    border: 1.5px solid var(--u-chip);
-    border-radius: 20px;
-    padding: 5px 13px;
-    font-size: 12px;
-    font-weight: 600;
-    cursor: pointer;
-    user-select: none;
-    transition: all .15s;
-    white-space: nowrap;
-  }
-  .chip i { font-size: 12px; }
-  .chip.active, .chip:hover {
-    background: var(--u-green);
-    color: white;
-    border-color: var(--u-green);
-  }
-  .chip-count {
-    background: rgba(0,168,89,0.15);
-    color: var(--u-green);
-    border-radius: 10px;
-    padding: 1px 7px;
-    font-size: 11px;
-    font-weight: 700;
-  }
-  .chip.active .chip-count { background: rgba(255,255,255,0.25); color: white; }
-  .ms-auto-chip { margin-left: auto; }
+/* NO RESULTS */
+.no-res{display:none;flex-direction:column;align-items:center;padding:40px 24px;text-align:center;}
+.no-res i{font-size:32px;color:var(--u-chip);margin-bottom:10px;}
+.no-res p{font-size:13px;color:var(--u-muted);}
 
-  /* ── RESULTS AREA ── */
-  .results-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin: 24px 0 16px;
-  }
-  .results-title {
-    font-size: 15px;
-    font-weight: 600;
-    color: var(--u-text);
-    display: flex; align-items: center; gap: 8px;
-  }
-  .results-title .count-badge {
-    background: var(--u-light);
-    color: var(--u-green);
-    border: 1px solid var(--u-chip);
-    border-radius: 20px;
-    padding: 2px 10px;
-    font-size: 12px;
-    font-weight: 700;
-  }
-  .sort-sel {
-    display: flex; align-items: center; gap: 8px;
-    font-size: 13px;
-    color: var(--u-muted);
-  }
-  .sort-sel select {
-    border: 1.5px solid var(--u-border);
-    border-radius: 7px;
-    padding: 5px 28px 5px 10px;
-    font-size: 13px;
-    font-family: inherit;
-    color: var(--u-text);
-    background: white;
-    appearance: none;
-    outline: none;
-    cursor: pointer;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%235C7268' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: right 8px center;
-  }
+/* RESULTS */
+.res-hdr{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin:20px 0 12px;}
+.res-title{font-size:14px;font-weight:600;color:var(--u-text);display:flex;align-items:center;gap:8px;}
+.cbadge{background:var(--u-light);color:var(--u-green);border:1px solid var(--u-chip);border-radius:20px;padding:1px 10px;font-size:11px;font-weight:700;}
+.sort-sel{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--u-muted);}
+.sort-sel select{border:1.5px solid var(--u-border);border-radius:7px;padding:4px 28px 4px 9px;font-size:12px;font-family:inherit;color:var(--u-text);background:white url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='11' viewBox='0 0 24 24' fill='none' stroke='%235C7268' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E") no-repeat right 8px center;appearance:none;outline:none;cursor:pointer;}
 
-  /* view toggle */
-  .view-toggle {
-    display: flex;
-    border: 1.5px solid var(--u-border);
-    border-radius: 8px;
-    overflow: hidden;
-  }
-  .vt-btn {
-    padding: 6px 10px;
-    background: white;
-    border: none;
-    cursor: pointer;
-    color: var(--u-muted);
-    font-size: 15px;
-    transition: all .15s;
-  }
-  .vt-btn.active { background: var(--u-light); color: var(--u-green); }
-  .vt-btn:first-child { border-right: 1.5px solid var(--u-border); }
+/* MED CARD */
+.med-card{background:var(--u-white);border:1px solid var(--u-border);border-radius:var(--rl);overflow:hidden;transition:box-shadow .2s,border-color .2s;margin-bottom:10px;animation:fadeUp .22s ease both;}
+.med-card:hover{box-shadow:0 4px 20px rgba(0,100,60,.11);border-color:var(--u-chip);}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+.med-card:nth-child(1){animation-delay:.03s}.med-card:nth-child(2){animation-delay:.07s}.med-card:nth-child(3){animation-delay:.11s}.med-card:nth-child(4){animation-delay:.15s}.med-card:nth-child(5){animation-delay:.19s}.med-card:nth-child(6){animation-delay:.23s}
 
-  /* ── CARDS GRID ── */
-  #resultGrid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 14px;
-  }
-  #resultGrid.list-view {
-    grid-template-columns: 1fr;
-  }
+.mc-head{display:flex;align-items:center;gap:12px;padding:13px 16px;cursor:pointer;user-select:none;}
+.mc-av{width:42px;height:42px;border-radius:50%;background:var(--u-light);border:2px solid var(--u-chip);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;color:var(--u-dark);flex-shrink:0;}
+.mc-inf{flex:1;min-width:0;}
+.mc-name{font-size:14px;font-weight:600;color:var(--u-text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:1px;}
+.mc-esp{font-size:12px;color:var(--u-green);font-weight:600;}
+.mc-bgs{display:flex;gap:5px;margin-top:5px;flex-wrap:wrap;}
+.mc-rgt{display:flex;flex-direction:column;align-items:flex-end;gap:6px;flex-shrink:0;}
+.btn-exp{background:none;border:1.5px solid var(--u-border);border-radius:7px;width:30px;height:30px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--u-muted);font-size:14px;transition:all .15s;}
+.btn-exp:hover{border-color:var(--u-chip);color:var(--u-green);}
+.btn-exp.open{background:var(--u-light);border-color:var(--u-chip);color:var(--u-green);}
+.btn-exp i{transition:transform .2s;}
+.btn-exp.open i{transform:rotate(180deg);}
 
-  .med-card {
-    background: var(--u-white);
-    border: 1px solid var(--u-border);
-    border-radius: var(--radius-lg);
-    padding: 18px;
-    cursor: pointer;
-    transition: box-shadow .2s, transform .15s, border-color .2s;
-    display: flex;
-    gap: 14px;
-    align-items: flex-start;
-    position: relative;
-    overflow: hidden;
-  }
-  .med-card::before {
-    content: '';
-    position: absolute;
-    left: 0; top: 0; bottom: 0;
-    width: 3px;
-    background: transparent;
-    transition: background .2s;
-  }
-  .med-card:hover {
-    box-shadow: 0 6px 24px rgba(0,100,60,0.12);
-    transform: translateY(-2px);
-    border-color: var(--u-chip);
-  }
-  .med-card:hover::before { background: var(--u-green); }
+.mc-body{display:none;border-top:1px solid var(--u-border);padding:12px 16px 14px;background:#FAFCFB;}
+.mc-body.open{display:block;}
+.mc-crm{font-size:11px;color:var(--u-muted);margin-bottom:8px;}
+.mc-meta{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:10px;}
+.mc-mi{display:flex;align-items:center;gap:5px;font-size:12px;color:var(--u-muted);}
+.mc-mi i{font-size:12px;color:var(--u-teal);}
+.mc-acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:4px;}
+.btn-ag{background:var(--u-green);color:white;border:none;border-radius:8px;padding:7px 16px;font-size:12px;font-weight:600;font-family:inherit;cursor:pointer;display:flex;align-items:center;gap:5px;transition:background .15s;}
+.btn-ag:hover{background:var(--u-dark);}
+.btn-mp{background:white;color:var(--u-dark);border:1.5px solid var(--u-border);border-radius:8px;padding:7px 14px;font-size:12px;font-weight:600;font-family:inherit;cursor:pointer;display:flex;align-items:center;gap:5px;transition:all .15s;}
+.btn-mp:hover{border-color:var(--u-chip);background:var(--u-light);}
+.btn-zap{background:#25D366;color:white;border:none;border-radius:8px;padding:7px 14px;font-size:12px;font-weight:600;font-family:inherit;cursor:pointer;display:flex;align-items:center;gap:5px;transition:background .15s;margin-left:auto;}
+.btn-zap:hover{background:#1ebe5d;}
 
-  .med-avatar {
-    width: 52px; height: 52px;
-    border-radius: 50%;
-    background: var(--u-light);
-    border: 2px solid var(--u-chip);
-    display: flex; align-items: center; justify-content: center;
-    font-weight: 700;
-    font-size: 16px;
-    color: var(--u-dark);
-    flex-shrink: 0;
-  }
-  .med-info { flex: 1; min-width: 0; }
-  .med-name {
-    font-size: 15px;
-    font-weight: 600;
-    color: var(--u-text);
-    margin-bottom: 2px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-  .med-esp {
-    font-size: 13px;
-    color: var(--u-green);
-    font-weight: 600;
-    margin-bottom: 8px;
-  }
-  .med-meta {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-  }
-  .med-meta-item {
-    display: flex; align-items: center; gap: 4px;
-    font-size: 12px;
-    color: var(--u-muted);
-  }
-  .med-meta-item i { font-size: 12px; }
-  .med-badges {
-    display: flex;
-    gap: 5px;
-    margin-top: 10px;
-    flex-wrap: wrap;
-  }
-  .badge-aps {
-    background: #E6F4EE; color: #0F6E56;
-    border: 1px solid var(--u-chip);
-    border-radius: 5px;
-    padding: 2px 9px;
-    font-size: 11px;
-    font-weight: 700;
-    display: inline-flex; align-items: center; gap: 3px;
-  }
-  .badge-urg {
-    background: #FEF3E2; color: #92400E;
-    border: 1px solid #F9C86D;
-    border-radius: 5px;
-    padding: 2px 9px;
-    font-size: 11px;
-    font-weight: 700;
-    display: inline-flex; align-items: center; gap: 3px;
-  }
-  .badge-tel {
-    background: #EEF2FF; color: #3730A3;
-    border: 1px solid #C7D2FE;
-    border-radius: 5px;
-    padding: 2px 9px;
-    font-size: 11px;
-    font-weight: 700;
-    display: inline-flex; align-items: center; gap: 3px;
-  }
-  .med-side {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 8px;
-    flex-shrink: 0;
-  }
-  .btn-agend {
-    background: var(--u-green);
-    color: white;
-    border: none;
-    border-radius: 8px;
-    padding: 7px 14px;
-    font-size: 12px;
-    font-weight: 600;
-    font-family: inherit;
-    cursor: pointer;
-    white-space: nowrap;
-    transition: background .15s;
-    display: flex; align-items: center; gap: 5px;
-  }
-  .btn-agend:hover { background: var(--u-dark); }
-  .btn-fav {
-    background: none;
-    border: 1.5px solid var(--u-border);
-    border-radius: 8px;
-    width: 32px; height: 32px;
-    display: flex; align-items: center; justify-content: center;
-    cursor: pointer;
-    color: var(--u-muted);
-    font-size: 15px;
-    transition: all .15s;
-  }
-  .btn-fav:hover, .btn-fav.active {
-    border-color: #F87171;
-    color: #EF4444;
-    background: #FEF2F2;
-  }
+/* BADGES */
+.b-aps{background:#E6F4EE;color:#0F6E56;border:1px solid var(--u-chip);border-radius:5px;padding:2px 8px;font-size:10px;font-weight:700;display:inline-flex;align-items:center;gap:3px;}
+.b-urg{background:#FEF3E2;color:#92400E;border:1px solid #F9C86D;border-radius:5px;padding:2px 8px;font-size:10px;font-weight:700;display:inline-flex;align-items:center;gap:3px;}
+.b-tel{background:#EEF2FF;color:#3730A3;border:1px solid #C7D2FE;border-radius:5px;padding:2px 8px;font-size:10px;font-weight:700;display:inline-flex;align-items:center;gap:3px;}
 
-  /* LIST VIEW */
-  #resultGrid.list-view .med-card {
-    flex-direction: row;
-    align-items: center;
-  }
-  #resultGrid.list-view .med-badges { margin-top: 6px; }
-  #resultGrid.list-view .med-side { flex-direction: row; align-items: center; }
+/* PAGINATION */
+.pgn{display:flex;justify-content:center;gap:5px;margin-top:20px;padding-bottom:32px;}
+.pgb{width:34px;height:34px;display:flex;align-items:center;justify-content:center;border:1.5px solid var(--u-border);border-radius:8px;background:white;color:var(--u-muted);font-size:12px;font-weight:600;cursor:pointer;transition:all .15s;}
+.pgb:hover{border-color:var(--u-chip);color:var(--u-green);}
+.pgb.active{background:var(--u-green);border-color:var(--u-green);color:white;}
 
-  /* ── EMPTY STATE ── */
-  .empty-state {
-    display: none;
-    flex-direction: column;
-    align-items: center;
-    padding: 60px 24px;
-    text-align: center;
-  }
-  .empty-state .empty-icon {
-    width: 64px; height: 64px;
-    background: var(--u-light);
-    border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 28px;
-    color: var(--u-chip);
-    margin-bottom: 16px;
-  }
-  .empty-state h5 { font-size: 16px; font-weight: 600; color: var(--u-text); margin-bottom: 6px; }
-  .empty-state p { font-size: 14px; color: var(--u-muted); }
+/* FOOTER */
+.footer{background:var(--u-dark);color:rgba(255,255,255,.5);padding:14px 0;font-size:11px;text-align:center;margin-top:20px;}
+.footer a{color:rgba(255,255,255,.7);text-decoration:none;}
 
-  /* ── DETALHADA FORM ── */
-  #formDetalhada { display: none; }
-  .form-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 14px;
-    margin-bottom: 16px;
-  }
-  .form-group-u label {
-    display: block;
-    font-size: 11px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.7px;
-    color: var(--u-muted);
-    margin-bottom: 6px;
-  }
-  .form-group-u input,
-  .form-group-u select {
-    width: 100%;
-    border: 1.5px solid var(--u-border);
-    border-radius: var(--radius);
-    padding: 10px 14px;
-    font-size: 14px;
-    font-family: inherit;
-    color: var(--u-text);
-    background: white;
-    outline: none;
-    transition: border-color .2s;
-    appearance: none;
-  }
-  .form-group-u input:focus,
-  .form-group-u select:focus { border-color: var(--u-green); }
-  .checkbox-grid {
-    display: flex; flex-wrap: wrap; gap: 8px;
-    margin-bottom: 16px;
-  }
-  .cchip {
-    display: inline-flex; align-items: center; gap: 6px;
-    background: var(--u-light);
-    color: #0F6E56;
-    border: 1.5px solid var(--u-chip);
-    border-radius: 20px;
-    padding: 6px 14px;
-    font-size: 13px;
-    font-weight: 600;
-    cursor: pointer;
-    user-select: none;
-    transition: all .15s;
-  }
-  .cchip.on { background: var(--u-green); color: white; border-color: var(--u-green); }
-  .form-actions { display: flex; gap: 10px; flex-wrap: wrap; }
-  .btn-buscar {
-    background: var(--u-green);
-    color: white;
-    border: none;
-    border-radius: var(--radius);
-    padding: 11px 28px;
-    font-size: 14px;
-    font-weight: 600;
-    font-family: inherit;
-    cursor: pointer;
-    display: flex; align-items: center; gap: 7px;
-    transition: background .18s;
-  }
-  .btn-buscar:hover { background: var(--u-dark); }
-  .btn-limpar {
-    background: white;
-    color: var(--u-muted);
-    border: 1.5px solid var(--u-border);
-    border-radius: var(--radius);
-    padding: 11px 20px;
-    font-size: 14px;
-    font-weight: 600;
-    font-family: inherit;
-    cursor: pointer;
-    display: flex; align-items: center; gap: 7px;
-    transition: all .18s;
-  }
-  .btn-limpar:hover { border-color: var(--u-chip); color: var(--u-dark); }
+/* SHARE MODAL */
+.sh-ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:500;align-items:center;justify-content:center;}
+.sh-ov.open{display:flex;}
+.sh-modal{background:white;border-radius:16px;padding:24px;max-width:400px;width:90%;animation:popIn .2s ease;}
+@keyframes popIn{from{transform:scale(.92);opacity:0;}to{transform:scale(1);opacity:1;}}
+.sh-modal h5{font-size:15px;font-weight:700;color:var(--u-dark);margin-bottom:4px;display:flex;align-items:center;gap:8px;}
+.sh-modal p{font-size:12px;color:var(--u-muted);margin-bottom:14px;}
+#shareCanvas{width:100%;border-radius:10px;border:1px solid var(--u-border);margin-bottom:14px;}
+.sh-acts{display:flex;gap:10px;}
+.btn-szap{flex:1;background:#25D366;color:white;border:none;border-radius:10px;padding:11px;font-size:13px;font-weight:700;font-family:inherit;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:7px;transition:background .15s;}
+.btn-szap:hover{background:#1ebe5d;}
+.btn-can{background:white;color:var(--u-muted);border:1.5px solid var(--u-border);border-radius:10px;padding:11px 18px;font-size:13px;font-weight:600;font-family:inherit;cursor:pointer;transition:all .15s;}
+.btn-can:hover{border-color:var(--u-chip);}
 
-  /* ── ALTERAÇÕES BANNER ── */
-  .alert-rede {
-    background: #FFFBEB;
-    border: 1px solid #FCD34D;
-    border-radius: var(--radius);
-    padding: 10px 16px;
-    font-size: 13px;
-    color: #92400E;
-    display: flex; align-items: center; gap: 8px;
-    margin-bottom: 16px;
-  }
-
-  /* ── PAGINATION ── */
-  .pagination-wrap {
-    display: flex;
-    justify-content: center;
-    gap: 6px;
-    margin-top: 28px;
-    padding-bottom: 32px;
-  }
-  .pg-btn {
-    width: 36px; height: 36px;
-    display: flex; align-items: center; justify-content: center;
-    border: 1.5px solid var(--u-border);
-    border-radius: 8px;
-    background: white;
-    color: var(--u-muted);
-    font-size: 13px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all .15s;
-  }
-  .pg-btn:hover { border-color: var(--u-chip); color: var(--u-green); }
-  .pg-btn.active { background: var(--u-green); border-color: var(--u-green); color: white; }
-
-  /* ── FOOTER ── */
-  .site-footer {
-    background: var(--u-dark);
-    color: rgba(255,255,255,0.6);
-    padding: 20px 0;
-    font-size: 12px;
-    text-align: center;
-    margin-top: auto;
-  }
-  .site-footer a { color: rgba(255,255,255,0.8); text-decoration: none; }
-
-  /* ── RESPONSIVE ── */
-  @media (max-width: 768px) {
-    .topnav-links { display: none; }
-    .topnav-user span { display: none; }
-    .hero-strip { padding: 24px 0 28px; }
-    .search-card { border-radius: 12px; padding: 16px; margin-top: -12px; }
-    .search-row { flex-direction: column; }
-    .sel-wrap { min-width: 100%; }
-    .btn-pesq { width: 100%; justify-content: center; }
-    .results-header { flex-direction: column; align-items: flex-start; gap: 8px; }
-    #resultGrid { grid-template-columns: 1fr; }
-    .med-side { display: none; }
-    .med-card { padding: 14px; }
-    .med-badges { margin-top: 8px; }
-  }
-
-  @media (min-width: 1200px) {
-    #resultGrid { grid-template-columns: repeat(3, 1fr); }
-  }
-
-  /* ── ANIMATIONS ── */
-  .med-card { animation: fadeUp .25s ease both; }
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(10px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-  .med-card:nth-child(1)  { animation-delay: .04s; }
-  .med-card:nth-child(2)  { animation-delay: .08s; }
-  .med-card:nth-child(3)  { animation-delay: .12s; }
-  .med-card:nth-child(4)  { animation-delay: .16s; }
-  .med-card:nth-child(5)  { animation-delay: .20s; }
-  .med-card:nth-child(6)  { animation-delay: .24s; }
+@media(max-width:576px){.tnav-links{display:none;}.tnav-user span{display:none;}}
 </style>
 </head>
 <body>
 
-<!-- TOP NAV -->
+<!-- TOPNAV -->
 <nav class="topnav">
-  <a href="#" class="topnav-brand">
-    <div class="brand-icon"><i class="bi bi-heart-pulse-fill text-white"></i></div>
-    Unimed Sorocaba
-  </a>
-  <div class="topnav-links d-none d-md-flex">
+  <a href="#" class="topnav-brand"><i class="bi bi-heart-pulse-fill"></i> Unimed Sorocaba</a>
+  <div class="tnav-links d-none d-md-flex">
     <a href="#">Início</a>
     <a href="#" class="active">Guia Médico</a>
     <a href="#">Autorizações</a>
     <a href="#">Cartão Virtual</a>
-    <a href="#">Serviços</a>
   </div>
-  <div class="topnav-user">
-    <div class="user-avatar">WA</div>
+  <div class="tnav-user">
+    <div class="u-av">WA</div>
     <span>Wesley Torres</span>
   </div>
 </nav>
 
-<!-- HERO -->
-<div class="hero-strip">
-  <div class="container">
-    <nav aria-label="breadcrumb">
-      <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="#">Início</a></li>
-        <li class="breadcrumb-item active">Guia Médico</li>
-      </ol>
-    </nav>
-    <h1><i class="bi bi-person-badge me-2"></i>Guia Médico</h1>
-    <p>Encontre médicos, especialidades e clínicas credenciadas na sua região</p>
-  </div>
+<!-- SUBHEADER -->
+<div class="subhdr">
+  <nav aria-label="breadcrumb">
+    <ol class="bc breadcrumb">
+      <li class="breadcrumb-item"><a href="#">Início</a></li>
+      <li class="breadcrumb-item active">Guia Médico</li>
+    </ol>
+  </nav>
+  <p class="subhdr-title"><i class="bi bi-person-badge"></i> Guia Médico</p>
 </div>
 
-<!-- MAIN CONTENT -->
-<div class="container py-4">
+<!-- MAIN -->
+<div class="container py-3" style="max-width:900px;">
 
   <!-- SEARCH CARD -->
-  <div class="search-card">
+  <div class="sc mb-3">
+    <div class="s-tabs">
+      <div class="s-tab active" onclick="switchTab('r',this)"><i class="bi bi-lightning-fill"></i> Busca Rápida</div>
+      <div class="s-tab" onclick="switchTab('d',this)"><i class="bi bi-sliders2"></i> Busca Detalhada</div>
+    </div>
 
-    <!-- tabs -->
-    <div class="search-tabs">
-      <div class="s-tab active" onclick="switchTab('rapida', this)" id="tabRapidaBtn">
-        <i class="bi bi-lightning-fill"></i> Busca Rápida
+    <!-- RÁPIDA -->
+    <div id="formR">
+      <div class="sbox">
+        <input type="text" id="sInput" placeholder="Médico, especialidade, clínica..." oninput="onSearch(this.value)" autocomplete="off">
+        <i class="bi bi-search si" id="sIco"></i>
+        <button class="scl" id="sClr" onclick="clearS()"><i class="bi bi-x-circle-fill"></i></button>
       </div>
-      <div class="s-tab" onclick="switchTab('detalhada', this)" id="tabDetalhadaBtn">
-        <i class="bi bi-sliders2"></i> Busca Detalhada
+      <div class="shint"><i class="bi bi-info-circle"></i> Digite ao menos 3 caracteres para buscar</div>
+      <!-- filtros recolhidos -->
+      <button class="filt-toggle" id="ftog" onclick="toggleF()">
+        <i class="bi bi-funnel"></i> Filtros <i class="bi bi-chevron-down arr"></i>
+      </button>
+      <div class="filt-panel" id="fpanel">
+        <div class="flabel">Tipo de credenciamento</div>
+        <div class="chips">
+          <div class="chip active" onclick="setF('todos',this)"><i class="bi bi-grid-fill"></i> Todos <span class="ccount" id="cAll">6</span></div>
+          <div class="chip" onclick="setF('urg',this)"><i class="bi bi-heart-pulse-fill"></i> Urgência e Emergência <span class="ccount">2</span></div>
+          <div class="chip" onclick="setF('aps',this)"><i class="bi bi-house-heart-fill"></i> APS <span class="ccount">2</span></div>
+          <div class="chip" onclick="setF('tel',this)"><i class="bi bi-camera-video-fill"></i> Teleconsulta <span class="ccount">3</span></div>
+        </div>
+        <a href="#" class="rede-lnk"><i class="bi bi-exclamation-circle"></i> Alterações na Rede Credenciada</a>
       </div>
     </div>
 
-    <!-- BUSCA RÁPIDA -->
-    <div id="formRapida">
-      <div class="search-row">
-        <div class="search-main">
-          <input type="text" id="searchInput" placeholder="Médico, especialidade, clínica, endereço, cidade..." oninput="filterCards()">
-          <i class="bi bi-search si"></i>
-        </div>
-        <button class="btn-pesq" onclick="filterCards()">
-          <i class="bi bi-search"></i> Pesquisar
-        </button>
+    <!-- DETALHADA -->
+    <div id="formDet">
+      <div class="fgrid">
+        <div class="fg"><label>Nome / Especialidade</label><input type="text" placeholder="Ex: Cardiologia, Dr. Silva..."></div>
+        <div class="fg"><label>Cidade</label><select><option value="">Selecione...</option><option>Sorocaba</option><option>Votorantim</option><option>Itu</option><option>Mairinque</option><option>São Roque</option></select></div>
+        <div class="fg"><label>Bairro / Região</label><input type="text" placeholder="Ex: Centro, Norte..."></div>
+        <div class="fg"><label>Disponibilidade</label><select><option value="">Qualquer horário</option><option>Manhã (6h–12h)</option><option>Tarde (12h–18h)</option><option>Noite (18h–22h)</option></select></div>
       </div>
-
-      <div class="filter-row">
-        <span class="filter-label">Filtros:</span>
-        <div class="chip active" onclick="setFilter('todos', this)">
-          <i class="bi bi-grid-fill"></i> Todos <span class="chip-count">6</span>
-        </div>
-        <div class="chip" onclick="setFilter('urg', this)">
-          <i class="bi bi-heart-pulse-fill"></i> Urgência e Emergência <span class="chip-count">2</span>
-        </div>
-        <div class="chip" onclick="setFilter('aps', this)">
-          <i class="bi bi-house-heart-fill"></i> APS <span class="chip-count">2</span>
-        </div>
-        <div class="chip" onclick="setFilter('tel', this)">
-          <i class="bi bi-camera-video-fill"></i> Teleconsulta <span class="chip-count">3</span>
-        </div>
-        <a href="#" class="ms-auto-chip" style="font-size:12px; color:var(--u-green); font-weight:600; text-decoration:none; display:flex; align-items:center; gap:4px;">
-          <i class="bi bi-exclamation-circle"></i> Alterações na Rede Credenciada
-        </a>
+      <div class="dlabel">Tipo de atendimento</div>
+      <div class="dchips">
+        <div class="dchip" onclick="this.classList.toggle('on')"><i class="bi bi-building"></i> Presencial</div>
+        <div class="dchip" onclick="this.classList.toggle('on')"><i class="bi bi-camera-video"></i> Teleconsulta</div>
+        <div class="dchip" onclick="this.classList.toggle('on')"><i class="bi bi-heart-pulse"></i> Urgência</div>
+        <div class="dchip" onclick="this.classList.toggle('on')"><i class="bi bi-house-heart"></i> APS</div>
+        <div class="dchip" onclick="this.classList.toggle('on')"><i class="bi bi-star"></i> Fácil</div>
       </div>
-    </div>
-
-    <!-- BUSCA DETALHADA -->
-    <div id="formDetalhada">
-      <div class="form-grid">
-        <div class="form-group-u">
-          <label>Nome / Especialidade</label>
-          <input type="text" placeholder="Ex: Cardiologia, Dr. Silva...">
-        </div>
-        <div class="form-group-u">
-          <label>Cidade</label>
-          <select>
-            <option value="">Selecione...</option>
-            <option>Sorocaba</option>
-            <option>Votorantim</option>
-            <option>Itu</option>
-            <option>Mairinque</option>
-          </select>
-        </div>
-        <div class="form-group-u">
-          <label>Bairro / Região</label>
-          <input type="text" placeholder="Ex: Centro, Norte...">
-        </div>
-        <div class="form-group-u">
-          <label>Disponibilidade</label>
-          <select>
-            <option value="">Qualquer horário</option>
-            <option>Manhã (6h – 12h)</option>
-            <option>Tarde (12h – 18h)</option>
-            <option>Noite (18h – 22h)</option>
-          </select>
-        </div>
-      </div>
-      <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.7px; color:var(--u-muted); margin-bottom:8px;">Tipo de atendimento</div>
-      <div class="checkbox-grid">
-        <div class="cchip" onclick="this.classList.toggle('on')"><i class="bi bi-building"></i> Presencial</div>
-        <div class="cchip" onclick="this.classList.toggle('on')"><i class="bi bi-camera-video"></i> Teleconsulta</div>
-        <div class="cchip" onclick="this.classList.toggle('on')"><i class="bi bi-heart-pulse"></i> Urgência</div>
-        <div class="cchip" onclick="this.classList.toggle('on')"><i class="bi bi-house-heart"></i> APS</div>
-        <div class="cchip" onclick="this.classList.toggle('on')"><i class="bi bi-star"></i> Fácil</div>
-      </div>
-      <div class="form-actions">
-        <button class="btn-buscar"><i class="bi bi-search"></i> Pesquisar</button>
+      <div class="dact">
+        <button class="btn-buscar" onclick="detSearch()"><i class="bi bi-search"></i> Pesquisar</button>
         <button class="btn-limpar"><i class="bi bi-arrow-counterclockwise"></i> Limpar Filtros</button>
       </div>
-      <p style="font-size:12px; color:var(--u-muted); margin-top:14px; margin-bottom:0;">
-        Se você é cliente, <a href="#" style="color:var(--u-green); font-weight:600;">clique aqui</a> e faça seu login para ver resultados personalizados.
-      </p>
-    </div>
-
-  </div>
-  <!-- /search-card -->
-
-  <!-- RESULTS HEADER -->
-  <div class="results-header" id="resultsArea">
-    <div class="results-title">
-      Resultados
-      <span class="count-badge" id="countBadge">6 médicos</span>
-    </div>
-    <div class="d-flex align-items-center gap-3">
-      <div class="sort-sel">
-        <i class="bi bi-sort-down text-muted"></i>
-        <select>
-          <option>Mais próximos</option>
-          <option>Ordem A–Z</option>
-          <option>Especialidade</option>
-        </select>
-      </div>
-      <div class="view-toggle">
-        <button class="vt-btn active" id="gridBtn" onclick="setView('grid')"><i class="bi bi-grid-3x3-gap"></i></button>
-        <button class="vt-btn" id="listBtn" onclick="setView('list')"><i class="bi bi-list-ul"></i></button>
-      </div>
     </div>
   </div>
-
-  <!-- CARDS GRID -->
-  <div id="resultGrid">
-
-    <div class="med-card" data-name="ana paula ferreira" data-esp="clínica médica" data-tipo="aps" data-cidade="sorocaba">
-      <div class="med-avatar">AP</div>
-      <div class="med-info">
-        <div class="med-name">Dra. Ana Paula Ferreira</div>
-        <div class="med-esp">Clínica Médica</div>
-        <div class="med-meta">
-          <span class="med-meta-item"><i class="bi bi-geo-alt-fill"></i> Sorocaba Centro</span>
-          <span class="med-meta-item"><i class="bi bi-clock-fill"></i> Seg–Sex 8h–18h</span>
-          <span class="med-meta-item"><i class="bi bi-telephone-fill"></i> (15) 3213-0000</span>
-        </div>
-        <div class="med-badges">
-          <span class="badge-aps"><i class="bi bi-house-heart-fill"></i> APS</span>
-          <span class="badge-tel"><i class="bi bi-camera-video-fill"></i> Teleconsulta</span>
-        </div>
-      </div>
-      <div class="med-side">
-        <button class="btn-agend"><i class="bi bi-calendar-plus"></i> Agendar</button>
-        <button class="btn-fav" onclick="toggleFav(this)"><i class="bi bi-heart"></i></button>
-      </div>
-    </div>
-
-    <div class="med-card" data-name="carlos henrique lima" data-esp="cardiologia" data-tipo="urg" data-cidade="votorantim">
-      <div class="med-avatar">CH</div>
-      <div class="med-info">
-        <div class="med-name">Dr. Carlos Henrique Lima</div>
-        <div class="med-esp">Cardiologia</div>
-        <div class="med-meta">
-          <span class="med-meta-item"><i class="bi bi-geo-alt-fill"></i> Votorantim</span>
-          <span class="med-meta-item"><i class="bi bi-clock-fill"></i> Seg–Qui 7h–19h</span>
-          <span class="med-meta-item"><i class="bi bi-telephone-fill"></i> (15) 3222-1000</span>
-        </div>
-        <div class="med-badges">
-          <span class="badge-urg"><i class="bi bi-heart-pulse-fill"></i> Urgência</span>
-        </div>
-      </div>
-      <div class="med-side">
-        <button class="btn-agend"><i class="bi bi-calendar-plus"></i> Agendar</button>
-        <button class="btn-fav" onclick="toggleFav(this)"><i class="bi bi-heart"></i></button>
-      </div>
-    </div>
-
-    <div class="med-card" data-name="mariana costa ribeiro" data-esp="pediatria" data-tipo="tel" data-cidade="sorocaba">
-      <div class="med-avatar">MC</div>
-      <div class="med-info">
-        <div class="med-name">Dra. Mariana Costa Ribeiro</div>
-        <div class="med-esp">Pediatria</div>
-        <div class="med-meta">
-          <span class="med-meta-item"><i class="bi bi-geo-alt-fill"></i> Sorocaba Norte</span>
-          <span class="med-meta-item"><i class="bi bi-clock-fill"></i> Ter–Sáb 8h–17h</span>
-          <span class="med-meta-item"><i class="bi bi-telephone-fill"></i> (15) 3280-5500</span>
-        </div>
-        <div class="med-badges">
-          <span class="badge-tel"><i class="bi bi-camera-video-fill"></i> Teleconsulta</span>
-        </div>
-      </div>
-      <div class="med-side">
-        <button class="btn-agend"><i class="bi bi-calendar-plus"></i> Agendar</button>
-        <button class="btn-fav" onclick="toggleFav(this)"><i class="bi bi-heart"></i></button>
-      </div>
-    </div>
-
-    <div class="med-card" data-name="roberto fonseca" data-esp="ortopedia e traumatologia" data-tipo="urg" data-cidade="itu">
-      <div class="med-avatar">RF</div>
-      <div class="med-info">
-        <div class="med-name">Dr. Roberto Fonseca</div>
-        <div class="med-esp">Ortopedia e Traumatologia</div>
-        <div class="med-meta">
-          <span class="med-meta-item"><i class="bi bi-geo-alt-fill"></i> Itu</span>
-          <span class="med-meta-item"><i class="bi bi-clock-fill"></i> Seg–Sex 9h–18h</span>
-          <span class="med-meta-item"><i class="bi bi-telephone-fill"></i> (11) 4023-8800</span>
-        </div>
-        <div class="med-badges">
-          <span class="badge-urg"><i class="bi bi-heart-pulse-fill"></i> Urgência</span>
-          <span class="badge-tel"><i class="bi bi-camera-video-fill"></i> Teleconsulta</span>
-        </div>
-      </div>
-      <div class="med-side">
-        <button class="btn-agend"><i class="bi bi-calendar-plus"></i> Agendar</button>
-        <button class="btn-fav" onclick="toggleFav(this)"><i class="bi bi-heart"></i></button>
-      </div>
-    </div>
-
-    <div class="med-card" data-name="fernanda melo" data-esp="ginecologia e obstetrícia" data-tipo="aps" data-cidade="sorocaba">
-      <div class="med-avatar">FM</div>
-      <div class="med-info">
-        <div class="med-name">Dra. Fernanda Melo</div>
-        <div class="med-esp">Ginecologia e Obstetrícia</div>
-        <div class="med-meta">
-          <span class="med-meta-item"><i class="bi bi-geo-alt-fill"></i> Sorocaba Sul</span>
-          <span class="med-meta-item"><i class="bi bi-clock-fill"></i> Seg–Qui 8h–16h</span>
-          <span class="med-meta-item"><i class="bi bi-telephone-fill"></i> (15) 3233-7700</span>
-        </div>
-        <div class="med-badges">
-          <span class="badge-aps"><i class="bi bi-house-heart-fill"></i> APS</span>
-        </div>
-      </div>
-      <div class="med-side">
-        <button class="btn-agend"><i class="bi bi-calendar-plus"></i> Agendar</button>
-        <button class="btn-fav" onclick="toggleFav(this)"><i class="bi bi-heart"></i></button>
-      </div>
-    </div>
-
-    <div class="med-card" data-name="thiago nascimento" data-esp="neurologia" data-tipo="tel" data-cidade="sorocaba">
-      <div class="med-avatar">TN</div>
-      <div class="med-info">
-        <div class="med-name">Dr. Thiago Nascimento</div>
-        <div class="med-esp">Neurologia</div>
-        <div class="med-meta">
-          <span class="med-meta-item"><i class="bi bi-geo-alt-fill"></i> Sorocaba Leste</span>
-          <span class="med-meta-item"><i class="bi bi-clock-fill"></i> Qua–Sex 10h–17h</span>
-          <span class="med-meta-item"><i class="bi bi-telephone-fill"></i> (15) 3270-4400</span>
-        </div>
-        <div class="med-badges">
-          <span class="badge-tel"><i class="bi bi-camera-video-fill"></i> Teleconsulta</span>
-        </div>
-      </div>
-      <div class="med-side">
-        <button class="btn-agend"><i class="bi bi-calendar-plus"></i> Agendar</button>
-        <button class="btn-fav" onclick="toggleFav(this)"><i class="bi bi-heart"></i></button>
-      </div>
-    </div>
-
-  </div>
-  <!-- /resultGrid -->
 
   <!-- EMPTY STATE -->
-  <div class="empty-state" id="emptyState">
-    <div class="empty-icon"><i class="bi bi-search"></i></div>
-    <h5>Nenhum resultado encontrado</h5>
-    <p>Tente outros termos ou remova algum filtro aplicado.</p>
+  <div id="ES" class="empty-st">
+    <div class="e-icon"><i class="bi bi-person-badge"></i></div>
+    <h4>Encontre aqui o Guia Médico<br>da Unimed Sorocaba</h4>
+    <p>Digite o nome do médico, especialidade ou clínica no campo acima para iniciar a busca.</p>
   </div>
 
-  <!-- PAGINATION -->
-  <div class="pagination-wrap" id="paginacao">
-    <button class="pg-btn"><i class="bi bi-chevron-left"></i></button>
-    <button class="pg-btn active">1</button>
-    <button class="pg-btn">2</button>
-    <button class="pg-btn">3</button>
-    <button class="pg-btn"><i class="bi bi-chevron-right"></i></button>
+  <!-- NO RESULTS -->
+  <div id="NR" class="no-res">
+    <i class="bi bi-search"></i>
+    <p>Nenhum médico encontrado para "<strong id="NRterm"></strong>".<br>Tente outros termos ou remova filtros.</p>
   </div>
 
-</div>
-<!-- /container -->
-
-<!-- FOOTER -->
-<footer class="site-footer">
-  <div class="container">
-    © 2026 Unimed Sorocaba · Guia Médico ·
-    <a href="#">Política de Privacidade</a> ·
-    <a href="#">Fale Conosco</a>
+  <!-- RESULTS -->
+  <div id="RS" style="display:none;">
+    <div class="res-hdr">
+      <div class="res-title">Resultados <span class="cbadge" id="cbg">0</span></div>
+      <div class="sort-sel">
+        <i class="bi bi-sort-down"></i>
+        <select><option>Mais próximos</option><option>Ordem A–Z</option><option>Especialidade</option></select>
+      </div>
+    </div>
+    <div id="CL"></div>
+    <div class="pgn">
+      <button class="pgb"><i class="bi bi-chevron-left"></i></button>
+      <button class="pgb active">1</button>
+      <button class="pgb">2</button>
+      <button class="pgb">3</button>
+      <button class="pgb"><i class="bi bi-chevron-right"></i></button>
+    </div>
   </div>
+
+</div><!-- /container -->
+
+<footer class="footer">
+  <div class="container">© 2026 Unimed Sorocaba · Guia Médico · <a href="#">Política de Privacidade</a> · <a href="#">Fale Conosco</a></div>
 </footer>
 
+<!-- SHARE MODAL -->
+<div class="sh-ov" id="shOv" onclick="closeSBg(event)">
+  <div class="sh-modal">
+    <h5><i class="bi bi-whatsapp" style="color:#25D366"></i> Compartilhar via WhatsApp</h5>
+    <p>Prévia da imagem que será enviada para (15) 99604-9468</p>
+    <canvas id="shareCanvas" height="200"></canvas>
+    <div class="sh-acts">
+      <button class="btn-szap" onclick="sendZap()"><i class="bi bi-whatsapp"></i> Enviar agora</button>
+      <button class="btn-can" onclick="closeS()">Cancelar</button>
+    </div>
+  </div>
+</div>
+
 <script>
-  let activeFilter = 'todos';
+const MED = [
+  {id:1,nm:'Dra. Ana Paula Ferreira',ini:'AP',esp:'Clínica Médica',tipo:'aps',loc:'Sorocaba Centro',hr:'Seg–Sex 8h–18h',tel:'(15) 3213-0000',crm:'CRM/SP 123.456',bg:['aps','tel'],end:'Rua Comendador Pereira Inácio, 350 – Centro'},
+  {id:2,nm:'Dr. Carlos Henrique Lima',ini:'CH',esp:'Cardiologia',tipo:'urg',loc:'Votorantim',hr:'Seg–Qui 7h–19h',tel:'(15) 3222-1000',crm:'CRM/SP 87.654',bg:['urg'],end:'Av. Votorantim, 1200 – Centro'},
+  {id:3,nm:'Dra. Mariana Costa Ribeiro',ini:'MC',esp:'Pediatria',tipo:'tel',loc:'Sorocaba Norte',hr:'Ter–Sáb 8h–17h',tel:'(15) 3280-5500',crm:'CRM/SP 201.345',bg:['tel'],end:'Rua João Pessoa, 88 – Jd. Vergueiro'},
+  {id:4,nm:'Dr. Roberto Fonseca',ini:'RF',esp:'Ortopedia e Traumatologia',tipo:'urg',loc:'Itu',hr:'Seg–Sex 9h–18h',tel:'(11) 4023-8800',crm:'CRM/SP 156.789',bg:['urg','tel'],end:'Av. Tiradentes, 740 – Centro – Itu'},
+  {id:5,nm:'Dra. Fernanda Melo',ini:'FM',esp:'Ginecologia e Obstetrícia',tipo:'aps',loc:'Sorocaba Sul',hr:'Seg–Qui 8h–16h',tel:'(15) 3233-7700',crm:'CRM/SP 99.001',bg:['aps'],end:'Rua Frei Galvão, 55 – Jd. Paulistano'},
+  {id:6,nm:'Dr. Thiago Nascimento',ini:'TN',esp:'Neurologia',tipo:'tel',loc:'Sorocaba Leste',hr:'Qua–Sex 10h–17h',tel:'(15) 3270-4400',crm:'CRM/SP 174.320',bg:['tel'],end:'Av. Dom Lúcio, 300 – Jd. Paulicéia'}
+];
+const BG = {
+  aps:`<span class="b-aps"><i class="bi bi-house-heart-fill"></i> APS</span>`,
+  urg:`<span class="b-urg"><i class="bi bi-heart-pulse-fill"></i> Urgência</span>`,
+  tel:`<span class="b-tel"><i class="bi bi-camera-video-fill"></i> Teleconsulta</span>`
+};
+let filt='todos', shareM=null, timer;
 
-  function switchTab(tab, el) {
-    document.querySelectorAll('.s-tab').forEach(t => t.classList.remove('active'));
-    el.classList.add('active');
-    document.getElementById('formRapida').style.display    = tab === 'rapida'    ? 'block' : 'none';
-    document.getElementById('formDetalhada').style.display = tab === 'detalhada' ? 'block' : 'none';
-    document.getElementById('resultsArea').style.display   = tab === 'rapida'    ? 'flex'  : 'none';
-    document.getElementById('resultGrid').style.display    = tab === 'rapida'    ? 'grid'  : 'none';
-    document.getElementById('emptyState').style.display    = 'none';
-    document.getElementById('paginacao').style.display     = tab === 'rapida'    ? 'flex'  : 'none';
-  }
-
-  function setFilter(type, el) {
-    activeFilter = type;
-    document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
-    el.classList.add('active');
-    filterCards();
-  }
-
-  function filterCards() {
-    const q       = document.getElementById('searchInput').value.toLowerCase().trim();
-    const cards   = document.querySelectorAll('#resultGrid .med-card');
-    let visible   = 0;
-
-    cards.forEach(c => {
-      const nameOk   = !q || c.dataset.name.includes(q) || c.dataset.esp.includes(q);
-      const tipoOk   = activeFilter === 'todos' || c.dataset.tipo === activeFilter;
-      const show     = nameOk && tipoOk;
-      c.style.display = show ? 'flex' : 'none';
-      if (show) visible++;
-    });
-
-    document.getElementById('countBadge').textContent = `${visible} médico${visible !== 1 ? 's' : ''}`;
-    document.getElementById('emptyState').style.display = visible === 0 ? 'flex' : 'none';
-    document.getElementById('paginacao').style.display  = visible === 0 ? 'none' : 'flex';
-  }
-
-  function setView(v) {
-    const grid = document.getElementById('resultGrid');
-    document.getElementById('gridBtn').classList.toggle('active', v === 'grid');
-    document.getElementById('listBtn').classList.toggle('active', v === 'list');
-    grid.classList.toggle('list-view', v === 'list');
-  }
-
-  function toggleFav(btn) {
-    btn.classList.toggle('active');
-    const icon = btn.querySelector('i');
-    icon.className = btn.classList.contains('active') ? 'bi bi-heart-fill' : 'bi bi-heart';
-  }
+function switchTab(t,el){
+  document.querySelectorAll('.s-tab').forEach(x=>x.classList.remove('active')); el.classList.add('active');
+  document.getElementById('formR').style.display   = t==='r'?'block':'none';
+  document.getElementById('formDet').style.display = t==='d'?'block':'none';
+  if(t==='d'){document.getElementById('RS').style.display='none';document.getElementById('ES').style.display='flex';document.getElementById('NR').style.display='none';}
+}
+function toggleF(){
+  document.getElementById('ftog').classList.toggle('open');
+  document.getElementById('fpanel').classList.toggle('open');
+}
+function setF(t,el){
+  filt=t;
+  document.querySelectorAll('.chip').forEach(x=>x.classList.remove('active')); el.classList.add('active');
+  const q=document.getElementById('sInput').value; if(q.length>=3) render(q);
+}
+function onSearch(v){
+  clearTimeout(timer);
+  document.getElementById('sIco').style.display  = v.length?'none':'block';
+  document.getElementById('sClr').style.display  = v.length?'block':'none';
+  if(v.length<3){document.getElementById('RS').style.display='none';document.getElementById('NR').style.display='none';document.getElementById('ES').style.display='flex';return;}
+  timer=setTimeout(()=>render(v),280);
+}
+function clearS(){document.getElementById('sInput').value='';onSearch('');}
+function render(q){
+  const t=q.toLowerCase().trim();
+  const r=MED.filter(m=>{
+    const ok=(m.nm.toLowerCase().includes(t)||m.esp.toLowerCase().includes(t)||m.loc.toLowerCase().includes(t));
+    const fo=filt==='todos'||m.bg.includes(filt);
+    return ok&&fo;
+  });
+  document.getElementById('ES').style.display='none';
+  if(!r.length){document.getElementById('NRterm').textContent=q;document.getElementById('NR').style.display='flex';document.getElementById('RS').style.display='none';return;}
+  document.getElementById('NR').style.display='none';
+  document.getElementById('RS').style.display='block';
+  document.getElementById('cbg').textContent=`${r.length} médico${r.length!==1?'s':''}`;
+  document.getElementById('CL').innerHTML=r.map(m=>`
+    <div class="med-card">
+      <div class="mc-head" onclick="togCard(${m.id})">
+        <div class="mc-av">${m.ini}</div>
+        <div class="mc-inf">
+          <div class="mc-name">${m.nm}</div>
+          <div class="mc-esp">${m.esp}</div>
+          <div class="mc-bgs">${m.bg.map(b=>BG[b]).join('')}</div>
+        </div>
+        <div class="mc-rgt">
+          <button class="btn-exp" id="exp${m.id}"><i class="bi bi-chevron-down"></i></button>
+        </div>
+      </div>
+      <div class="mc-body" id="bod${m.id}">
+        <div class="mc-crm">${m.crm}</div>
+        <div class="mc-meta">
+          <span class="mc-mi"><i class="bi bi-geo-alt-fill"></i> ${m.loc}</span>
+          <span class="mc-mi"><i class="bi bi-clock-fill"></i> ${m.hr}</span>
+          <span class="mc-mi"><i class="bi bi-telephone-fill"></i> ${m.tel}</span>
+          <span class="mc-mi"><i class="bi bi-map-fill"></i> ${m.end}</span>
+        </div>
+        <div class="mc-acts">
+          <button class="btn-ag"><i class="bi bi-calendar-plus"></i> Agendar</button>
+          <button class="btn-mp"><i class="bi bi-map"></i> Ver no mapa</button>
+          <button class="btn-zap" onclick="openS(${m.id})"><i class="bi bi-whatsapp"></i> Compartilhar</button>
+        </div>
+      </div>
+    </div>`).join('');
+}
+function togCard(id){
+  document.getElementById(`bod${id}`).classList.toggle('open');
+  document.getElementById(`exp${id}`).classList.toggle('open');
+}
+function detSearch(){
+  document.getElementById('formDet').style.display='none';
+  document.getElementById('ES').style.display='none';
+  document.getElementById('NR').style.display='none';
+  document.getElementById('RS').style.display='block';
+  document.getElementById('cbg').textContent=`${MED.length} médicos`;
+  document.getElementById('CL').innerHTML=MED.map(m=>`
+    <div class="med-card">
+      <div class="mc-head" onclick="togCard(${m.id})">
+        <div class="mc-av">${m.ini}</div>
+        <div class="mc-inf">
+          <div class="mc-name">${m.nm}</div>
+          <div class="mc-esp">${m.esp}</div>
+          <div class="mc-bgs">${m.bg.map(b=>BG[b]).join('')}</div>
+        </div>
+        <div class="mc-rgt">
+          <button class="btn-exp" id="exp${m.id}"><i class="bi bi-chevron-down"></i></button>
+        </div>
+      </div>
+      <div class="mc-body" id="bod${m.id}">
+        <div class="mc-crm">${m.crm}</div>
+        <div class="mc-meta">
+          <span class="mc-mi"><i class="bi bi-geo-alt-fill"></i> ${m.loc}</span>
+          <span class="mc-mi"><i class="bi bi-clock-fill"></i> ${m.hr}</span>
+          <span class="mc-mi"><i class="bi bi-telephone-fill"></i> ${m.tel}</span>
+          <span class="mc-mi"><i class="bi bi-map-fill"></i> ${m.end}</span>
+        </div>
+        <div class="mc-acts">
+          <button class="btn-ag"><i class="bi bi-calendar-plus"></i> Agendar</button>
+          <button class="btn-mp"><i class="bi bi-map"></i> Ver no mapa</button>
+          <button class="btn-zap" onclick="openS(${m.id})"><i class="bi bi-whatsapp"></i> Compartilhar</button>
+        </div>
+      </div>
+    </div>`).join('');
+}
+function openS(id){
+  shareM=MED.find(m=>m.id===id); if(!shareM)return;
+  document.getElementById('shOv').classList.add('open');
+  setTimeout(()=>drawCanvas(shareM),60);
+}
+function closeS(){document.getElementById('shOv').classList.remove('open');shareM=null;}
+function closeSBg(e){if(e.target===document.getElementById('shOv'))closeS();}
+function drawCanvas(m){
+  const cv=document.getElementById('shareCanvas');
+  const W=cv.offsetWidth||360; cv.width=W*2; cv.height=210*2; cv.style.height='210px';
+  const c=cv.getContext('2d'); c.scale(2,2);
+  // bg
+  c.fillStyle='#1B6B5A'; c.beginPath(); c.roundRect(0,0,W,210,10); c.fill();
+  // top band
+  c.fillStyle='rgba(255,255,255,.07)'; c.fillRect(0,0,W,46);
+  // brand
+  c.fillStyle='white'; c.font='bold 12px sans-serif'; c.fillText('Unimed Sorocaba — Guia Médico',16,29);
+  // avatar
+  c.fillStyle='#4DBFA0'; c.beginPath(); c.arc(44,88,24,0,Math.PI*2); c.fill();
+  c.fillStyle='white'; c.font='bold 14px sans-serif'; c.textAlign='center'; c.fillText(m.ini,44,94); c.textAlign='left';
+  // name
+  c.fillStyle='white'; c.font='bold 14px sans-serif'; c.fillText(m.nm,78,72);
+  c.fillStyle='#7FECB8'; c.font='600 12px sans-serif'; c.fillText(m.esp,78,90);
+  c.fillStyle='rgba(255,255,255,.5)'; c.font='11px sans-serif'; c.fillText(m.crm,78,107);
+  // divider
+  c.strokeStyle='rgba(255,255,255,.15)'; c.lineWidth=1; c.beginPath(); c.moveTo(16,120); c.lineTo(W-16,120); c.stroke();
+  // info
+  c.fillStyle='rgba(255,255,255,.78)'; c.font='11px sans-serif';
+  c.fillText('📍 '+m.loc+'   🕐 '+m.hr,16,140);
+  c.fillText('📞 '+m.tel,16,158);
+  c.fillText('📌 '+(m.end.length>55?m.end.substring(0,54)+'…':m.end),16,176);
+  // footer
+  c.fillStyle='rgba(255,255,255,.3)'; c.font='10px sans-serif'; c.fillText('Compartilhado via Guia Médico Unimed Sorocaba',16,198);
+}
+function sendZap(){
+  if(!shareM)return;
+  const cv=document.getElementById('shareCanvas');
+  const txt=encodeURIComponent(`*Guia Médico – Unimed Sorocaba*\n\n*${shareM.nm}*\nEspecialidade: ${shareM.esp}\n📍 ${shareM.loc}\n🕐 ${shareM.hr}\n📞 ${shareM.tel}\n\n_Compartilhado via Guia Médico Unimed Sorocaba_`);
+  cv.toBlob(b=>{try{navigator.clipboard.write([new ClipboardItem({'image/png':b})]).then(()=>{alert('Imagem copiada! Cole no WhatsApp com Ctrl+V após abrir a conversa.');}).catch(()=>{});}catch(e){}});
+  window.open(`https://wa.me/5515996049468?text=${txt}`,'_blank');
+  closeS();
+}
 </script>
-
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
