@@ -1,798 +1,421 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Instituto Dr. Miguel Soeiro | Protótipo Moderno</title>
-  <style>
-    :root {
-      --navy: #0b1f33;
-      --ink: #102a43;
-      --muted: #627d98;
-      --line: rgba(255,255,255,.16);
-      --cream: #f7f3ea;
-      --sand: #efe4d0;
-      --teal: #0f766e;
-      --mint: #94d2bd;
-      --gold: #d6a84f;
-      --white: #ffffff;
-      --shadow: 0 24px 70px rgba(7, 24, 43, .18);
-      --radius: 26px;
-    }
-
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-    body {
-      font-family: Inter, "Segoe UI", Arial, sans-serif;
-      color: var(--ink);
-      background:
-        radial-gradient(circle at top left, rgba(148,210,189,.28), transparent 32%),
-        linear-gradient(180deg, #fbf7ef 0%, #f4efe6 48%, #ffffff 100%);
-      overflow-x: hidden;
-    }
-
-    .noise {
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      opacity: .035;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-      z-index: 10;
-    }
-
-    header {
-      position: sticky;
-      top: 0;
-      z-index: 20;
-      backdrop-filter: blur(18px);
-      background: rgba(247,243,234,.78);
-      border-bottom: 1px solid rgba(11,31,51,.08);
-    }
-
-    .nav {
-      max-width: 1180px;
-      margin: auto;
-      height: 78px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 24px;
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 13px;
-      font-weight: 800;
-      letter-spacing: -.03em;
-      color: var(--navy);
-    }
-
-    .brand-mark {
-      width: 44px;
-      height: 44px;
-      border-radius: 16px;
-      display: grid;
-      place-items: center;
-      background: linear-gradient(135deg, var(--teal), var(--mint));
-      box-shadow: 0 12px 30px rgba(15,118,110,.24);
-      color: white;
-    }
-
-    .brand span small {
-      display: block;
-      color: var(--muted);
-      font-weight: 600;
-      letter-spacing: .02em;
-      font-size: 11px;
-      text-transform: uppercase;
-      margin-top: 2px;
-    }
-
-    nav {
-      display: flex;
-      gap: 22px;
-      align-items: center;
-      font-size: 14px;
-      font-weight: 650;
-    }
-
-    nav a {
-      color: #36516a;
-      text-decoration: none;
-      position: relative;
-    }
-
-    nav a::after {
-      content: "";
-      position: absolute;
-      height: 2px;
-      left: 0;
-      right: 100%;
-      bottom: -8px;
-      background: var(--teal);
-      transition: .25s ease;
-    }
-
-    nav a:hover::after { right: 0; }
-
-    .btn {
-      border: 0;
-      cursor: pointer;
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 9px;
-      padding: 13px 18px;
-      border-radius: 999px;
-      font-weight: 750;
-      color: white;
-      background: linear-gradient(135deg, var(--navy), #123a5c);
-      box-shadow: 0 18px 36px rgba(11,31,51,.22);
-      transition: transform .25s ease, box-shadow .25s ease;
-    }
-
-    .btn:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 24px 46px rgba(11,31,51,.28);
-    }
-
-    .btn.secondary {
-      background: rgba(255,255,255,.16);
-      color: white;
-      border: 1px solid rgba(255,255,255,.25);
-      box-shadow: none;
-    }
-
-    section { padding: 94px 24px; }
-    .wrap { max-width: 1180px; margin: auto; }
-
-    .hero {
-      padding-top: 80px;
-      min-height: 760px;
-      position: relative;
-      color: white;
-      background:
-        linear-gradient(135deg, rgba(11,31,51,.96), rgba(15,118,110,.86)),
-        url("https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=1800&q=80") center/cover;
-      overflow: hidden;
-    }
-
-    .hero::before {
-      content: "";
-      position: absolute;
-      width: 520px;
-      height: 520px;
-      border-radius: 999px;
-      background: rgba(214,168,79,.22);
-      filter: blur(20px);
-      right: -160px;
-      top: 120px;
-      animation: float 7s ease-in-out infinite;
-    }
-
-    .hero-grid {
-      position: relative;
-      z-index: 1;
-      display: grid;
-      grid-template-columns: 1.05fr .95fr;
-      gap: 54px;
-      align-items: center;
-    }
-
-    .eyebrow {
-      display: inline-flex;
-      gap: 9px;
-      align-items: center;
-      padding: 8px 12px;
-      border-radius: 999px;
-      background: rgba(255,255,255,.13);
-      border: 1px solid rgba(255,255,255,.22);
-      color: #d9fff5;
-      font-size: 13px;
-      font-weight: 750;
-      margin-bottom: 22px;
-    }
-
-    h1 {
-      font-size: clamp(44px, 6vw, 78px);
-      line-height: .96;
-      letter-spacing: -.07em;
-      max-width: 760px;
-    }
-
-    .hero p {
-      color: rgba(255,255,255,.82);
-      font-size: 19px;
-      line-height: 1.7;
-      max-width: 640px;
-      margin: 28px 0 34px;
-    }
-
-    .actions { display: flex; gap: 14px; flex-wrap: wrap; }
-
-    .glass-panel {
-      border: 1px solid rgba(255,255,255,.18);
-      background: linear-gradient(180deg, rgba(255,255,255,.18), rgba(255,255,255,.09));
-      backdrop-filter: blur(18px);
-      border-radius: 34px;
-      padding: 24px;
-      box-shadow: 0 40px 80px rgba(0,0,0,.18);
-      animation: slideUp .8s ease both;
-    }
-
-    .impact-mini {
-      display: grid;
-      grid-template-columns: repeat(2,1fr);
-      gap: 14px;
-    }
-
-    .mini-card {
-      padding: 20px;
-      border-radius: 24px;
-      background: rgba(255,255,255,.9);
-      color: var(--navy);
-      min-height: 145px;
-      transition: .25s ease;
-    }
-
-    .mini-card:hover { transform: translateY(-5px) scale(1.015); }
-
-    .mini-card .number {
-      display: block;
-      font-size: 34px;
-      font-weight: 850;
-      letter-spacing: -.05em;
-      color: var(--teal);
-      margin: 12px 0 4px;
-    }
-
-    .icon {
-      width: 36px;
-      height: 36px;
-      stroke: currentColor;
-      stroke-width: 1.65;
-      fill: none;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-    }
-
-    .section-head {
-      display: flex;
-      justify-content: space-between;
-      align-items: end;
-      gap: 30px;
-      margin-bottom: 34px;
-    }
-
-    .section-head h2 {
-      font-size: clamp(32px, 4vw, 52px);
-      letter-spacing: -.055em;
-      color: var(--navy);
-      line-height: 1;
-      max-width: 650px;
-    }
-
-    .section-head p {
-      max-width: 460px;
-      color: var(--muted);
-      line-height: 1.7;
-    }
-
-    .cards {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
-    }
-
-    .card {
-      background: rgba(255,255,255,.78);
-      border: 1px solid rgba(11,31,51,.08);
-      border-radius: var(--radius);
-      padding: 28px;
-      box-shadow: 0 20px 50px rgba(11,31,51,.07);
-      transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .card::before {
-      content: "";
-      position: absolute;
-      width: 120px;
-      height: 120px;
-      background: rgba(148,210,189,.24);
-      border-radius: 50%;
-      right: -48px;
-      top: -48px;
-      transition: .25s ease;
-    }
-
-    .card:hover {
-      transform: translateY(-8px);
-      box-shadow: var(--shadow);
-      border-color: rgba(15,118,110,.22);
-    }
-
-    .card:hover::before { transform: scale(1.35); }
-
-    .card h3 {
-      margin: 18px 0 10px;
-      font-size: 22px;
-      letter-spacing: -.035em;
-      color: var(--navy);
-      position: relative;
-    }
-
-    .card p { color: var(--muted); line-height: 1.7; position: relative; }
-
-    .transparency {
-      background: var(--navy);
-      color: white;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .transparency::after {
-      content: "";
-      position: absolute;
-      inset: auto -10% -35% auto;
-      width: 520px;
-      height: 520px;
-      background: radial-gradient(circle, rgba(148,210,189,.28), transparent 62%);
-    }
-
-    .transparency .section-head h2 { color: white; }
-    .transparency .section-head p { color: rgba(255,255,255,.7); }
-
-    .doc-grid {
-      display: grid;
-      grid-template-columns: 1.2fr .8fr;
-      gap: 22px;
-      position: relative;
-      z-index: 1;
-    }
-
-    .timeline {
-      background: rgba(255,255,255,.07);
-      border: 1px solid var(--line);
-      border-radius: 30px;
-      padding: 28px;
-    }
-
-    .doc-list {
-      display: grid;
-      gap: 13px;
-    }
-
-    .doc-item {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 15px;
-      padding: 18px;
-      border-radius: 20px;
-      background: rgba(255,255,255,.08);
-      border: 1px solid var(--line);
-      color: rgba(255,255,255,.86);
-      transition: .22s ease;
-    }
-
-    .doc-item:hover {
-      background: rgba(255,255,255,.14);
-      transform: translateX(5px);
-    }
-
-    .doc-item strong { color: white; display:block; margin-bottom:4px; }
-    .doc-item small { color: rgba(255,255,255,.58); }
-
-    .seal {
-      background:
-        linear-gradient(160deg, rgba(214,168,79,.28), rgba(255,255,255,.08));
-      border: 1px solid var(--line);
-      border-radius: 30px;
-      padding: 30px;
-      min-height: 100%;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-
-    .seal .big {
-      font-size: 62px;
-      font-weight: 900;
-      letter-spacing: -.07em;
-      margin: 24px 0 8px;
-    }
-
-    .projects {
-      display: grid;
-      grid-template-columns: repeat(3,1fr);
-      gap: 20px;
-    }
-
-    .project {
-      min-height: 360px;
-      border-radius: 30px;
-      padding: 24px;
-      color: white;
-      position: relative;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      justify-content: end;
-      background: var(--navy);
-      box-shadow: var(--shadow);
-      isolation: isolate;
-    }
-
-    .project::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(180deg, transparent, rgba(0,0,0,.78));
-      z-index: -1;
-    }
-
-    .project.one { background: linear-gradient(135deg, rgba(11,31,51,.35), rgba(0,0,0,.72)), url("https://images.unsplash.com/photo-1577896851231-70ef18881754?auto=format&fit=crop&w=900&q=80") center/cover; }
-    .project.two { background: linear-gradient(135deg, rgba(11,31,51,.25), rgba(0,0,0,.72)), url("https://images.unsplash.com/photo-1517649763962-0c623066013b?auto=format&fit=crop&w=900&q=80") center/cover; }
-    .project.three { background: linear-gradient(135deg, rgba(11,31,51,.25), rgba(0,0,0,.72)), url("https://images.unsplash.com/photo-1550831107-1553da8c8464?auto=format&fit=crop&w=900&q=80") center/cover; }
-
-    .tag {
-      display: inline-flex;
-      width: fit-content;
-      padding: 7px 11px;
-      border-radius: 999px;
-      background: rgba(255,255,255,.18);
-      border: 1px solid rgba(255,255,255,.22);
-      font-size: 12px;
-      font-weight: 800;
-      margin-bottom: 12px;
-    }
-
-    .project h3 {
-      font-size: 25px;
-      letter-spacing: -.04em;
-      margin-bottom: 10px;
-    }
-
-    .project p {
-      color: rgba(255,255,255,.76);
-      line-height: 1.6;
-    }
-
-    .cta {
-      padding: 84px 24px;
-      background: linear-gradient(135deg, var(--teal), #123a5c);
-      color: white;
-    }
-
-    .cta-box {
-      max-width: 1180px;
-      margin: auto;
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 28px;
-      align-items: center;
-    }
-
-    .cta h2 {
-      font-size: clamp(34px, 4vw, 56px);
-      letter-spacing: -.06em;
-      line-height: 1;
-      max-width: 760px;
-    }
-
-    .cta p {
-      margin-top: 16px;
-      color: rgba(255,255,255,.75);
-      line-height: 1.7;
-      max-width: 720px;
-    }
-
-    footer {
-      background: #071827;
-      color: rgba(255,255,255,.74);
-      padding: 46px 24px;
-    }
-
-    .footer-grid {
-      max-width: 1180px;
-      margin: auto;
-      display: grid;
-      grid-template-columns: 1.2fr repeat(3, .7fr);
-      gap: 30px;
-    }
-
-    footer h4 {
-      color: white;
-      margin-bottom: 12px;
-    }
-
-    footer a {
-      display: block;
-      color: rgba(255,255,255,.68);
-      text-decoration: none;
-      margin: 8px 0;
-    }
-
-    .reveal {
-      opacity: 0;
-      transform: translateY(28px);
-      animation: reveal .8s ease forwards;
-    }
-
-    .delay-1 { animation-delay: .12s; }
-    .delay-2 { animation-delay: .24s; }
-    .delay-3 { animation-delay: .36s; }
-
-    @keyframes reveal {
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    @keyframes slideUp {
-      from { opacity: 0; transform: translateY(38px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    @keyframes float {
-      0%,100% { transform: translate(0,0); }
-      50% { transform: translate(-26px, 24px); }
-    }
-
-    @media (max-width: 900px) {
-      nav { display:none; }
-      .hero-grid, .doc-grid, .cta-box, .footer-grid { grid-template-columns: 1fr; }
-      .cards, .projects { grid-template-columns: 1fr; }
-      .impact-mini { grid-template-columns: 1fr 1fr; }
-      .hero { min-height: auto; }
-      section { padding: 70px 20px; }
-    }
-
-    @media (max-width: 560px) {
-      .impact-mini { grid-template-columns: 1fr; }
-      .actions { flex-direction: column; }
-      .btn { justify-content: center; }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>clinic — Unimed Sorocaba</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --unimed-green:#00A859;
+  --unimed-green-dark:#009650;
+  --unimed-green-darker:#00813F;
+  --unimed-lime:#A3C940;
+  --ink:#444;
+  --ink-soft:#6f7782;
+  --line:#e8eaed;
+  --bg:#f5f6f8;
+  --purple:#6f5bd6;
+  --yellow:#f0b429;
+  --sidebar-w:218px;
+  --panel-w:330px;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;font-family:'Roboto',system-ui,sans-serif;background:var(--bg);color:var(--ink);font-size:14px;overflow:hidden}
+
+/* ===== TOPBAR ===== */
+.topbar{height:64px;background:var(--unimed-green);display:flex;align-items:center;gap:18px;padding:0 18px;color:#fff;position:relative;z-index:30}
+.brand{display:flex;flex-direction:column;line-height:1}
+.brand .name{font-size:30px;font-weight:300;letter-spacing:.5px}
+.brand .ver{font-size:10px;opacity:.85;margin-top:2px}
+.unimed-badge{border:2px solid #fff;border-radius:4px;padding:4px 14px;background:rgba(255,255,255,.06);display:flex;flex-direction:column;align-items:center;line-height:1.1}
+.unimed-badge .u{font-weight:700;font-size:15px;font-style:italic;letter-spacing:.3px}
+.unimed-badge .s{font-size:9px;opacity:.9}
+.top-actions{margin-left:auto;display:flex;align-items:center;gap:8px}
+.top-ic{position:relative;width:40px;height:40px;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;cursor:pointer;transition:background .15s;font-size:19px;border:0;background:transparent}
+.top-ic:hover{background:rgba(255,255,255,.15)}
+.top-ic .cnt{font-size:13px;font-weight:500;margin-left:4px}
+.avatar-top{width:38px;height:38px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;color:var(--unimed-green);font-size:20px;cursor:pointer}
+
+/* ===== LAYOUT ===== */
+.app{display:flex;height:calc(100vh - 64px)}
+
+/* ===== SIDEBAR ===== */
+.sidebar{width:var(--sidebar-w);background:#fff;border-right:1px solid var(--line);display:flex;flex-direction:column;padding:10px 0;overflow-y:auto;flex-shrink:0}
+.nav-item-c{display:flex;align-items:center;gap:12px;padding:11px 18px;color:var(--unimed-green-dark);cursor:pointer;font-weight:400;font-size:14.5px;border-left:4px solid transparent;transition:background .12s;user-select:none}
+.nav-item-c i{font-size:18px;width:20px;text-align:center}
+.nav-item-c:hover{background:#f2faf6}
+.nav-item-c.active{background:#e2f4ea;border-left-color:var(--unimed-green);font-weight:500}
+.nav-item-c .chev{margin-left:auto;font-size:12px;opacity:.7}
+
+/* ===== MIDDLE PANEL ===== */
+.panel{width:var(--panel-w);background:#fff;border-right:1px solid var(--line);display:flex;flex-direction:column;flex-shrink:0;overflow:hidden}
+.cal-head{display:flex;align-items:center;justify-content:space-between;padding:14px 14px 6px}
+.cal-head .title{font-size:15px;color:var(--ink);font-weight:400}
+.cal-nav{width:30px;height:30px;border-radius:6px;border:1px solid var(--line);background:#fff;color:#999;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.cal-nav:hover{background:#f4f4f4}
+table.cal{width:100%;border-collapse:collapse;font-size:13px;table-layout:fixed}
+table.cal th{color:var(--unimed-green);font-weight:500;text-align:center;padding:6px 0;font-size:12.5px;background:#f0f7f3}
+table.cal td{text-align:center;padding:0;height:32px}
+.day{width:30px;height:30px;line-height:30px;border-radius:50%;display:inline-block;cursor:pointer;color:#555;position:relative}
+.day:hover{background:#e9f6ef}
+.day.out{color:#b9c2cc}
+.day.sel{background:var(--unimed-green);color:#fff;font-weight:500}
+.day .dot{position:absolute;top:1px;left:50%;transform:translateX(-50%);width:14px;height:3px;border-radius:2px}
+.dot.r{background:#e74c3c}.dot.y{background:var(--yellow)}
+
+.agendas-bar{display:flex;align-items:center;gap:10px;padding:14px 16px 8px;border-top:1px solid var(--line);margin-top:8px}
+.agendas-bar .t{font-size:15px;color:var(--ink)}
+.agendas-bar .hoje{margin-left:auto;color:var(--ink-soft);font-size:13px;cursor:pointer}
+.agendas-bar i{color:#8a939e;font-size:16px;cursor:pointer}
+.agendas-bar i:hover{color:var(--unimed-green)}
+.agenda-list{overflow-y:auto;flex:1;padding:4px 10px 14px}
+.agenda-card{display:flex;align-items:center;gap:10px;padding:12px 10px;border-radius:8px;cursor:pointer;border-left:4px solid transparent;transition:background .12s}
+.agenda-card:hover{background:#f5f8f6}
+.agenda-card.sel{background:#eef3fb;border-left-color:#2f6fd0}
+.agenda-av{width:44px;height:44px;border-radius:50%;background:#eef1f4;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:17px;color:#7d8794;font-weight:500;flex-shrink:0}
+.agenda-av.med{color:var(--unimed-green);background:#fff;border:2px solid var(--unimed-green)}
+.agenda-info{flex:1;min-width:0}
+.agenda-info .n{font-size:14px;color:#3c4450;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.agenda-info .e{font-size:12.5px;color:var(--unimed-green);}
+.agenda-card .chk{font-size:20px;color:#c6ccd4;flex-shrink:0}
+.agenda-card.sel .chk{color:var(--unimed-lime)}
+.agenda-card .arrow{color:#aab2bc;font-size:12px}
+
+/* ===== MAIN ===== */
+.main{flex:1;display:flex;flex-direction:column;overflow:hidden}
+.main-head{display:flex;align-items:flex-start;gap:14px;padding:18px 24px 10px}
+.collapse-btn{width:34px;height:34px;border:1px solid var(--line);background:#fff;border-radius:8px;color:#98a1ab;display:flex;align-items:center;justify-content:center;cursor:pointer;margin-top:3px}
+.main-title h1{font-size:21px;font-weight:400;color:#4a4f57;letter-spacing:.3px;margin:0;display:flex;align-items:center;gap:10px}
+.main-title h1 i{color:#9aa3ad;font-size:17px;cursor:pointer}
+.main-sub{color:#828a94;font-size:14px;margin-top:3px;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
+.main-actions{margin-left:auto;display:flex;align-items:center;gap:10px}
+.act-ic{width:42px;height:38px;border:1px solid var(--line);border-radius:8px;background:#fff;color:#8a939e;display:flex;align-items:center;justify-content:center;font-size:17px;cursor:pointer;transition:all .12s}
+.act-ic:hover{color:var(--unimed-green);border-color:var(--unimed-green)}
+.btn-marcar{background:#8db82e;border:0;color:#fff;font-weight:600;font-size:13px;letter-spacing:.4px;padding:10px 20px;border-radius:6px;transition:background .15s}
+.btn-marcar:hover{background:#7da526;color:#fff}
+
+.sched-wrap{flex:1;overflow:hidden;padding:6px 24px 20px}
+.sched-card{background:#fff;border:1px solid var(--line);border-radius:10px;height:100%;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+.doc-head{display:flex;align-items:center;gap:14px;padding:16px 18px 12px;border-left:5px solid var(--unimed-green)}
+.doc-av{width:52px;height:52px;border-radius:50%;border:2px solid var(--unimed-green);display:flex;align-items:center;justify-content:center;color:var(--unimed-green);font-size:22px;background:#fff;flex-shrink:0}
+.doc-meta .n{font-size:15px;color:#3c4450}
+.doc-meta .e{font-size:13px;color:#828a94}
+.occ{flex:1;display:flex;align-items:center;gap:10px;padding:0 6px 0 14px}
+.occ .bar{flex:1;height:7px;border-radius:4px;background:#e7eaee;overflow:hidden}
+.occ .fill{height:100%;background:var(--unimed-green);border-radius:4px;width:88%;transition:width .6s ease}
+.occ .pct{font-size:12px;color:#7d8794}
+
+.slots{flex:1;overflow-y:auto;border-top:1px solid var(--line)}
+.slot{display:grid;grid-template-columns:64px 70px 1.5fr 1fr 1fr 40px;align-items:center;padding:13px 14px;border-bottom:1px solid #f0f2f4;cursor:pointer;transition:background .1s}
+.slot:hover{background:#fafcfb}
+.slot-ic{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:15px}
+.ic-purple{background:var(--purple)}
+.ic-yellow{background:var(--yellow)}
+.ic-green{background:var(--unimed-green)}
+.slot .hr{font-size:14px;color:#5a626c}
+.slot .pac{font-size:13.5px;font-weight:700;color:#3c4450;display:flex;align-items:center;gap:8px;letter-spacing:.2px}
+.slot .pac i{color:#6f7782;font-weight:400;font-size:14px}
+.slot .tipo,.slot .conv{font-size:13px;color:#828a94}
+.slot .free{color:var(--unimed-green);font-size:13.5px}
+.slot .kebab{color:#9aa3ad;font-size:17px;text-align:center}
+.slot .kebab:hover{color:var(--unimed-green)}
+
+/* placeholder views */
+.placeholder{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#9aa3ad;gap:12px}
+.placeholder i{font-size:52px;color:#cfd6db}
+.placeholder .t{font-size:17px;color:#7d8794}
+
+/* status url bar */
+.urlbar{position:fixed;bottom:0;left:0;background:#f1f3f4;border:1px solid var(--line);border-bottom:0;border-left:0;padding:4px 12px;font-size:12px;color:#5f6368;border-top-right-radius:6px;z-index:50}
+
+::-webkit-scrollbar{width:9px;height:9px}
+::-webkit-scrollbar-thumb{background:#cdd3d9;border-radius:6px}
+::-webkit-scrollbar-track{background:#f1f3f4}
+</style>
 </head>
-
 <body>
-  <div class="noise"></div>
 
-  <header>
-    <div class="nav">
-      <a href="#inicio" class="brand" aria-label="Instituto Dr. Miguel Soeiro">
-        <div class="brand-mark">
-          <svg class="icon" viewBox="0 0 24 24"><path d="M12 21s-7-4.4-9-10A5.3 5.3 0 0 1 12 5a5.3 5.3 0 0 1 9 6c-2 5.6-9 10-9 10z"/><path d="M9 12h6M12 9v6"/></svg>
-        </div>
-        <span>Instituto Dr. Miguel Soeiro<small>Saúde • Educação • Esporte</small></span>
-      </a>
-      <nav>
-        <a href="#instituto">Instituto</a>
-        <a href="#impacto">Impacto</a>
-        <a href="#transparencia">Transparência</a>
-        <a href="#projetos">Projetos</a>
-        <a href="#contato">Contato</a>
-      </nav>
-      <a class="btn" href="#apoie">Apoie</a>
+<!-- TOPBAR -->
+<header class="topbar">
+  <div class="brand">
+    <span class="name">clinic</span>
+    <span class="ver">26.5.262</span>
+  </div>
+  <div class="unimed-badge">
+    <span class="u">Unimed <i class="bi bi-flower1" style="font-size:10px"></i></span>
+    <span class="s">Sorocaba</span>
+  </div>
+  <div class="top-actions">
+    <button class="top-ic" title="Listas"><i class="bi bi-list-task"></i></button>
+    <button class="top-ic" title="Teleconsultas"><i class="bi bi-camera-video"></i><span class="cnt">0</span></button>
+    <button class="top-ic" title="Espera"><i class="bi bi-clock"></i><span class="cnt">1</span></button>
+    <button class="top-ic" title="Mensagens"><i class="bi bi-chat-left-text"></i></button>
+    <div class="avatar-top"><i class="bi bi-person-fill"></i></div>
+  </div>
+</header>
+
+<div class="app">
+
+  <!-- SIDEBAR -->
+  <nav class="sidebar" id="sidebar">
+    <div class="nav-item-c active" data-view="agendas"><i class="bi bi-calendar3"></i> Agendas</div>
+    <div class="nav-item-c" data-view="atendimento"><i class="bi bi-clipboard2-pulse"></i> Atendimento</div>
+    <div class="nav-item-c" data-view="dashboards"><i class="bi bi-grid-1x2"></i> Dashboards <i class="bi bi-chevron-down chev"></i></div>
+    <div class="nav-item-c" data-view="personal"><i class="bi bi-person"></i> Personal</div>
+    <div class="nav-item-c" data-view="pacientes"><i class="bi bi-people"></i> Pacientes</div>
+    <div class="nav-item-c" data-view="faturamento"><i class="bi bi-receipt"></i> Faturamento <i class="bi bi-chevron-down chev"></i></div>
+    <div class="nav-item-c" data-view="financeiro"><i class="bi bi-currency-dollar"></i> Financeiro <i class="bi bi-chevron-down chev"></i></div>
+    <div class="nav-item-c" data-view="relatorios"><i class="bi bi-file-earmark-text"></i> Relatórios</div>
+    <div class="nav-item-c" data-view="cadastros"><i class="bi bi-person-badge"></i> Cadastros <i class="bi bi-chevron-down chev"></i></div>
+    <div class="nav-item-c" data-view="configuracoes"><i class="bi bi-gear"></i> Configurações <i class="bi bi-chevron-down chev"></i></div>
+  </nav>
+
+  <!-- MIDDLE PANEL (calendário + agendas) -->
+  <aside class="panel" id="panelAgendas">
+    <div class="cal-head">
+      <button class="cal-nav" onclick="moveMonth(-1)"><i class="bi bi-chevron-left"></i></button>
+      <span class="title" id="calTitle">Junho 2026</span>
+      <button class="cal-nav" onclick="moveMonth(1)"><i class="bi bi-chevron-right"></i></button>
     </div>
-  </header>
+    <table class="cal">
+      <thead><tr><th>D</th><th>S</th><th>T</th><th>Q</th><th>Q</th><th>S</th><th>S</th></tr></thead>
+      <tbody id="calBody"></tbody>
+    </table>
 
-  <main>
-    <section class="hero" id="inicio">
-      <div class="wrap hero-grid">
-        <div class="reveal">
-          <div class="eyebrow">
-            <svg class="icon" style="width:18px;height:18px" viewBox="0 0 24 24"><path d="M12 3l7 4v5c0 5-3 8-7 9-4-1-7-4-7-9V7l7-4z"/></svg>
-            Instituição social com governança e propósito
-          </div>
-          <h1>Transparência que aproxima. Impacto que transforma.</h1>
-          <p>
-            Uma plataforma institucional moderna para apresentar projetos, fortalecer a confiança pública
-            e mostrar, com clareza, como cada ação gera valor para a comunidade.
-          </p>
-          <div class="actions">
-            <a class="btn" href="#transparencia">
-              Ver transparência
-              <svg class="icon" style="width:18px;height:18px" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-            </a>
-            <a class="btn secondary" href="#projetos">Conhecer projetos</a>
-          </div>
-        </div>
+    <div class="agendas-bar">
+      <span class="t">Agendas</span>
+      <span class="hoje" onclick="goToday()">Hoje</span>
+      <i class="bi bi-eye"></i>
+      <i class="bi bi-search"></i>
+      <i class="bi bi-plus-lg"></i>
+    </div>
+    <div class="agenda-list" id="agendaList"></div>
+  </aside>
 
-        <div class="glass-panel">
-          <div class="impact-mini">
-            <div class="mini-card">
-              <svg class="icon" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2"/><circle cx="10" cy="7" r="4"/><path d="M21 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-              <span class="number">+2.4k</span>
-              <strong>Pessoas impactadas</strong>
-            </div>
-            <div class="mini-card">
-              <svg class="icon" viewBox="0 0 24 24"><path d="M4 19.5V6a2 2 0 0 1 2-2h12v16H6a2 2 0 0 1-2-2z"/><path d="M8 8h7M8 12h7"/></svg>
-              <span class="number">18</span>
-              <strong>Ações realizadas</strong>
-            </div>
-            <div class="mini-card">
-              <svg class="icon" viewBox="0 0 24 24"><path d="M3 21h18"/><path d="M6 21V7l6-4 6 4v14"/><path d="M9 21v-6h6v6"/></svg>
-              <span class="number">6</span>
-              <strong>Projetos ativos</strong>
-            </div>
-            <div class="mini-card">
-              <svg class="icon" viewBox="0 0 24 24"><path d="M12 1v22"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7H14a3.5 3.5 0 0 1 0 7H6"/></svg>
-              <span class="number">100%</span>
-              <strong>Prestação pública</strong>
-            </div>
+  <!-- MAIN -->
+  <main class="main" id="mainArea">
+    <div class="main-head">
+      <button class="collapse-btn"><i class="bi bi-chevron-double-left"></i></button>
+      <div class="main-title">
+        <h1 id="dayTitle">QUINTA-FEIRA, 11 DE JUNHO DE 2026 <i class="bi bi-calendar4-week"></i></h1>
+        <span class="main-sub" id="docSub">João da Silva - Geriatra <i class="bi bi-chevron-down" style="font-size:11px"></i></span>
+      </div>
+      <div class="main-actions">
+        <div class="act-ic" title="Imprimir"><i class="bi bi-printer"></i></div>
+        <div class="act-ic" title="Configurações da agenda"><i class="bi bi-gear"></i></div>
+        <div class="act-ic" title="Filtros"><i class="bi bi-funnel"></i></div>
+        <button class="btn btn-marcar" data-bs-toggle="modal" data-bs-target="#modalMarcar">MARCAR CONSULTA</button>
+      </div>
+    </div>
+
+    <div class="sched-wrap">
+      <div class="sched-card">
+        <div class="doc-head">
+          <div class="doc-av"><i class="bi bi-person-vcard"></i></div>
+          <div class="doc-meta">
+            <div class="n" id="docName">João da Silva</div>
+            <div class="e" id="docEsp">Geriatra</div>
+          </div>
+          <div class="occ">
+            <div class="bar"><div class="fill" id="occFill"></div></div>
+            <span class="pct" id="occPct">88%</span>
           </div>
         </div>
+        <div class="slots" id="slots"></div>
       </div>
-    </section>
-
-    <section id="instituto">
-      <div class="wrap">
-        <div class="section-head reveal">
-          <h2>Um site com aparência de instituição, não apenas de página informativa.</h2>
-          <p>
-            A proposta valoriza credibilidade, clareza e confiança, com uma linguagem visual mais limpa,
-            responsiva e preparada para crescer com novos projetos.
-          </p>
-        </div>
-
-        <div class="cards">
-          <article class="card reveal delay-1">
-            <svg class="icon" viewBox="0 0 24 24"><path d="M12 3l8 4-8 4-8-4 8-4z"/><path d="M4 12l8 4 8-4"/><path d="M4 17l8 4 8-4"/></svg>
-            <h3>Arquitetura clara</h3>
-            <p>Menu simples, seções objetivas, textos curtos e navegação pensada para cidadãos, empresas e parceiros.</p>
-          </article>
-
-          <article class="card reveal delay-2">
-            <svg class="icon" viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
-            <h3>Governança visível</h3>
-            <p>Documentos, relatórios, políticas, diretoria, conselhos e prestação de contas em destaque.</p>
-          </article>
-
-          <article class="card reveal delay-3">
-            <svg class="icon" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 5-7"/></svg>
-            <h3>Indicadores de impacto</h3>
-            <p>Cards, gráficos simples e números-chave para demonstrar resultado social com transparência.</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="transparency" id="transparencia">
-      <div class="wrap">
-        <div class="section-head reveal">
-          <h2>Portal da Transparência como área nobre do site.</h2>
-          <p>
-            A transparência deixa de ser apenas um link no rodapé e passa a ser uma vitrine de governança,
-            prestação de contas e responsabilidade institucional.
-          </p>
-        </div>
-
-        <div class="doc-grid">
-          <div class="timeline reveal delay-1">
-            <div class="doc-list">
-              <a class="doc-item" href="#">
-                <span><strong>Estatuto Social</strong><small>Documento institucional atualizado</small></span>
-                <svg class="icon" viewBox="0 0 24 24"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
-              </a>
-              <a class="doc-item" href="#">
-                <span><strong>Relatório de Atividades</strong><small>Ações, indicadores e evolução anual</small></span>
-                <svg class="icon" viewBox="0 0 24 24"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
-              </a>
-              <a class="doc-item" href="#">
-                <span><strong>Prestação de Contas</strong><small>Demonstrações e documentos públicos</small></span>
-                <svg class="icon" viewBox="0 0 24 24"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
-              </a>
-              <a class="doc-item" href="#">
-                <span><strong>Política de Privacidade</strong><small>LGPD, segurança e tratamento de dados</small></span>
-                <svg class="icon" viewBox="0 0 24 24"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
-              </a>
-            </div>
-          </div>
-
-          <aside class="seal reveal delay-2">
-            <div>
-              <svg class="icon" style="width:52px;height:52px;color:#d6a84f" viewBox="0 0 24 24"><path d="M12 3l7 4v5c0 5-3 8-7 9-4-1-7-4-7-9V7l7-4z"/><path d="M9 12l2 2 4-5"/></svg>
-              <div class="big">2026</div>
-              <h3>Transparência ativa</h3>
-              <p style="color:rgba(255,255,255,.7);line-height:1.7;margin-top:10px">
-                Área preparada para documentos, filtros por ano, relatórios em PDF, dashboards e histórico de publicações.
-              </p>
-            </div>
-            <a class="btn secondary" href="#">Acessar documentos</a>
-          </aside>
-        </div>
-      </div>
-    </section>
-
-    <section id="projetos">
-      <div class="wrap">
-        <div class="section-head reveal">
-          <h2>Projetos com narrativa visual e status de execução.</h2>
-          <p>
-            Cada projeto pode ter página própria com objetivo, público atendido, parceiros, cronograma,
-            indicadores, fotos e documentos relacionados.
-          </p>
-        </div>
-
-        <div class="projects">
-          <article class="project one reveal delay-1">
-            <span class="tag">Educação</span>
-            <h3>Formação e oportunidades</h3>
-            <p>Iniciativas educacionais com acompanhamento de resultados e evidências de impacto social.</p>
-          </article>
-
-          <article class="project two reveal delay-2">
-            <span class="tag">Esporte</span>
-            <h3>Movimento e cidadania</h3>
-            <p>Projetos esportivos que promovem inclusão, disciplina, saúde e desenvolvimento comunitário.</p>
-          </article>
-
-          <article class="project three reveal delay-3">
-            <span class="tag">Saúde</span>
-            <h3>Promoção da saúde</h3>
-            <p>Ações preventivas, campanhas sociais e apoio à comunidade com linguagem acessível.</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="cta" id="apoie">
-      <div class="cta-box">
-        <div>
-          <h2>Empresas, parceiros e comunidade em uma jornada de impacto.</h2>
-          <p>
-            Uma área de apoio pode explicar leis de incentivo, formas de contribuição, voluntariado,
-            parcerias institucionais e resultados esperados.
-          </p>
-        </div>
-        <a class="btn" href="#contato">Quero apoiar</a>
-      </div>
-    </section>
+    </div>
   </main>
+</div>
 
-  <footer id="contato">
-    <div class="footer-grid">
-      <div>
-        <h4>Instituto Dr. Miguel Soeiro</h4>
-        <p>Protótipo visual moderno para renovação institucional do site, com foco em confiança, impacto e transparência.</p>
+<div class="urlbar">https://clinic.globalhealth.mv/clinic/#/schedule</div>
+
+<!-- MODAL MARCAR CONSULTA -->
+<div class="modal fade" id="modalMarcar" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content" style="border-radius:12px;border:0">
+      <div class="modal-header" style="background:var(--unimed-green);color:#fff;border-top-left-radius:12px;border-top-right-radius:12px">
+        <h6 class="modal-title">Marcar consulta</h6>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
       </div>
-      <div>
-        <h4>Instituto</h4>
-        <a href="#instituto">Sobre</a>
-        <a href="#impacto">Impacto</a>
-        <a href="#projetos">Projetos</a>
+      <div class="modal-body">
+        <div class="mb-3"><label class="form-label" style="font-size:13px;color:#6f7782">Paciente</label>
+          <input class="form-control" placeholder="Buscar paciente..."></div>
+        <div class="row">
+          <div class="col-6 mb-3"><label class="form-label" style="font-size:13px;color:#6f7782">Data</label>
+            <input class="form-control" value="11/06/2026"></div>
+          <div class="col-6 mb-3"><label class="form-label" style="font-size:13px;color:#6f7782">Horário</label>
+            <select class="form-select"><option>23:30</option><option>23:45</option></select></div>
+        </div>
+        <div class="mb-2"><label class="form-label" style="font-size:13px;color:#6f7782">Convênio</label>
+          <select class="form-select"><option>Unimed Sorocaba</option><option>Unimed</option><option>Particular</option></select></div>
       </div>
-      <div>
-        <h4>Transparência</h4>
-        <a href="#transparencia">Documentos</a>
-        <a href="#transparencia">Relatórios</a>
-        <a href="#transparencia">LGPD</a>
-      </div>
-      <div>
-        <h4>Contato</h4>
-        <a href="#">Fale conosco</a>
-        <a href="#">Parcerias</a>
-        <a href="#">Imprensa</a>
+      <div class="modal-footer" style="border-top:1px solid var(--line)">
+        <button class="btn btn-light" data-bs-dismiss="modal">Cancelar</button>
+        <button class="btn" style="background:var(--unimed-green);color:#fff" data-bs-dismiss="modal">Confirmar</button>
       </div>
     </div>
-  </footer>
+  </div>
+</div>
 
-  <script>
-    const cards = document.querySelectorAll('.card, .project, .mini-card');
-    cards.forEach(card => {
-      card.addEventListener('mousemove', e => {
-        const rect = card.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        card.style.transform = `perspective(900px) rotateX(${-(y - rect.height/2)/35}deg) rotateY(${(x - rect.width/2)/35}deg) translateY(-6px)`;
-      });
-      card.addEventListener('mouseleave', () => {
-        card.style.transform = '';
-      });
-    });
-  </script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+/* ================= DADOS DE EXEMPLO ================= */
+const medicos = [
+  {nome:'João da Silva', esp:'Geriatra', med:true},
+  {nome:'Aline Anunciação', esp:'Clínica Médica'},
+  {nome:'Ana Beatriz Moraes', esp:'Clínica Médica'},
+  {nome:'Augusto Marques', esp:'Clínica Médica'},
+  {nome:'Beatriz Fontes', esp:'Clínica Médica'},
+  {nome:'Carlos Eduardo Lima', esp:'Cardiologia'},
+  {nome:'Daniela Prado', esp:'Pediatria'}
+];
+
+const horarios = [
+  {h:'20:00', pac:'FRANCINE APARECIDA DA SILVA', tipo:'teste agendamento', conv:'Unimed Sorocaba', ic:'person', cor:'ic-purple'},
+  {h:'20:30', pac:'GABRIEL DE LARA ACQUAVIVA', tipo:'teste agendamento', conv:'Unimed', ic:'pulse', cor:'ic-purple'},
+  {h:'21:00', pac:'FERNANDO PONTAROLLI FILHO', tipo:'teste agendamento', conv:'Unimed Sorocaba', ic:'person', cor:'ic-purple'},
+  {h:'21:30', pac:'GABRIEL DE LARA ACQUAVIVA', tipo:'teste agendamento', conv:'Unimed', ic:'pulse', cor:'ic-purple'},
+  {h:'22:00', pac:'PAMELLA MARCELLI SANTOS', tipo:'teste agendamento', conv:'Unimed Sorocaba', ic:'pulse', cor:'ic-purple'},
+  {h:'22:30', pac:'PAMELLA MARCELLI SANTOS', tipo:'teste agendamento', conv:'Unimed Sorocaba', ic:'cal', cor:'ic-yellow'},
+  {h:'23:00', pac:'GABRIEL DE LARA ACQUAVIVA', tipo:'teste agendamento', conv:'Unimed', ic:'pulse', cor:'ic-purple'},
+  {h:'23:30', pac:null, tipo:'', conv:'', ic:'clock', cor:'ic-green'}
+];
+
+const icones = {person:'bi-person-plus', pulse:'bi-activity', cal:'bi-calendar-check', clock:'bi-clock'};
+const meses = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+const dias = ['DOMINGO','SEGUNDA-FEIRA','TERÇA-FEIRA','QUARTA-FEIRA','QUINTA-FEIRA','SEXTA-FEIRA','SÁBADO'];
+
+let cal = {y:2026, m:5, sel:11};
+
+/* ================= CALENDÁRIO ================= */
+function renderCal(){
+  document.getElementById('calTitle').textContent = meses[cal.m]+' '+cal.y;
+  const first = new Date(cal.y, cal.m, 1).getDay();
+  const dim = new Date(cal.y, cal.m+1, 0).getDate();
+  const dimPrev = new Date(cal.y, cal.m, 0).getDate();
+  let html='', d=1, next=1;
+  for(let w=0; w<6; w++){
+    html+='<tr>';
+    for(let wd=0; wd<7; wd++){
+      const idx = w*7+wd;
+      if(idx<first){
+        html+=`<td><span class="day out">${dimPrev-first+wd+1}</span></td>`;
+      } else if(d<=dim){
+        const sel = d===cal.sel ? 'sel':'';
+        const dot = (d>=8 && d<=10 && cal.m===5) ? `<span class="dot ${d===10?'y':'r'}"></span>` : '';
+        html+=`<td><span class="day ${sel}" onclick="selDay(${d})">${dot}${d}</span></td>`;
+        d++;
+      } else {
+        html+=`<td><span class="day out">${next++}</span></td>`;
+      }
+    }
+    html+='</tr>';
+    if(d>dim && next>7) break;
+  }
+  document.getElementById('calBody').innerHTML = html;
+}
+function moveMonth(dir){
+  cal.m+=dir;
+  if(cal.m<0){cal.m=11;cal.y--}
+  if(cal.m>11){cal.m=0;cal.y++}
+  renderCal();
+}
+function selDay(d){
+  cal.sel=d;
+  const dt = new Date(cal.y, cal.m, d);
+  document.getElementById('dayTitle').innerHTML =
+    `${dias[dt.getDay()]}, ${d} DE ${meses[cal.m].toUpperCase()} DE ${cal.y} <i class="bi bi-calendar4-week"></i>`;
+  renderCal();
+}
+function goToday(){cal={y:2026,m:5,sel:11};selDay(11);}
+
+/* ================= AGENDAS (MÉDICOS) ================= */
+function renderAgendas(){
+  document.getElementById('agendaList').innerHTML = medicos.map((m,i)=>`
+    <div class="agenda-card ${i===0?'sel':''}" onclick="selMed(${i})">
+      <div class="agenda-av ${m.med?'med':''}">${m.med?'<i class="bi bi-person-vcard"></i>':m.nome[0]}</div>
+      <div class="agenda-info">
+        <div class="n">${m.nome}</div>
+        <div class="e">${m.esp}</div>
+      </div>
+      <i class="bi bi-chevron-right arrow"></i>
+      <i class="bi ${i===0?'bi-check-circle-fill':'bi-circle'} chk"></i>
+    </div>`).join('');
+}
+function selMed(i){
+  document.querySelectorAll('.agenda-card').forEach((c,j)=>{
+    c.classList.toggle('sel', j===i);
+    c.querySelector('.chk').className = `bi ${j===i?'bi-check-circle-fill':'bi-circle'} chk`;
+  });
+  const m = medicos[i];
+  document.getElementById('docName').textContent = m.nome;
+  document.getElementById('docEsp').textContent = m.esp;
+  document.getElementById('docSub').innerHTML = `${m.nome} - ${m.esp} <i class="bi bi-chevron-down" style="font-size:11px"></i>`;
+  const occ = i===0 ? 88 : Math.floor(30+Math.random()*60);
+  document.getElementById('occFill').style.width = occ+'%';
+  document.getElementById('occPct').textContent = occ+'%';
+}
+
+/* ================= GRADE DE HORÁRIOS ================= */
+function renderSlots(){
+  document.getElementById('slots').innerHTML = horarios.map(s=>`
+    <div class="slot" ${!s.pac?'data-bs-toggle="modal" data-bs-target="#modalMarcar"':''}>
+      <div><div class="slot-ic ${s.cor}"><i class="bi ${icones[s.ic]}"></i></div></div>
+      <div class="hr">${s.h}</div>
+      ${s.pac
+        ? `<div class="pac">${s.pac} <i class="bi bi-headphones"></i></div>
+           <div class="tipo">${s.tipo}</div>
+           <div class="conv">${s.conv}</div>`
+        : `<div class="free">Disponível</div><div></div><div></div>`}
+      <div class="kebab"><i class="bi bi-three-dots-vertical"></i></div>
+    </div>`).join('');
+}
+
+/* ================= NAVEGAÇÃO SIDEBAR ================= */
+const placeholders = {
+  atendimento:{ic:'bi-clipboard2-pulse',t:'Atendimento'},
+  dashboards:{ic:'bi-grid-1x2',t:'Dashboards'},
+  personal:{ic:'bi-person',t:'Personal'},
+  pacientes:{ic:'bi-people',t:'Pacientes'},
+  faturamento:{ic:'bi-receipt',t:'Faturamento'},
+  financeiro:{ic:'bi-currency-dollar',t:'Financeiro'},
+  relatorios:{ic:'bi-file-earmark-text',t:'Relatórios'},
+  cadastros:{ic:'bi-person-badge',t:'Cadastros'},
+  configuracoes:{ic:'bi-gear',t:'Configurações'}
+};
+const mainHTML = document.getElementById('mainArea').innerHTML;
+
+document.querySelectorAll('.nav-item-c').forEach(item=>{
+  item.addEventListener('click',()=>{
+    document.querySelectorAll('.nav-item-c').forEach(n=>n.classList.remove('active'));
+    item.classList.add('active');
+    const v = item.dataset.view;
+    const panel = document.getElementById('panelAgendas');
+    const main = document.getElementById('mainArea');
+    if(v==='agendas'){
+      panel.style.display='flex';
+      main.innerHTML = mainHTML;
+      renderSlots();
+    } else {
+      panel.style.display='none';
+      const p = placeholders[v];
+      main.innerHTML = `<div class="placeholder">
+        <i class="bi ${p.ic}"></i>
+        <div class="t">${p.t}</div>
+        <div style="font-size:13px">Módulo em construção — protótipo navegável</div>
+      </div>`;
+    }
+  });
+});
+
+renderCal();
+renderAgendas();
+renderSlots();
+</script>
 </body>
 </html>
