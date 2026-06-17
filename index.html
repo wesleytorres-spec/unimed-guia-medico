@@ -1,65 +1,398 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Centro de Comando Assistencial — Unimed Sorocaba</title>
-  <link rel="icon" href="assets/logo.svg">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://cdn.datatables.net/2.0.8/css/dataTables.dataTables.min.css" rel="stylesheet">
-  <link href="style.css" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gestão de Eventos Adversos — Unimed Sorocaba</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+:root{
+  --uni-green:#00A859;
+  --uni-green-dark:#007A40;
+  --uni-green-light:#E8F7EF;
+  --uni-green-soft:#B6E8CC;
+  --uni-gray:#5A6872;
+  --uni-bg:#F4F7F6;
+  --sev-leve:#2EB872;
+  --sev-mod:#F2A900;
+  --sev-grave:#E8590C;
+  --sev-obito:#C0392B;
+}
+*{font-family:'Segoe UI',system-ui,-apple-system,sans-serif}
+body{background:var(--uni-bg);color:#2c3e44}
+.navbar-uni{background:linear-gradient(100deg,var(--uni-green-dark),var(--uni-green));box-shadow:0 2px 14px rgba(0,120,64,.25)}
+.navbar-uni .navbar-brand,.navbar-uni .nav-link{color:#fff!important;font-weight:500}
+.navbar-uni .nav-link.active{border-bottom:3px solid #fff}
+.card-uni{border:none;border-radius:16px;box-shadow:0 4px 18px rgba(0,0,0,.06);transition:.2s}
+.card-uni:hover{box-shadow:0 8px 26px rgba(0,0,0,.10)}
+.stat-card{border-radius:16px;border:none;color:#fff;box-shadow:0 6px 20px rgba(0,0,0,.10)}
+.stat-icon{width:54px;height:54px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.6rem;background:rgba(255,255,255,.22)}
+.btn-uni{background:var(--uni-green);border:none;color:#fff;font-weight:600;border-radius:10px}
+.btn-uni:hover{background:var(--uni-green-dark);color:#fff}
+.btn-outline-uni{border:1.5px solid var(--uni-green);color:var(--uni-green);font-weight:600;border-radius:10px}
+.btn-outline-uni:hover{background:var(--uni-green);color:#fff}
+.section-title{font-weight:700;color:var(--uni-green-dark)}
+.badge-sev{font-weight:600;padding:.4em .8em;border-radius:20px}
+
+/* Timeline / etapas */
+.flow{display:flex;flex-wrap:wrap;gap:0;align-items:stretch;justify-content:space-between}
+.flow-step{flex:1;min-width:120px;text-align:center;position:relative;padding:0 4px}
+.flow-step .dot{width:46px;height:46px;border-radius:50%;background:#e3e9e7;color:#9aa7a2;display:flex;align-items:center;justify-content:center;font-size:1.2rem;margin:0 auto 8px;border:3px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,.08);z-index:2;position:relative}
+.flow-step .lbl{font-size:.74rem;font-weight:600;color:var(--uni-gray);line-height:1.1}
+.flow-step::before{content:"";position:absolute;top:23px;left:-50%;width:100%;height:4px;background:#e3e9e7;z-index:1}
+.flow-step:first-child::before{display:none}
+.flow-step.done .dot{background:var(--uni-green);color:#fff}
+.flow-step.done::before{background:var(--uni-green)}
+.flow-step.current .dot{background:var(--uni-green-dark);color:#fff;box-shadow:0 0 0 6px var(--uni-green-soft)}
+.flow-step.current::before{background:var(--uni-green)}
+
+/* lista de eventos */
+.ev-row{cursor:pointer;border-left:5px solid transparent}
+.ev-row:hover{background:var(--uni-green-light)}
+.ev-id{font-weight:700;color:var(--uni-green-dark)}
+
+/* detalhe timeline vertical */
+.vtimeline{position:relative;padding-left:38px}
+.vtimeline::before{content:"";position:absolute;left:15px;top:6px;bottom:6px;width:3px;background:var(--uni-green-soft)}
+.vt-item{position:relative;margin-bottom:22px}
+.vt-item .vt-dot{position:absolute;left:-31px;width:30px;height:30px;border-radius:50%;background:var(--uni-green);color:#fff;display:flex;align-items:center;justify-content:center;font-size:.85rem;box-shadow:0 2px 6px rgba(0,0,0,.15)}
+.vt-item.pending .vt-dot{background:#cdd6d2;color:#fff}
+.vt-card{background:#fff;border-radius:12px;padding:14px 16px;box-shadow:0 2px 10px rgba(0,0,0,.05)}
+.attach-chip{display:inline-flex;align-items:center;gap:6px;background:var(--uni-green-light);color:var(--uni-green-dark);border-radius:8px;padding:5px 10px;font-size:.82rem;margin:3px 4px 0 0}
+.comment-box{background:var(--uni-green-light);border-radius:12px;padding:12px 14px;margin-bottom:10px}
+.comment-box .who{font-weight:700;color:var(--uni-green-dark);font-size:.9rem}
+.tab-pane{animation:fade .3s}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.form-label{font-weight:600;font-size:.88rem;color:var(--uni-gray)}
+.legend-dot{width:12px;height:12px;border-radius:50%;display:inline-block;margin-right:5px}
+.kpi-mini{font-size:.78rem;color:var(--uni-gray)}
+</style>
 </head>
 <body>
-  <div id="app-shell">
-    <aside class="sidebar">
-      <div class="brand">
-        <img src="assets/logo.svg" alt="Unimed" />
-        <div>
-          <strong>Super Dash</strong>
-          <small>Centro de Comando Assistencial</small>
+
+<nav class="navbar navbar-expand-lg navbar-uni px-3 py-2">
+  <div class="container-fluid">
+    <span class="navbar-brand d-flex align-items-center gap-2">
+      <i class="bi bi-shield-plus fs-4"></i>
+      <span>Gestão de Eventos Adversos <small class="d-block" style="font-size:.65rem;opacity:.85;font-weight:400">Unimed Sorocaba · Segurança do Paciente</small></span>
+    </span>
+    <ul class="navbar-nav ms-auto flex-row gap-3">
+      <li class="nav-item"><a class="nav-link active" href="#" onclick="showView('dash',this)"><i class="bi bi-speedometer2"></i> Painel</a></li>
+      <li class="nav-item"><a class="nav-link" href="#" onclick="showView('list',this)"><i class="bi bi-list-check"></i> Eventos</a></li>
+      <li class="nav-item"><a class="nav-link" href="#" onclick="showView('new',this)"><i class="bi bi-plus-circle"></i> Novo Registro</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="container-fluid px-lg-5 py-4">
+
+<!-- ===================== DASHBOARD ===================== -->
+<div id="view-dash">
+  <h4 class="section-title mb-3"><i class="bi bi-speedometer2"></i> Painel de Indicadores</h4>
+  <div class="row g-3 mb-4">
+    <div class="col-6 col-lg-3">
+      <div class="stat-card p-3" style="background:linear-gradient(120deg,#00A859,#007A40)">
+        <div class="d-flex justify-content-between align-items-center">
+          <div><div class="kpi-mini text-white-50">Eventos no mês</div><h2 class="mb-0 fw-bold">48</h2></div>
+          <div class="stat-icon"><i class="bi bi-clipboard-pulse"></i></div>
         </div>
       </div>
-      <nav id="nav" class="nav-menu"></nav>
-      <div class="sidebar-footer">
-        <span class="status-dot"></span>
-        <div>
-          <strong>Modo executivo</strong>
-          <small>SPA estática · sem backend</small>
+    </div>
+    <div class="col-6 col-lg-3">
+      <div class="stat-card p-3" style="background:linear-gradient(120deg,#F2A900,#E8590C)">
+        <div class="d-flex justify-content-between align-items-center">
+          <div><div class="kpi-mini text-white-50">Em investigação</div><h2 class="mb-0 fw-bold">12</h2></div>
+          <div class="stat-icon"><i class="bi bi-search"></i></div>
         </div>
       </div>
-    </aside>
-
-    <main class="main">
-      <header class="topbar">
-        <div>
-          <div class="eyebrow">Unimed Sorocaba · Gestão Populacional</div>
-          <h1 id="page-title">Centro de Comando</h1>
+    </div>
+    <div class="col-6 col-lg-3">
+      <div class="stat-card p-3" style="background:linear-gradient(120deg,#C0392B,#922B21)">
+        <div class="d-flex justify-content-between align-items-center">
+          <div><div class="kpi-mini text-white-50">Eventos graves / never</div><h2 class="mb-0 fw-bold">5</h2></div>
+          <div class="stat-icon"><i class="bi bi-exclamation-octagon"></i></div>
         </div>
-        <div class="top-actions">
-          <button class="btn btn-ghost" id="btnCsv"><i data-lucide="file-down"></i> CSV</button>
-          <button class="btn btn-ghost" id="btnExcel"><i data-lucide="sheet"></i> Excel</button>
-          <button class="btn btn-ghost" id="btnPdf"><i data-lucide="file-text"></i> PDF</button>
-          <button class="btn btn-primary" id="btnPrint"><i data-lucide="printer"></i> Imprimir</button>
+      </div>
+    </div>
+    <div class="col-6 col-lg-3">
+      <div class="stat-card p-3" style="background:linear-gradient(120deg,#2EB872,#1B7A4B)">
+        <div class="d-flex justify-content-between align-items-center">
+          <div><div class="kpi-mini text-white-50">Finalizados</div><h2 class="mb-0 fw-bold">31</h2></div>
+          <div class="stat-icon"><i class="bi bi-check2-circle"></i></div>
         </div>
-      </header>
-
-      <section id="content" class="content"></section>
-    </main>
+      </div>
+    </div>
   </div>
 
-  <div class="drawer-backdrop" id="drawerBackdrop"></div>
-  <aside class="detail-drawer" id="detailDrawer" aria-hidden="true">
-    <button class="drawer-close" id="drawerClose"><i data-lucide="x"></i></button>
-    <div id="drawerContent"></div>
-  </aside>
+  <div class="row g-3 mb-4">
+    <div class="col-lg-7">
+      <div class="card-uni p-3 h-100">
+        <h6 class="section-title mb-3">Evolução mensal de eventos por gravidade</h6>
+        <canvas id="chartTrend" height="120"></canvas>
+      </div>
+    </div>
+    <div class="col-lg-5">
+      <div class="card-uni p-3 h-100">
+        <h6 class="section-title mb-3">Distribuição por gravidade</h6>
+        <canvas id="chartSev" height="160"></canvas>
+      </div>
+    </div>
+  </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script src="https://unpkg.com/lucide@latest"></script>
-  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-  <script src="https://cdn.datatables.net/2.0.8/js/dataTables.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
-  <script src="assets/data.js"></script>
-  <script src="app.js"></script>
+  <div class="row g-3">
+    <div class="col-lg-6">
+      <div class="card-uni p-3 h-100">
+        <h6 class="section-title mb-3">Eventos por tipo / categoria</h6>
+        <canvas id="chartType" height="150"></canvas>
+      </div>
+    </div>
+    <div class="col-lg-6">
+      <div class="card-uni p-3 h-100">
+        <h6 class="section-title mb-3">Eventos por etapa do fluxo</h6>
+        <canvas id="chartStage" height="150"></canvas>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== LISTA ===================== -->
+<div id="view-list" style="display:none">
+  <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+    <h4 class="section-title mb-0"><i class="bi bi-list-check"></i> Eventos Registrados</h4>
+    <div class="d-flex gap-2 flex-wrap">
+      <select class="form-select form-select-sm" style="width:170px" id="fSev" onchange="renderList()">
+        <option value="">Todas gravidades</option>
+        <option>Leve</option><option>Moderado</option><option>Grave</option><option>Óbito</option>
+      </select>
+      <select class="form-select form-select-sm" style="width:200px" id="fStage" onchange="renderList()">
+        <option value="">Todas as etapas</option>
+        <option>Registro</option><option>Classificação</option><option>Análise Segurança</option>
+        <option>Ciência Diretoria</option><option>Investigação</option><option>Parecer Auditor</option><option>Finalizado</option>
+      </select>
+      <button class="btn btn-uni btn-sm" onclick="showView('new')"><i class="bi bi-plus-lg"></i> Novo</button>
+    </div>
+  </div>
+  <div class="card-uni p-0">
+    <table class="table table-hover mb-0 align-middle">
+      <thead style="background:var(--uni-green-light)">
+        <tr class="text-uppercase" style="font-size:.74rem;color:var(--uni-green-dark)">
+          <th class="ps-3">ID</th><th>Ocorrência</th><th>Setor</th><th>Data</th><th>Gravidade</th><th>Etapa atual</th><th></th>
+        </tr>
+      </thead>
+      <tbody id="listBody"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ===================== DETALHE ===================== -->
+<div id="view-detail" style="display:none">
+  <button class="btn btn-outline-uni btn-sm mb-3" onclick="showView('list')"><i class="bi bi-arrow-left"></i> Voltar</button>
+  <div id="detailContent"></div>
+</div>
+
+<!-- ===================== NOVO ===================== -->
+<div id="view-new" style="display:none">
+  <h4 class="section-title mb-3"><i class="bi bi-plus-circle"></i> Novo Registro de Ocorrência</h4>
+  <div class="card-uni p-4">
+    <div class="row g-3">
+      <div class="col-md-6"><label class="form-label">Título da ocorrência</label><input class="form-control" id="nTitle" placeholder="Ex.: Queda de paciente no leito"></div>
+      <div class="col-md-3"><label class="form-label">Setor / Unidade</label>
+        <select class="form-select" id="nSector"><option>UTI Adulto</option><option>Pronto-Socorro</option><option>Centro Cirúrgico</option><option>Internação 3º andar</option><option>Farmácia</option><option>Maternidade</option></select></div>
+      <div class="col-md-3"><label class="form-label">Data/Hora do evento</label><input type="datetime-local" class="form-control" id="nDate"></div>
+      <div class="col-md-4"><label class="form-label">Tipo de evento</label>
+        <select class="form-select" id="nType"><option>Queda</option><option>Erro de medicação</option><option>Lesão por pressão</option><option>Identificação incorreta</option><option>Infecção relacionada à assistência</option><option>Falha de processo / fluxo</option></select></div>
+      <div class="col-md-4"><label class="form-label">Gravidade inicial (notificante)</label>
+        <select class="form-select" id="nSev"><option>Leve</option><option>Moderado</option><option>Grave</option><option>Óbito</option></select></div>
+      <div class="col-md-4"><label class="form-label">Notificante</label><input class="form-control" id="nReporter" placeholder="Nome / função"></div>
+      <div class="col-12"><label class="form-label">Descrição do ocorrido</label><textarea class="form-control" rows="3" id="nDesc" placeholder="Descreva o que aconteceu, sem juízo de valor..."></textarea></div>
+      <div class="col-12">
+        <label class="form-label">Anexos complementares</label>
+        <div class="border rounded-3 p-3 text-center" style="border-style:dashed!important;background:var(--uni-green-light)">
+          <i class="bi bi-cloud-arrow-up fs-3 text-success"></i>
+          <div class="small text-muted">Arraste arquivos ou clique para anexar (fotos, exames, prontuário)</div>
+          <input type="file" class="form-control mt-2" multiple>
+        </div>
+      </div>
+      <div class="col-12 text-end">
+        <button class="btn btn-outline-uni me-2" onclick="showView('list')">Cancelar</button>
+        <button class="btn btn-uni" onclick="saveNew()"><i class="bi bi-send"></i> Registrar e iniciar fluxo</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<script>
+const STAGES = ["Registro","Classificação","Análise Segurança","Ciência Diretoria","Investigação","Parecer Auditor","Finalizado"];
+const STAGE_ICON = ["bi-clipboard-plus","bi-tags","bi-shield-check","bi-people","bi-search","bi-clipboard-check","bi-check2-all"];
+const SEV_COLOR = {"Leve":"var(--sev-leve)","Moderado":"var(--sev-mod)","Grave":"var(--sev-grave)","Óbito":"var(--sev-obito)"};
+
+let events = [
+  {id:"EA-2026-0048",title:"Queda de paciente no leito",sector:"Internação 3º andar",date:"2026-06-14 02:30",type:"Queda",sev:"Moderado",reporter:"Enf. Ana Paula",desc:"Paciente idoso encontrado no chão ao lado do leito durante a ronda noturna, sem grade elevada.",stage:4,
+   tl:[
+     {st:0,who:"Enf. Ana Paula",role:"Notificante",when:"14/06 02:45",txt:"Registro inicial da ocorrência."},
+     {st:1,who:"NSP – Núcleo Seg. Paciente",role:"Classificação",when:"14/06 08:10",txt:"Classificado como Evento Adverso com dano temporário. NEAR MISS descartado.",class:"Evento Adverso"},
+     {st:2,who:"Dra. Marina Lopes",role:"Análise Segurança",when:"14/06 10:00",txt:"Aplicado protocolo de queda. Identificada ausência de avaliação de risco (escala de Morse) na admissão."},
+     {st:3,who:"Diretoria Técnica",role:"Ciência",when:"14/06 16:30",txt:"Diretoria ciente. Solicitada investigação de causa raiz."},
+   ],
+   attach:[{n:"foto_leito.jpg",t:"img"},{n:"escala_morse.pdf",t:"pdf"}],
+   comments:[{who:"Dr. Edson",role:"Diretor",when:"14/06 17:00",txt:"Verificar se houve recorrência neste setor nos últimos 30 dias."}]},
+
+  {id:"EA-2026-0047",title:"Erro de medicação — dose dobrada",sector:"UTI Adulto",date:"2026-06-12 14:10",type:"Erro de medicação",sev:"Grave",reporter:"Téc. João Mendes",desc:"Administração de dose dobrada de anticoagulante por troca de etiqueta.",stage:5,
+   tl:[
+     {st:0,who:"Téc. João Mendes",role:"Notificante",when:"12/06 14:20",txt:"Notificação imediata após identificação do erro."},
+     {st:1,who:"NSP",role:"Classificação",when:"12/06 15:00",txt:"Evento Adverso grave — incidente com dano.",class:"Evento Adverso"},
+     {st:2,who:"Dra. Marina Lopes",role:"Análise Segurança",when:"12/06 16:00",txt:"Paciente monitorado, sem sangramento. Falha na dupla checagem."},
+     {st:3,who:"Diretoria Técnica",role:"Ciência",when:"12/06 18:00",txt:"Ciência da diretoria e do médico assistente."},
+     {st:4,who:"Comitê Investigação",role:"Investigação",when:"13/06 09:00",txt:"Causa raiz: etiquetas de aspecto similar. Proposto duplo-check eletrônico."},
+   ],
+   attach:[{n:"prescricao.pdf",t:"pdf"},{n:"rotulo_medicamento.jpg",t:"img"}],
+   comments:[{who:"Fúlvia",role:"Auditoria",when:"13/06 11:00",txt:"Aguardando parecer auditor sobre conformidade do processo de dispensação."}]},
+
+  {id:"EA-2026-0046",title:"Identificação incorreta de paciente",sector:"Centro Cirúrgico",date:"2026-06-10 07:50",type:"Identificação incorreta",sev:"Grave",reporter:"Enf. Carla Reis",desc:"Pulseira de identificação trocada antes de procedimento, detectada no time-out.",stage:6,
+   tl:[
+     {st:0,who:"Enf. Carla Reis",role:"Notificante",when:"10/06 07:55",txt:"Erro barrado no time-out cirúrgico."},
+     {st:1,who:"NSP",role:"Classificação",when:"10/06 09:00",txt:"Near miss — barreira funcionou.",class:"Near Miss"},
+     {st:2,who:"Dra. Marina Lopes",role:"Análise Segurança",when:"10/06 10:30",txt:"Protocolo de identificação reforçado."},
+     {st:3,who:"Diretoria",role:"Ciência",when:"10/06 14:00",txt:"Diretoria ciente."},
+     {st:4,who:"Comitê",role:"Investigação",when:"11/06 09:00",txt:"Causa raiz concluída."},
+     {st:5,who:"Auditoria",role:"Parecer Auditor",when:"11/06 15:00",txt:"Parecer: processo conforme após ação corretiva. Recomendado treinamento."},
+     {st:6,who:"NSP",role:"Finalização",when:"12/06 08:00",txt:"Evento finalizado com plano de ação concluído."},
+   ],
+   attach:[{n:"checklist_cirurgia_segura.pdf",t:"pdf"}],
+   comments:[]},
+
+  {id:"EA-2026-0045",title:"Lesão por pressão estágio 2",sector:"UTI Adulto",date:"2026-06-08 22:00",type:"Lesão por pressão",sev:"Moderado",reporter:"Enf. Bruno Costa",desc:"Lesão sacral identificada em paciente acamado de longa permanência.",stage:6,
+   tl:[
+     {st:0,who:"Enf. Bruno Costa",role:"Notificante",when:"08/06 22:10",txt:"Registro da lesão."},
+     {st:1,who:"NSP",role:"Classificação",when:"09/06 08:00",txt:"Evento Adverso com dano.",class:"Evento Adverso"},
+     {st:2,who:"Dra. Marina",role:"Análise Segurança",when:"09/06 10:00",txt:"Reposicionamento não registrado conforme protocolo."},
+     {st:3,who:"Diretoria",role:"Ciência",when:"09/06 15:00",txt:"Ciente."},
+     {st:4,who:"Comitê",role:"Investigação",when:"10/06 09:00",txt:"Causa raiz: sobrecarga de equipe no plantão."},
+     {st:5,who:"Auditoria",role:"Parecer Auditor",when:"10/06 16:00",txt:"Parecer favorável ao plano de dimensionamento."},
+     {st:6,who:"NSP",role:"Finalização",when:"11/06 09:00",txt:"Finalizado."},
+   ],
+   attach:[{n:"foto_lesao.jpg",t:"img"},{n:"mapa_braden.pdf",t:"pdf"}],
+   comments:[]},
+];
+
+/* ---------- navegação ---------- */
+function showView(v,el){
+  ["dash","list","new","detail"].forEach(x=>document.getElementById("view-"+x).style.display="none");
+  document.getElementById("view-"+v).style.display="block";
+  if(el){document.querySelectorAll(".navbar-uni .nav-link").forEach(n=>n.classList.remove("active"));el.classList.add("active");}
+  if(v==="list")renderList();
+  if(v==="dash")setTimeout(initCharts,50);
+}
+
+/* ---------- lista ---------- */
+function sevBadge(s){return `<span class="badge-sev text-white" style="background:${SEV_COLOR[s]}">${s}</span>`;}
+function renderList(){
+  const fs=document.getElementById("fSev").value, fst=document.getElementById("fStage").value;
+  const body=document.getElementById("listBody");body.innerHTML="";
+  events.filter(e=>(!fs||e.sev===fs)&&(!fst||STAGES[e.stage]===fst)).forEach(e=>{
+    body.innerHTML+=`<tr class="ev-row" style="border-left-color:${SEV_COLOR[e.sev]}" onclick="openDetail('${e.id}')">
+      <td class="ps-3 ev-id">${e.id}</td><td>${e.title}</td><td>${e.sector}</td>
+      <td class="small text-muted">${e.date}</td><td>${sevBadge(e.sev)}</td>
+      <td><span class="badge bg-light text-success border"><i class="bi ${STAGE_ICON[e.stage]}"></i> ${STAGES[e.stage]}</span></td>
+      <td><i class="bi bi-chevron-right text-muted"></i></td></tr>`;
+  });
+}
+
+/* ---------- detalhe ---------- */
+function openDetail(id){
+  const e=events.find(x=>x.id===id);showView('detail');
+  let flow="";STAGES.forEach((s,i)=>{
+    let cls=i<e.stage?"done":(i===e.stage?"current":"");
+    flow+=`<div class="flow-step ${cls}"><div class="dot"><i class="bi ${STAGE_ICON[i]}"></i></div><div class="lbl">${s}</div></div>`;});
+  let tl="";e.tl.forEach(t=>{tl+=`<div class="vt-item"><div class="vt-dot"><i class="bi ${STAGE_ICON[t.st]}"></i></div>
+     <div class="vt-card"><div class="d-flex justify-content-between"><span class="fw-bold text-success">${t.role}</span><span class="small text-muted">${t.when}</span></div>
+     <div class="small text-muted">${t.who}</div>${t.class?`<span class="badge bg-success-subtle text-success border mt-1">${t.class}</span>`:""}<p class="mb-0 mt-1">${t.txt}</p></div></div>`;});
+  // próximas etapas pendentes
+  for(let i=e.stage+1;i<STAGES.length;i++){tl+=`<div class="vt-item pending"><div class="vt-dot"><i class="bi ${STAGE_ICON[i]}"></i></div><div class="vt-card text-muted"><span class="fw-bold">${STAGES[i]}</span><p class="mb-0 small">Aguardando etapa anterior</p></div></div>`;}
+  let att=e.attach.map(a=>`<span class="attach-chip"><i class="bi ${a.t==='img'?'bi-image':'bi-file-earmark-pdf'}"></i>${a.n}</span>`).join("")||'<span class="text-muted small">Nenhum anexo</span>';
+  let cmts=e.comments.map(c=>`<div class="comment-box"><div class="d-flex justify-content-between"><span class="who">${c.who} · ${c.role}</span><span class="small text-muted">${c.when}</span></div><div>${c.txt}</div></div>`).join("")||'<p class="text-muted small">Sem informações complementares ainda.</p>';
+
+  document.getElementById("detailContent").innerHTML=`
+   <div class="card-uni p-4 mb-3">
+     <div class="d-flex justify-content-between flex-wrap gap-2 mb-3">
+       <div><span class="ev-id fs-5">${e.id}</span><h4 class="mb-0">${e.title}</h4>
+         <span class="text-muted small"><i class="bi bi-geo-alt"></i> ${e.sector} · <i class="bi bi-clock"></i> ${e.date} · <i class="bi bi-tag"></i> ${e.type}</span></div>
+       <div class="text-end">${sevBadge(e.sev)}<div class="small text-muted mt-1">Notificante: ${e.reporter}</div></div>
+     </div>
+     <p class="text-secondary">${e.desc}</p>
+     <hr><h6 class="section-title mb-3">Fluxo do evento</h6>
+     <div class="flow mb-2">${flow}</div>
+   </div>
+   <div class="row g-3">
+     <div class="col-lg-7">
+       <div class="card-uni p-4">
+         <h6 class="section-title mb-3"><i class="bi bi-list-ul"></i> Linha do tempo / tramitação</h6>
+         <div class="vtimeline">${tl}</div>
+       </div>
+     </div>
+     <div class="col-lg-5">
+       <div class="card-uni p-4 mb-3">
+         <h6 class="section-title mb-2"><i class="bi bi-paperclip"></i> Anexos complementares</h6>
+         <div>${att}</div>
+         <input type="file" class="form-control form-control-sm mt-3" multiple>
+       </div>
+       <div class="card-uni p-4">
+         <h6 class="section-title mb-3"><i class="bi bi-chat-left-text"></i> Informações dos envolvidos</h6>
+         ${cmts}
+         <textarea class="form-control mb-2" id="cmtTxt" rows="2" placeholder="Adicione informação complementar..."></textarea>
+         <button class="btn btn-uni btn-sm w-100" onclick="addComment('${e.id}')"><i class="bi bi-plus-lg"></i> Adicionar</button>
+       </div>
+       ${e.stage<6?`<button class="btn btn-outline-uni w-100 mt-3" onclick="advance('${e.id}')"><i class="bi bi-arrow-right-circle"></i> Avançar para: ${STAGES[e.stage+1]}</button>`:`<div class="alert alert-success mt-3 mb-0 text-center"><i class="bi bi-check2-all"></i> Evento finalizado</div>`}
+     </div>
+   </div>`;
+}
+function addComment(id){const e=events.find(x=>x.id===id);const t=document.getElementById("cmtTxt").value.trim();if(!t)return;
+  e.comments.push({who:"Você",role:"Envolvido",when:"agora",txt:t});openDetail(id);}
+function advance(id){const e=events.find(x=>x.id===id);if(e.stage<6){e.stage++;
+  e.tl.push({st:e.stage,who:"Sistema",role:STAGES[e.stage],when:"agora",txt:"Etapa iniciada."});}openDetail(id);}
+
+/* ---------- novo ---------- */
+function saveNew(){
+  const t=document.getElementById("nTitle").value.trim();if(!t){alert("Informe o título da ocorrência.");return;}
+  const num=String(49+events.length-4).padStart(4,"0");
+  events.unshift({id:"EA-2026-"+num,title:t,sector:document.getElementById("nSector").value,
+    date:(document.getElementById("nDate").value||"agora").replace("T"," "),type:document.getElementById("nType").value,
+    sev:document.getElementById("nSev").value,reporter:document.getElementById("nReporter").value||"Notificante",
+    desc:document.getElementById("nDesc").value,stage:0,
+    tl:[{st:0,who:document.getElementById("nReporter").value||"Notificante",role:"Notificante",when:"agora",txt:"Registro inicial da ocorrência."}],
+    attach:[],comments:[]});
+  document.getElementById("nTitle").value="";document.getElementById("nDesc").value="";
+  alert("Ocorrência registrada! Encaminhada para classificação pela Segurança do Paciente.");showView('list');
+}
+
+/* ---------- charts ---------- */
+let charts={};
+function initCharts(){
+  Object.values(charts).forEach(c=>c&&c.destroy());
+  const g="#00A859",gd="#007A40";
+  charts.trend=new Chart(document.getElementById("chartTrend"),{type:"bar",
+    data:{labels:["Jan","Fev","Mar","Abr","Mai","Jun"],datasets:[
+      {label:"Leve",data:[10,12,9,14,11,13],backgroundColor:"#2EB872"},
+      {label:"Moderado",data:[6,8,7,9,8,10],backgroundColor:"#F2A900"},
+      {label:"Grave",data:[3,2,4,3,5,4],backgroundColor:"#E8590C"},
+      {label:"Óbito",data:[0,1,0,1,0,1],backgroundColor:"#C0392B"}]},
+    options:{responsive:true,plugins:{legend:{position:"bottom"}},scales:{x:{stacked:true},y:{stacked:true}}}});
+  charts.sev=new Chart(document.getElementById("chartSev"),{type:"doughnut",
+    data:{labels:["Leve","Moderado","Grave","Óbito"],datasets:[{data:[26,15,5,2],backgroundColor:["#2EB872","#F2A900","#E8590C","#C0392B"]}]},
+    options:{plugins:{legend:{position:"bottom"}}}});
+  charts.type=new Chart(document.getElementById("chartType"),{type:"bar",
+    data:{labels:["Queda","Erro medicação","Lesão pressão","Ident. incorreta","Infecção","Falha processo"],
+      datasets:[{label:"Eventos",data:[14,11,8,5,6,4],backgroundColor:g,borderRadius:6}]},
+    options:{indexAxis:"y",plugins:{legend:{display:false}}}});
+  charts.stage=new Chart(document.getElementById("chartStage"),{type:"polarArea",
+    data:{labels:STAGES,datasets:[{data:[4,6,5,8,12,5,31],backgroundColor:["#B6E8CC","#9ADBB8","#6FCB97","#46BC80","#F2A900","#E8590C","#007A40"]}]},
+    options:{plugins:{legend:{position:"right",labels:{font:{size:10}}}}}});
+}
+renderList();initCharts();
+</script>
 </body>
 </html>
